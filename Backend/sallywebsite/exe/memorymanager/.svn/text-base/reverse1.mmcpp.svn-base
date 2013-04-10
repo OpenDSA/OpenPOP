@@ -1,0 +1,33 @@
+Linked list reversal (unfolded while loop)
+// gridsize 2 4
+Node *yetToReverse = new Node( 'A' , NULL );
+yetToReverse->next = new Node( 'B' , NULL );
+yetToReverse->next->next = new Node( 'C' , NULL );
+yetToReverse->next->next->next = new Node( 'D' , NULL );
+// redraw yetToReverse
+Node *soFar = NULL ; // 1 0 LEFT left
+Node *temp = NULL ; // 1 0 RIGHT
+temp = soFar ;
+soFar = yetToReverse ;
+yetToReverse = soFar->next ;
+soFar->next = temp ;
+// redraw soFar
+// redraw yetToReverse
+temp = soFar ;
+soFar = yetToReverse ;
+yetToReverse = soFar->next ;
+soFar->next = temp ;
+// redraw soFar
+// redraw yetToReverse
+temp = soFar ;
+soFar = yetToReverse ;
+yetToReverse = soFar->next ;
+soFar->next = temp ;
+// redraw soFar
+// redraw yetToReverse
+temp = soFar ;
+soFar = yetToReverse ;
+yetToReverse = soFar->next ;
+soFar->next = temp ;
+// redraw soFar
+// redraw yetToReverse

@@ -1,0 +1,16 @@
+Linked-list rotation by 2 positions
+// gridsize 2 4
+Node *head = new Node( 'A' , NULL );
+head->next = new Node( 'B' , NULL ); // 0 1
+head->next->next = new Node( 'C' , NULL ); // 0 2
+head->next->next->next = new Node( 'D' , NULL ); // 0 3
+Node *tail = head->next->next->next ; // 0 3 LEFT
+Node *p = head ; // 1 1 RIGHT
+p = p->next ; 
+p = p->next ; 
+Node *temp = head ; // 1 0 LEFT left
+head = p->next ;
+tail->next = temp ;
+tail = p ;
+p->next = NULL ;
+// redraw head

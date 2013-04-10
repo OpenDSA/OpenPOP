@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>BNF for Parser.jj</TITLE>
+</HEAD>
+<BODY>
+<H1 ALIGN=CENTER>BNF for Parser.jj</H1>
+<H2 ALIGN=CENTER>NON-TERMINALS</H2>
+<TABLE>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod1">Input</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod2">titleLine</A> <A HREF="#prod3">gridsizeLine</A> ( <A HREF="#prod4">newlistLine</A> )? ( ( <A HREF="#prod5">pointerOperation</A> | <A HREF="#prod6">layoutOperation</A> | <A HREF="#prod7">controlOperation</A> ) )* &lt;EOF&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod2">titleLine</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;TITLE&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod3">gridsizeLine</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;COMMENT&gt; &lt;GRIDSIZE&gt; &lt;INT&gt; &lt;INT&gt; &lt;LANGUAGE&gt; ( &lt;DRAWGRID&gt; )? ( ( &lt;INT&gt; | &lt;REAL&gt; ) )? ( &lt;SMALLFONT&gt; )? &lt;ENDOFCOMMENT&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod4">newlistLine</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;NODE&gt; ( &lt;STAR&gt; )? &lt;IDENTIFIER&gt; &lt;EQUAL&gt; &lt;CREATELIST&gt; &lt;LPAREN&gt; &lt;CHARLIST&gt; &lt;STRING&gt; &lt;RPAREN&gt; &lt;SEMICOLON&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">pointerOperation</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">pointerDeclaration</A> | <A HREF="#prod9">pointerAssignment</A> | <A HREF="#prod10">pointerDelete</A> | <A HREF="#prod11">dataAssignment</A> )</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">pointerDeclaration</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;NODE&gt; ( &lt;STAR&gt; )? &lt;IDENTIFIER&gt; ( "=" ( &lt;NULL&gt; | <A HREF="#prod12">pointerExpression</A> | <A HREF="#prod13">allocationExpression</A> ) )? &lt;SEMICOLON&gt; ( <A HREF="#prod14">layoutDirective</A> )?</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod9">pointerAssignment</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod12">pointerExpression</A> &lt;EQUAL&gt; ( &lt;NULL&gt; | <A HREF="#prod12">pointerExpression</A> | <A HREF="#prod13">allocationExpression</A> ) &lt;SEMICOLON&gt; ( <A HREF="#prod14">layoutDirective</A> )?</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod10">pointerDelete</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;DELETE&gt; <A HREF="#prod12">pointerExpression</A> &lt;SEMICOLON&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod11">dataAssignment</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod15">dataExpression</A> &lt;EQUAL&gt; ( <A HREF="#prod15">dataExpression</A> | &lt;CHAR&gt; ) &lt;SEMICOLON&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod16">pointerAssignmentInForLoop</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod12">pointerExpression</A> &lt;EQUAL&gt; ( &lt;NULL&gt; | <A HREF="#prod12">pointerExpression</A> | <A HREF="#prod13">allocationExpression</A> )</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod12">pointerExpression</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;IDENTIFIER&gt; ( &lt;CHAIN&gt; )?</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod13">allocationExpression</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;NEW&gt; &lt;NODE&gt; &lt;LPAREN&gt; ( &lt;CHARLIST&gt; | ( <A HREF="#prod15">dataExpression</A> &lt;COMMA&gt; ) ) ( &lt;NULL&gt; | <A HREF="#prod12">pointerExpression</A> ) &lt;RPAREN&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod7">controlOperation</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod17">whileLoop</A> | <A HREF="#prod18">forLoop</A> | <A HREF="#prod19">ifStatement</A> | <A HREF="#prod20">breakStatement</A> )</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod20">breakStatement</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;BREAK&gt; &lt;SEMICOLON&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod17">whileLoop</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;WHILE&gt; &lt;LPAREN&gt; <A HREF="#prod21">booleanExpression</A> &lt;RPAREN&gt; <A HREF="#prod22">block</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod18">forLoop</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod23">forLoopPointer</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod23">forLoopPointer</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;FOR&gt; &lt;LPAREN&gt; ( <A HREF="#prod16">pointerAssignmentInForLoop</A> )? &lt;SEMICOLON&gt; <A HREF="#prod21">booleanExpression</A> &lt;SEMICOLON&gt; ( <A HREF="#prod16">pointerAssignmentInForLoop</A> )? &lt;RPAREN&gt; <A HREF="#prod22">block</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod19">ifStatement</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;IF&gt; &lt;LPAREN&gt; <A HREF="#prod21">booleanExpression</A> ")" <A HREF="#prod22">block</A> ( &lt;ELSE&gt; <A HREF="#prod22">block</A> )?</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod22">block</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"{" ( ( <A HREF="#prod5">pointerOperation</A> | <A HREF="#prod7">controlOperation</A> | <A HREF="#prod6">layoutOperation</A> ) )* "}"</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod15">dataExpression</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod12">pointerExpression</A> &lt;DEREFERENCEOP&gt; &lt;INFO&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod21">booleanExpression</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod24">simpleBooleanExpression</A> | &lt;LPAREN&gt; <A HREF="#prod24">simpleBooleanExpression</A> &lt;RPAREN&gt; &lt;LOGICALCONNECTOR&gt; &lt;LPAREN&gt; <A HREF="#prod24">simpleBooleanExpression</A> &lt;RPAREN&gt; )</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod24">simpleBooleanExpression</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( ( <A HREF="#prod12">pointerExpression</A> | &lt;NULL&gt; ) &lt;EQUALCOMPARATOR&gt; ( <A HREF="#prod12">pointerExpression</A> | &lt;NULL&gt; ) | ( <A HREF="#prod15">dataExpression</A> | &lt;CHAR&gt; ) ( &lt;EQUALCOMPARATOR&gt; | &lt;ORDERCOMPARATOR&gt; ) ( <A HREF="#prod15">dataExpression</A> | &lt;CHAR&gt; ) )</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod6">layoutOperation</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;IDENTIFIER&gt; &lt;DEREFERENCEOP&gt; &lt;REDRAW&gt; &lt;SEMICOLON&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod14">layoutDirective</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;COMMENT&gt; &lt;INT&gt; &lt;INT&gt; ( &lt;IDENTIFIER&gt; ( &lt;IDENTIFIER&gt; )? )? ( &lt;ENDOFCOMMENT&gt; | &lt;EOF&gt; )</TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

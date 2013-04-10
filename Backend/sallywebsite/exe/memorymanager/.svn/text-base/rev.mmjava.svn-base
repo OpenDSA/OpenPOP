@@ -1,0 +1,16 @@
+Linked-list reversal
+// gridsize 2 4 java
+// newlist list 4 A B C D
+Node yetToReverse = list ; // 0 0 RIGHT
+Node soFar = null ; // 1 0 LEFT left
+Node temp = null ; // 1 0 RIGHT
+list = null ;
+while ( yetToReverse != null )
+{
+   temp = soFar ;
+   soFar = yetToReverse ;
+   yetToReverse = soFar.next ;
+   soFar.next = temp ;
+   // redraw soFar
+   // redraw yetToReverse
+}

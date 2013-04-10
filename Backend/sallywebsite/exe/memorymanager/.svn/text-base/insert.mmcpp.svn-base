@@ -1,0 +1,14 @@
+Linked list insertion
+// gridsize 2 4
+Node *list ;
+list = new Node( 'E' , NULL );
+Node *toInsert = new Node( 'C' , list ); // -1 -1 ANY left
+list = toInsert ;
+// redraw list
+toInsert = new Node( 'A' , list );
+list = toInsert ;
+// redraw list
+toInsert = new Node( 'B' , NULL );
+toInsert->next = list->next ;
+list->next = toInsert ;
+// redraw list

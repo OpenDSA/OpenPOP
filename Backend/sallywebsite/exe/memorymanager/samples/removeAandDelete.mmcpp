@@ -1,0 +1,29 @@
+Remove all A's from a list and delete nodes
+// gridsize 2 6 C++ 0.3
+Node *head = createList( 'A','A','B','A','C','A',"tail" );
+Node *p; // 0 2
+Node *temp; // 1 0 ANY left
+while ((head != NULL) && (head->info =='A')) {
+     temp = head;
+     head = head->next;
+     delete temp;
+}
+if (head == NULL)
+{
+   tail = NULL;
+}
+else
+{
+  for( p = head; p->next != NULL; )
+  {
+     if (p->next->info == 'A') {
+         temp = p->next;
+         p->next =  p->next->next;
+	 delete temp;
+     }
+     else {
+         p = p->next;
+     }
+  }
+}
+tail = p;

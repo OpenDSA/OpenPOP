@@ -1,0 +1,12 @@
+Linked-list rotation by 2 positions
+// gridsize 2 4
+// newlist head 4 A B C D tail
+Node p = head ; // 1 1 RIGHT
+p = p.next ; 
+p = p.next ; 
+Node temp = head ; // 1 0 LEFT left
+head = p.next ;
+tail.next = temp ;
+tail = p ;
+p.next = null ;
+// redraw head

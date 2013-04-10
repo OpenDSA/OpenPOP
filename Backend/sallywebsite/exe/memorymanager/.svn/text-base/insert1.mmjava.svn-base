@@ -1,0 +1,14 @@
+Building a linked list with default layout
+// gridsize 2 4 java
+Node list ;
+list = new Node( 'E' , null );
+Node toInsert = new Node( 'C' , list );
+list = toInsert ;
+// redraw list
+toInsert = new Node( 'A' , list );
+list = toInsert ;
+// redraw list
+toInsert = new Node( 'B' , list );
+toInsert.next = list.next ;
+list.next = toInsert ;
+// redraw list

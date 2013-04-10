@@ -1,0 +1,3 @@
+Linked list reversal (explicit while loop)
+// gridsize 2 4
+Node *yetToReverse = new Node( 'A' , NULL );

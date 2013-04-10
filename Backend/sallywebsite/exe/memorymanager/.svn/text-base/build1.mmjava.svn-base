@@ -1,0 +1,5 @@
+Building a linked list with default layout
+// gridsize 2 3 java
+Node list = new Node( 'A' , null );
+list.next = new Node( 'B' , null );
+list.next.next = new Node( 'C' , null );

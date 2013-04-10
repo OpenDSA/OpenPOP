@@ -1,0 +1,4 @@
+test
+// gridsize 1 3 java
+Node p1 = new Node( 'A', null);
+Node p2 = new Node( 'B', null);

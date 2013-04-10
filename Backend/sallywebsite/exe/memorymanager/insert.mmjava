@@ -1,0 +1,7 @@
+Linked list insertion
+// gridsize 2 4 java
+// newlist list 3 A C D
+Node toInsert = new Node( 'B' , null );
+toInsert.next = list.next ;
+list.next = toInsert ;
+// redraw list

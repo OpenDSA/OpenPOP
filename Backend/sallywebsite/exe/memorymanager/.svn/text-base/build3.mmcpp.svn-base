@@ -1,0 +1,6 @@
+Building a linked list with redraw directive
+// gridsize 2 3 C++
+Node *list = new Node( 'A' , NULL );
+list->next = new Node( 'B' , NULL );
+list->next->next = new Node( 'C' , NULL );
+// redraw list
