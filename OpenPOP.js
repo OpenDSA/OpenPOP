@@ -1,6 +1,6 @@
 "use strict";
 /*global alert: true, console */
-(function ($) {
+
   function visualize() { 
     //Here what should happen
     //1- get the code written by the student
@@ -34,4 +34,3 @@
       }   
     });
   }
-}(jQuery));
