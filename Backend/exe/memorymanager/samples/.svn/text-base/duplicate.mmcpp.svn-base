@@ -1,0 +1,15 @@
+Linked list duplication
+// gridsize 2 6 C++ 0.3
+Node *head = createList( 'A','B','C',"" );
+if (head != NULL )
+{
+   	Node *p;  // 0 1
+	head = new Node ( head->info , head );
+	for( p = head->next ; p->next != NULL ; p = p->next )
+	{
+     		head->redrawListHorizontally();
+     		p->next = new Node( p->next->info , p->next );
+     		p = p->next;
+	}
+	head->redrawListHorizontally();
+}

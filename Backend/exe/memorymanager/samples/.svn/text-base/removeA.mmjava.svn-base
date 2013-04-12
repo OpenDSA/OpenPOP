@@ -1,0 +1,24 @@
+Remove all A's from a list
+// gridsize 2 6 java 0.3
+Node head = Utils.createList( 'A','A','B','A','C','A',"tail" );
+Node p; // 0 2
+while ((head != null) && (head.info =='A')) {
+     head = head.next;
+}
+if (head == null)
+{
+   tail = null;
+}
+else
+{
+  for( p = head; p.next != null; )
+  {
+     if (p.next.info == 'A') {
+         p.next =  p.next.next;
+     }
+     else {
+         p = p.next;
+     }
+  }
+}
+tail = p;
