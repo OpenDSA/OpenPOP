@@ -47,9 +47,9 @@ class StudentcodeResource(ModelResource):
     
     def startvisualizing(self, request, **kwargs):
         self.method_check(request, allowed=['post'])
-        if request.POST['code']:
+        if request.POST.get('code'):
             print "api is called"
-            returnedString= visualize_code(request.POST['code'])
+            returnedString= visualize_code(request.POST.get('code'))
             return self.create_response(request, {'data': returnedString})
         else :
              print "This is not un ajax call"

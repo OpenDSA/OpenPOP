@@ -1,8 +1,13 @@
 # Django settings for sallywebsite project.
+# Returns the path to given filename
+import os
+def get_path(filename):
+    return os.path.join(os.path.dirname(__file__), filename)
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+BASE_URL = "openpop"
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -30,7 +35,7 @@ DATABASES = {
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/New_York'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -62,7 +67,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = get_path("static/")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -70,6 +75,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+     '/home/OpenPOP/Backend/static'
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -113,6 +119,7 @@ ROOT_URLCONF = 'urls'
 #WSGI_APPLICATION = 'sallywebsite.wsgi.application'
 
 TEMPLATE_DIRS = (
+    get_path('templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

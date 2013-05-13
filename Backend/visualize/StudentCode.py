@@ -12,7 +12,7 @@ def visualize_code(data):
     print data
     ##################### Put the student code in the value_entered and create an XML file  to be feed to the java command####################################### 
     # start creating foo.xml
-    foo = open('foo.xml', 'w')
+    foo = open('/home/OpenPOP/Backend/visualize/foo.xml', 'w')
     foo.write("""<?xml version="1.0" encoding="UTF-8"?>
 <input_panel><textarea><label_line>Enter your Java or C++ source code below:</label_line><default_field>Remove all A's from the list
 // gridsize 1 6 java 0.3
@@ -21,6 +21,8 @@ Node p = null; // 0 2
 </default_field><value_entered>\n"""+ data +"""\n""" + """</value_entered></textarea></input_panel>""")
     
     foo.close()
+    os.chdir("/home/OpenPOP/Backend/visualize")
+    print os.getcwd()
     ####################### Run the Java command to produce the snap shots file ##########################################################################################
     print "before the java call"
     os.system(" java -cp jhavepop-support.jar:jdom.jar:jaxen.jar:. exe.memorymanager.memorymanager foobar X foo.xml")
@@ -28,10 +30,10 @@ Node p = null; // 0 2
     ################################################## Parsing the .sho (snap shots) file and writting down the tokens file #################################################
 
     
-    tree = xml.parse('foobar.sho') # parse an XML file by name
+    tree = xml.parse('/home/OpenPOP/Backend/visualize/foobar.sho') # parse an XML file by name
 
     rootElement = tree.getroot()
-    tokensFile = open('forjsav', 'w')
+    tokensFile = open('/home/OpenPOP/Backend/visualize/forjsav', 'w')
 
     currentState = 'start' # To track if the current node is a pointer or a node in the linked list
 
