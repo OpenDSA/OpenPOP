@@ -1,0 +1,63 @@
+package exe.memorymanager;
+
+import java.io.*;
+import exe.*;
+
+/**
+ * A declaration operation: Node *<id>;
+ */
+
+public class OpDeclare  extends Operation
+{
+    // the name of the pointer variable
+    protected String id;   
+    protected String labelPosition;
+
+    /**
+     * Creates a declaration operation
+     *
+     * @param    id        Name of the pointer variable.
+     */
+    public OpDeclare( String id )
+    {
+	this.id = id;
+	this.labelPosition = "";
+    }// constructor
+
+
+    public OpDeclare( String id, int row, int col, String ref )
+    {
+	this.id = id;
+	this.row = row;
+	this.col = col;
+	this.ref = ref;
+	this.labelPosition = "";
+    }// constructor
+
+
+    public OpDeclare( String id, int row, int col, String ref, String position)
+    {
+	this.id = id;
+	this.row = row;
+	this.col = col;
+	this.ref = ref;
+	this.labelPosition = position;
+    }// constructor
+
+    /**
+     * Returns the name of the pointer variable.
+     */
+    String getPointerName()
+    {
+	return id;
+    }//getPointerName method
+
+    /**
+     * Executes the assignment operation
+     */
+    public void execute( GAIGSMemoryManager mm ) throws IOException
+    {
+	mm.setLineNumber( this.getLineNumber() );
+	mm.declare( id, row, col, ref );
+    }//execute method
+}// OpDeclare class

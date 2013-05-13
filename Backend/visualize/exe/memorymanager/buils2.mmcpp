@@ -1,0 +1,5 @@
+Building a linked list with layout directives
+// gridsize 2 3 C++
+Node *list = new Node( 'A' , NULL );
+list->next = new Node( 'B' , NULL ); // 0 1
+list->next->next = new Node( 'C' , NULL ); // 0 2

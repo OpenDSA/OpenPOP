@@ -1,0 +1,3 @@
+use strict;
+use warnings;
+system("java exe.memorymanager.memorymanager " . $ARGV[0] . ".sho " . $ARGV[0] . ".php " . $ARGV[0] . ".xml");

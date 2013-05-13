@@ -1,0 +1,1405 @@
+options { STATIC = false; }
+
+PARSER_BEGIN(Parser)
+
+package exe.memorymanager;
+
+import exe.*;
+import java.io.*;
+import java.util.*;
+
+public class Parser 
+{
+  public int numRows, numCols;
+  public String language;
+  public boolean drawgrid;
+  public String listHead, listTail;
+  public int listLength, count;
+  public String listElements[];
+  public double hSpacing;
+  int indent;	
+  
+  PrintWriter php;
+  Formatter f;
+
+  String dereferenceOp;  // "." or "->"
+  String nullString;     // "null" or "NULL"
+  String infoString;     // "info" or "data"
+  int chainUnitLength;
+  Operation ops[];
+  int numOps;
+  int lineNumber;  // as it will appear in the php script
+
+  public Operation[] parseProgram(PrintWriter phpWriter) 
+	throws ParseException
+  {
+
+    ops = new Operation[ 100 ];
+    numOps = 1;
+    listElements = null;
+    listTail = "";
+    php = phpWriter;
+    hSpacing = 0.5;
+    indent = 1;
+    infoString = "";
+
+    System.out.print( "Parsing source code... " );
+    System.out.flush();
+
+    Input();
+
+    System.out.println( "done" );
+
+     return ops;
+  }
+
+  private void addOp( Operation op )
+  { 
+     if (numOps == ops.length)
+        throw new MemoryManagerException( "Source program is too long" );
+     else
+        ops[ numOps++ ] = op;
+  }//addOp method
+
+  private void phpWrite( PointerExpression expr )
+  {
+     if (expr.isNull())
+         php.write( nullString );
+     else
+     {
+         php.write( expr.getPointerName() );
+	 for(int i=0; i<expr.getChainLength(); i++)
+   	    php.write( dereferenceOp +"next" );
+     }
+  }//phpWrite method
+
+}//Parser class
+
+PARSER_END(Parser)
+ 
+
+
+//========================== title line ==========================
+<IN_TITLE> TOKEN : { <TITLE: (~["\n","\r"])* <EOL> > : DEFAULT }
+
+//======================== gridsize line =========================
+<IN_COMMENT> TOKEN [IGNORE_CASE] : 
+{ 
+  <GRIDSIZE: "gridsize"> 
+| <DRAWGRID: "drawgrid">
+}
+
+//=========================== comments ===========================
+TOKEN : { <COMMENT: "//"> : IN_COMMENT }
+
+<IN_COMMENT> SKIP : {  " " | "\t" }
+<IN_COMMENT> TOKEN : { <ENDOFCOMMENT: <EOL> > : DEFAULT }
+<IN_COMMENT> TOKEN [IGNORE_CASE]: 
+{ 
+   <LANGUAGE : ("java" | "c++") > 
+| <SMALLFONT: "smallfont">
+}
+
+//================== non-default lexical states ==================
+<IN_TITLE, IN_COMMENT> TOKEN : 
+{  <EOL: ("\n" | "\r" | "\r\n") >  }
+
+
+//==================== default lexical state =====================
+SKIP : {  " " | "\t" | "\n" | "\r" }
+
+
+TOKEN [IGNORE_CASE] : 
+{ <INFO:   ("data" | "info")> 
+}
+
+TOKEN :
+{
+  <LPAREN:    "(">
+| <RPAREN:    ")">
+| <LBRACE:    "{">
+| <RBRACE:    "}">
+| <STAR:      "*">
+| <EQUAL:     "=">
+| <COMMA:     ",">
+| <SEMICOLON: ";">
+| <SQUOTE:    "\'">
+| <DQUOTE:    "\"">
+| <LOGICALCONNECTOR:  ("&&" | "||")>
+}
+
+TOKEN :
+{
+  <NODE:   "Node">
+| <NEW:    "new">
+| <DELETE: "delete">
+| <CREATELIST:   ("Utils.createList" | "createList" )>
+| <NULL:   ("null" | "NULL")>
+| <WHILE:  "while">
+| <FOR:    "for">
+| <BREAK:  "break">
+| <IF:     "if">
+| <ELSE:   "else">
+| <REDRAW: "redrawListHorizontally()">
+
+}
+
+TOKEN : { <#SP:      ([" ","\t","\n","\r"])* > }
+TOKEN : { <CHAR:     <SQUOTE> (<LETTER>|<DIGIT>) <SQUOTE> > }
+TOKEN : { <CHARLIST: <CHAR> <SP> <COMMA> <SP> ( <CHAR> <SP> <COMMA> <SP> )* > }
+TOKEN : { <STRING:   <DQUOTE> (<IDENTIFIER>)? <DQUOTE> > }
+
+
+<*> TOKEN :
+{
+  //  <POSINT: ["1"-"9"] (["0"-"9"])*>
+  <INT: (["0"-"9"])+>
+| <REAL:  ["0"-"9"] ("." ["0"-"9"])? >
+| <IDENTIFIER: <LETTER> ( <LETTER> | <DIGIT> )*>
+}
+
+TOKEN :
+{
+  <DEREFERENCEOP: ("." | "->")>
+| <EQUALCOMPARATOR: ("!=" | "==")>
+| <ORDERCOMPARATOR: ("<" | "<=" | ">" | ">=") >
+| <CHAIN:   ( <DEREFERENCEOP> "next" )+>
+| <#LETTER:  ["a"-"z","A"-"Z","_","$"] >
+| <#DIGIT:   ["0"-"9"] >
+}
+
+void Input() :
+{ Token t;
+  Operation op = null;
+}
+{
+    { token_source.SwitchTo(IN_TITLE); } 
+
+    titleLine() gridsizeLine() 
+
+    { lineNumber = 1;  }
+
+
+
+    [ LOOKAHEAD(6)  newlistLine() ]
+
+    ( (LOOKAHEAD(3) op = pointerOperation() | LOOKAHEAD(3) op = layoutOperation() |
+       LOOKAHEAD(3) op = controlOperation() ) 
+
+       { addOp( op ); }        
+     )*
+
+    <EOF>
+ 
+    { 	php.write(",\n\"</font>\"");  }
+
+}
+
+void titleLine() :
+{ Token t; }
+{
+   t=<TITLE> {  php.write( "\"<b>&nbsp; " 
+                + t.image.substring(0,t.image.length()-1)  // drop final <EOL>
+                + "</b><br>" ); }
+}
+
+void gridsizeLine() :
+{ Token t, f=null;
+  Token r, c;
+  Token l;
+  Token h = null;
+  Token d = null;
+}
+{
+   <COMMENT> <GRIDSIZE>  r=<INT> c=<INT>  l=<LANGUAGE> 
+    [  d=<DRAWGRID> ] [ (h=<INT>|h=<REAL>) ]  [ f=<SMALLFONT> ]
+   <ENDOFCOMMENT>
+
+   { 
+     if (f!=null)
+	php.write("<font size=\\\"-1\\\">\",\n");
+     else
+	php.write("<font size=\\\"-0\\\">\",\n");
+
+     numRows = Integer.parseInt( r.image );
+     numCols = Integer.parseInt( c.image );
+
+     if (l.image.toUpperCase().equals("JAVA"))
+     {
+         language = "java";
+	 dereferenceOp = ".";
+	 chainUnitLength = 5; // length of ".next"
+	 nullString = "null";
+     }
+     else
+     {
+         language = "C++";
+	 dereferenceOp = "->";
+	 chainUnitLength = 6; // length of "->next"
+	 nullString = "NULL";
+     }
+
+     drawgrid = (d != null); 
+ 
+     if (h != null)
+         hSpacing = Double.parseDouble( h.image );
+
+   }
+}
+
+
+void newlistLine() :
+{ Token s=null, h, l, t, c;
+}
+{
+   <NODE> [s=<STAR>] h=<IDENTIFIER> <EQUAL> c=<CREATELIST> 
+   <LPAREN> l=<CHARLIST> t=<STRING> <RPAREN> <SEMICOLON>  
+   { 
+     if ( (c.image.equals("Utils.createList")) && (language.equals("C++")) )
+	throw new MemoryManagerException( "\n\n" +
+              "'createList' is a free function.");
+
+     if ( (c.image.equals("createList")) && (language.equals("java")) )
+	throw new MemoryManagerException( "\n\n" +
+              "'createList' is a static function in the 'Utils' class");
+
+     listHead = h.image;
+     listLength = 0;
+     String list = l.image.replaceAll("\\s+","");
+     listElements = new String[ list.length() / 4 ]; // 'X', repeated 
+
+     for(int i=0; i<listElements.length; i++)
+         listElements[i] = list.substring(4*i+1,4*i+2);
+     listTail = t.image.substring(1, t.image.length()-1);
+
+     // System.out.println(  t.image + " "  + t.image.replaceAll("\"","\\\"") );
+      f = new Formatter();
+      php.write("\"" + f.format("%2d",lineNumber).toString()
+        +  "  Node " + ( language.equals("java") ? "" : "*" )
+        + h.image + " = " + 
+        ( language.equals("java") ? "Utils." : "" )
+	+ "createList( "
+        + list
+        + "\\\"" + listTail + "\\\""
+        + " );\"" );
+
+      lineNumber++;
+
+   }
+}
+
+Operation pointerOperation() :
+{ Operation op;
+}
+{
+    
+    ( LOOKAHEAD(3) op = pointerDeclaration() | LOOKAHEAD(3) op = pointerAssignment() |
+     LOOKAHEAD(3) op = pointerDelete() | LOOKAHEAD(3) op = dataAssignment() )
+
+    { return op; }
+}
+
+Operation pointerDeclaration() :
+{ Token  n=null, t=null, star=null, h;
+  String pointer;
+  AllocationExpression a=null;
+  PointerExpression p = null;
+  LayoutDirective ld = null;
+}
+{
+   <NODE> [star=<STAR>] h=<IDENTIFIER>
+
+
+   {
+
+      if (lineNumber > 1)
+          php.write( ",\n" );   
+
+      pointer = h.image;
+    
+      if ( star == null )   // no * (must be Java code)
+      {
+          if (language.equals( "C++" ))
+	     throw new ParseException( "* is missing in front of the " +
+                   "declaration of pointer variable '" + pointer + "'");
+      }
+      else   // presence of * (must be C++ code)
+      {
+          if (language.equals( "java" ))
+	     throw new ParseException( "* is not allowed in front of the " +
+                   "declaration of pointer variable '" + pointer + "'");
+      }
+      //System.out.println( "New declaration: ");
+      //System.out.println( "    pointer variable: " + pointer );
+   }
+
+   [ <EQUAL> 
+
+       ( n = <NULL> 
+       | p = pointerExpression() 
+       | a = allocationExpression() ) 
+   ] 
+
+   <SEMICOLON>
+
+   [ ld = layoutDirective() ]
+
+   {
+
+      Operation op;
+      f = new Formatter();
+      php.write(
+	        "\"" + f.format("%2d",lineNumber).toString()  );
+      for(int i=0; i<indent; i++)
+          php.write( "  " );
+      php.write( 
+                "Node "
+              + ( language.equals("java") ? "" : "*" )
+              + pointer );
+
+      int row = 0, col = 0;
+      String ref ="", position="";
+
+      if (ld != null)
+      {
+          if (ld.getType().equals("index"))
+          {
+             row = ld.getRow();
+             col = ld.getCol();
+             ref = ld.getRef();
+             position = ld.getPosition();
+          }
+      }
+
+      if (n != null)   // case: Node *<p> = NULL;
+      {
+           op = new OpDeclareAssign( 
+                   pointer, 
+                   new PointerExpression(),
+                   row, col, ref, position );
+	   op.setLineNumber( lineNumber );
+
+        //System.out.println( "in declare/NULL " + n.image );
+	  php.write( " = " + n.image );
+
+      }
+      else if (p != null)  // case Node *<p> = <pexpr>
+      {
+           op = new OpDeclareAssign( 
+                   pointer, 
+	           p,
+                   row, col, ref, position );
+	   op.setLineNumber( lineNumber );
+
+	  php.write( " = " + p.getPointerName() );
+
+	  for(int i=0; i<p.getChainLength(); i++)
+   	       php.write( dereferenceOp +"next" );
+
+      }
+      else if ( a != null )  // case: Node *<p> = new Node( ... );
+      { 
+
+	   op = new OpDeclareAllocateAssign( 
+			   pointer, 
+			   a,
+  			   row, col, ref, position );
+
+	   op.setLineNumber( lineNumber );
+
+          if (a.getInfo() != null )
+   	      php.write( " = new Node( '" + a.getInfo() + "' , ");
+          else
+          {
+              php.write( " = new Node( " + a.getInfoPointer().getPointerName() );
+              for(int i=0; i<a.getInfoPointer().getChainLength(); i++)
+                   php.write( dereferenceOp + "next" );
+              php.write( dereferenceOp + infoString + " , " );
+          }
+           phpWrite( a.getNext() );
+
+   	   php.write( " )" );
+      }
+      else  // case: Node *<p>;
+      {
+           op = new OpDeclare( pointer, row, col, ref, position );
+	   op.setLineNumber( lineNumber );
+      }
+
+      php.write( ";\"" );
+      lineNumber++;
+
+      return op;
+   }
+
+}
+
+
+Operation pointerAssignment() :
+{  Token n=null;
+   AllocationExpression a=null;
+   PointerExpression LHS, RHS=null;
+   LayoutDirective ld = null;
+}
+{
+   LHS = pointerExpression() 
+   <EQUAL>
+
+   {
+     if (lineNumber>1)
+        php.write( ",\n" );
+   }
+
+   ( n=<NULL> | RHS = pointerExpression() 
+     | a = allocationExpression() )
+
+   <SEMICOLON>
+
+   [ ld = layoutDirective() ]
+
+   {
+      Operation op;
+      int row = 0, col = 0;
+      String ref ="", position="";
+
+      if (ld != null)
+     {
+          if (ld.getType().equals("index"))
+          {
+             row = ld.getRow();
+             col = ld.getCol();
+             ref = ld.getRef();
+             position = ld.getPosition();
+          }
+      }
+
+
+      f = new Formatter();
+      php.write( "\"" + f.format("%2d",lineNumber).toString() );
+      for(int i=0; i<indent; i++)
+          php.write( "  " );
+
+      php.write( LHS.getPointerName() );
+      for(int i=0; i<LHS.getChainLength(); i++)
+          php.write( dereferenceOp +"next" );
+
+      php.write( " = " );	      
+
+      if (RHS != null)  // <pexpr1> = <pexpr2>;
+      {
+	  op = new OpAssign( LHS, RHS );
+          php.write( RHS.getPointerName() );
+          for(int i=0; i<RHS.getChainLength(); i++)
+   	      php.write( dereferenceOp +"next" );
+      }
+      else if (n!=null)   // <pexpr> = NULL;
+      {
+  	  op = new OpAssign( LHS, new PointerExpression() );
+ 	  //System.out.println( "\n\n\nin assign/new " + n.image +"\n\n\n");
+          php.write( n.image );
+      }
+      else  // <pexpr> = new Node( ... )
+      {
+	  op = new OpAssignAllocate( LHS, a, row, col);
+
+	//System.out.println( a.getInfo() + " " + a .getInfoPointer() );
+          if (a.getInfo() != null )
+   	      php.write( "new Node( '" + a.getInfo() + "' , ");
+          else
+          {
+              php.write( "new Node( " + a.getInfoPointer().getPointerName() );
+              for(int i=0; i<a.getInfoPointer().getChainLength(); i++)
+                   php.write( dereferenceOp + "next" );
+              php.write( dereferenceOp + infoString +" , " );
+          }
+          phpWrite( a.getNext() );
+
+   	  php.write( " )" );
+
+      }
+
+      op.setLineNumber( lineNumber );
+
+      lineNumber++;
+
+      php.write( ";\"") ;
+
+      return op;
+   } 
+
+}
+
+Operation pointerDelete() :
+{
+  PointerExpression p;
+}
+{
+   <DELETE> p=pointerExpression() <SEMICOLON>
+
+
+   {
+      if (language.equals( "java" ))
+	throw new MemoryManagerException( 
+             "The 'delete' operator is not part of Java" );
+
+      if (lineNumber > 1)
+          php.write( ",\n" );   
+
+      f = new Formatter();
+      php.write(
+	        "\"" + f.format("%2d",lineNumber).toString()  );
+      for(int i=0; i<indent; i++)
+          php.write( "  " );
+      php.write( "delete " + p.getPointerName() );
+      for(int i=0; i<p.getChainLength(); i++)
+   	php.write( dereferenceOp +"next" );
+
+
+      php.write( ";\"" );
+
+      Operation op = new OpDelete( p );
+      op.setLineNumber( lineNumber );
+
+      lineNumber++;
+
+      return op;
+   }
+
+
+}
+
+Operation dataAssignment() :
+{  Token charR=null;
+   PointerExpression LHS, RHS=null;
+}
+{
+
+    LHS = dataExpression() <EQUAL>  
+    (   RHS = dataExpression() | charR=<CHAR>)	
+    <SEMICOLON>
+
+   {
+     if (lineNumber>1)
+        php.write( ",\n" );
+
+      Operation op = new OpDataAssign(
+			new DataExpression( LHS ),
+			( charR != null ? 
+			  new DataExpression( charR.image.substring(1,2) ) :
+			  new DataExpression( RHS ) ) );
+
+      op.setLineNumber( lineNumber );
+
+      f = new Formatter();
+      php.write( "\"" + f.format("%2d",lineNumber).toString() );
+      for(int i=0; i<indent; i++)
+          php.write( "  " );
+
+      php.write( LHS.getPointerName() );
+      for(int i=0; i<LHS.getChainLength(); i++)
+         php.write( dereferenceOp + "next" );
+      php.write( dereferenceOp + infoString + " = " );
+
+      if (charR != null)
+         php.write( charR.image );
+      else
+      {
+         php.write( RHS.getPointerName() );
+         for(int i=0; i<RHS.getChainLength(); i++)
+             php.write( dereferenceOp + "next" );
+         php.write( dereferenceOp + infoString );
+      }
+      php.write( ";\"" );
+      lineNumber++;
+
+      return op;
+    }
+}
+
+Operation pointerAssignmentInForLoop() :
+{  Token n=null;
+   AllocationExpression a=null;
+   PointerExpression LHS, RHS=null;
+   LayoutDirective ld = null;
+}
+{
+   LHS = pointerExpression() 
+   <EQUAL>
+
+   ( n=<NULL> | RHS = pointerExpression() 
+     | a = allocationExpression() )
+
+   {
+      Operation op;
+      int row = 0, col = 0;
+      String ref ="", position="";
+
+      if (ld != null)
+      {
+          if (ld.getType().equals("index"))
+          {
+             row = ld.getRow();
+             col = ld.getCol();
+             ref = ld.getRef();
+             position = ld.getPosition();
+          }
+      }
+
+      String source = LHS.getPointerName();
+      for(int i=0; i<LHS.getChainLength(); i++)
+          source += dereferenceOp + "next";
+
+      source += " = ";	      
+
+      if (RHS != null)  // <pexpr1> = <pexpr2>;
+      {
+	  op = new OpAssign( LHS, RHS );
+          source += RHS.getPointerName();
+          for(int i=0; i<RHS.getChainLength(); i++)
+		source += dereferenceOp +"next";
+      }
+      else if (n!=null)   // <pexpr> = NULL;
+      {
+  	  op = new OpAssign( LHS, new PointerExpression() );
+ 	  //System.out.println( "\n\n\nin assign/new " + n.image +"\n\n\n");
+          source += n.image;
+      }
+      else  // <pexpr> = new Node( ... )
+      {
+	  op = new OpAssignAllocate(
+				  LHS,
+				  new AllocationExpression(
+	                                 a.getInfo(), a.getNext() ),
+				  row, col);
+
+          if (a.getInfo() != null )
+   	      php.write( "new Node( '" + a.getInfo() + "' , ");
+          else
+          {
+              php.write( "new Node( " + a.getInfoPointer().getPointerName() );
+              for(int i=0; i<a.getInfoPointer().getChainLength(); i++)
+                   php.write( dereferenceOp + "next" );
+              php.write( dereferenceOp + infoString + " , " );
+          }
+
+          source += a.getNext() + " )";
+      }
+
+      op.setLineNumber( lineNumber );
+      ((OpAssign)op).setSource( source );
+
+      php.write( source );
+
+      return op;
+   } 
+
+}
+
+
+PointerExpression pointerExpression() :
+{ Token p;
+  Token c=null;
+}
+{
+  p=<IDENTIFIER> [c=<CHAIN>]
+
+  {
+     if (c==null)
+        return new PointerExpression( p.image, 0 );
+
+     else
+     {
+     	String chain = c.image.trim();
+
+	if ((chain.indexOf("->")>-1) && (language.equals("java")))
+       	   throw new ParseException( 
+	          "operator '->' is not allowed in Java syntax" );
+	if ((chain.indexOf(".")>-1) && (language.equals("C++")))
+       	   throw new ParseException( 
+                  "operator '.' is not allowed in C++ syntax" );
+
+	String pointer = p.image;
+	int chainLength = chain.length() / chainUnitLength; 
+
+        return new PointerExpression( pointer, chainLength );
+     }
+  }
+}
+
+
+AllocationExpression allocationExpression() :
+{ Token i=null;
+  Token p1 = null;
+  PointerExpression p2 =null, p=null;
+}
+{  <NEW> <NODE> <LPAREN> (i=<CHARLIST>| ( p=dataExpression() <COMMA>)) 
+  ( p1=<NULL> | p2=pointerExpression() ) <RPAREN>
+
+  {
+     Character info;
+
+     if (i!=null)
+     {
+        if (i.image.replaceAll("\\s+","").trim().length() > 4)
+	   throw new ParseException( "Node info must be a single character" );
+
+        info = i.image.charAt(1);
+
+        if (p1!=null)
+            return new AllocationExpression(info, new PointerExpression());
+        else       
+            return new AllocationExpression(info , p2);
+     }
+     else
+     {
+       if (p1!=null)
+            return new AllocationExpression( p, new PointerExpression());
+        else       
+            return new AllocationExpression( p, p2);
+     }
+
+
+  }
+}
+
+
+Operation controlOperation() :
+{ Operation op; 
+}
+{
+    ( op = whileLoop() | op = forLoop() | op = ifStatement() |
+      op = breakStatement() )
+
+    { return op; }
+}
+
+
+Operation breakStatement() :
+{}
+{
+   <BREAK>  <SEMICOLON> 
+
+   { 
+     if (lineNumber>1)
+        php.write( ",\n" );
+
+
+       f = new Formatter();
+       php.write( "\"" + f.format("%2d",lineNumber).toString() );
+       int position = 2;
+       for(int i=0; i<indent; i++)
+       {
+           php.write( "  " );
+           position += 2;
+       }
+       php.write( "break;\"" );
+      Operation op = new OpBreak(); 
+      op.setLineNumber( lineNumber );
+      lineNumber++;
+
+      return op; 
+   }
+}
+
+
+Operation whileLoop() :
+{Operation op;
+ Operation body[];
+ BooleanExpression bexpr;
+}
+{
+   <WHILE> <LPAREN>  
+
+   {
+     if (lineNumber>1)
+        php.write( ",\n" );
+    }
+
+
+  bexpr =  booleanExpression() 
+   
+    <RPAREN>
+
+   {  
+       op = new OpWhile( bexpr );
+       op.setLineNumber( lineNumber );
+
+       f = new Formatter();
+       php.write( "\"" + f.format("%2d",lineNumber).toString() );
+       int position = 2;
+       for(int i=0; i<indent; i++)
+       {
+           php.write( "  " );
+           position += 2;
+       }
+       String boolExpr = bexpr.toString(dereferenceOp, nullString, infoString); 
+       if (bexpr instanceof CompoundBooleanExpression)
+       {
+         php.write( "while ( ( " + boolExpr + " ) ");
+	 php.write( ((CompoundBooleanExpression)bexpr).getConnector() + 
+	            "\",\n");
+         bexpr.setStartHighlighting( position + 10);
+         bexpr.setStopHighlighting( position + 10 + boolExpr.length() );
+	 lineNumber++;
+
+	 f = new Formatter();
+         php.write("\"" + f.format("%2d",lineNumber).toString() );
+         position = 2;
+         for(int i=0; i<indent; i++)
+         {
+           php.write( "  " );
+           position += 2;
+         }
+         String boolExpr2 = 
+             ((CompoundBooleanExpression)bexpr).getSecond().toString(
+                                     dereferenceOp, nullString, infoString); 
+         php.write("        ( " + boolExpr2 + " ) )\"" ); 
+         ((CompoundBooleanExpression)bexpr).getSecond().setStartHighlighting( 
+					position + 10 );
+         ((CompoundBooleanExpression)bexpr).getSecond().setStopHighlighting( 
+					position + 10 + boolExpr2.length() );
+
+       }
+       else
+       {
+         php.write( "while ( " + boolExpr + " ) {\"");
+
+         // character position for beginning/end of boolean expr
+         bexpr.setStartHighlighting( position + 8);
+         bexpr.setStopHighlighting( position + 8 + boolExpr.length() );
+
+       }
+
+       lineNumber++;
+       indent++;  
+   }
+
+   body = block()
+
+   {
+        
+	if (body==null)	
+           throw new MemoryManagerException( 
+                  "\nThe body of a WHILE loop cannot be empty.");
+
+        for( int i=0; i<body.length; i++)
+	  if (body[i] != null) 
+            ((OpWhile)op).addOperation( body[i] );
+
+
+        php.write( ",\n" );
+
+        indent--;  
+        f = new Formatter();
+        php.write(
+	    "\"" + f.format("%2d",lineNumber).toString() );
+        for(int i=0; i<indent; i++)
+             php.write( "  " );
+        php.write( "}\"");
+        lineNumber++;
+
+
+
+        return op;
+   }
+}
+
+Operation forLoop() :
+{ Operation op;
+}
+{
+   op = forLoopPointer()  // may decide to add integer loop here
+
+   { return op; }
+}
+
+// for loop in which the loop variable is a pointer
+Operation forLoopPointer() :
+{
+ Operation op, init=null, inc=null;
+ Operation body[];
+ BooleanExpression bexpr;
+ int position, saveStart=-1, saveStop=-1, saveStart2=-1, saveStop2=-1;
+ int forLineNumber;
+}
+{
+   <FOR> <LPAREN> 
+
+   {
+     if (lineNumber>1)
+        php.write( ",\n" );
+
+     f = new Formatter();
+     php.write(  "\"" + f.format("%2d",lineNumber).toString() );
+     position = 2;
+     for(int i=0; i<indent; i++)
+     {
+         php.write( "  " );
+         position += 2;
+     }
+     php.write( "for ( " );
+     forLineNumber = lineNumber;
+     position += 6;
+    }
+
+    [ init=pointerAssignmentInForLoop() ] <SEMICOLON> 
+
+    {
+      if (init!=null)
+      {
+         ( (OpAssign) init).setStartHighlighting( position );
+         position += ((OpAssign)init).getSource().length();
+         ( (OpAssign) init).setStopHighlighting( position );
+         php.write( " ; " );
+         position += 3;
+      }
+      else
+      {
+         php.write( "/* empty */ ; " );
+         position += 14;
+      }
+    }
+
+    bexpr=booleanExpression() <SEMICOLON>
+
+    {
+       if (bexpr instanceof CompoundBooleanExpression)
+       {
+         php.write("\",\n");
+	 lineNumber++;
+	 
+         f = new Formatter();
+         php.write("\"" + f.format("%2d",lineNumber).toString() );
+         position = 2;
+         for(int i=0; i<indent; i++)
+         {
+           php.write( "  " );
+           position += 2;
+         }
+         php.write( "      " ); // to account for "for ( "
+         position += 6;
+
+         String boolExpr = bexpr.toString(dereferenceOp, nullString, 
+					  infoString); 
+         php.write( "( " + boolExpr + " ) ");
+	 php.write( ((CompoundBooleanExpression)bexpr).getConnector() + 
+	            "\",\n");
+
+         bexpr.setStartHighlighting( position+ 2 );
+         bexpr.setStopHighlighting( position+ 2 + boolExpr.length() );
+
+	 lineNumber++;
+
+	 f = new Formatter();
+         php.write("\"" + f.format("%2d",lineNumber).toString() );
+         position = 2;
+         for(int i=0; i<indent; i++)
+         {
+           php.write( "  " );
+           position += 2;
+         }
+         php.write( "      " ); // to account for "for ( "
+         position += 6;
+         String boolExpr2 = 
+             ((CompoundBooleanExpression)bexpr).getSecond().toString(
+                                     dereferenceOp, nullString, infoString); 
+         php.write("( " + boolExpr2 + " ) ;\",\n" ); 
+	 lineNumber++;
+
+         ((CompoundBooleanExpression)bexpr).getSecond().setStartHighlighting( 
+					position+ 2 );
+         ((CompoundBooleanExpression)bexpr).getSecond().setStopHighlighting( 
+				      	position+ 2 + boolExpr2.length() );
+
+	// to prepare for the increment section
+	 
+         f = new Formatter();
+         php.write("\"" + f.format("%2d",lineNumber).toString() );
+         position = 2;
+         for(int i=0; i<indent; i++)
+         {
+           php.write( "  " );
+           position += 2;
+         }
+         php.write( "      " ); // to account for "for ( "
+         position += 6;
+
+       }
+       else
+       { // simple boolean expression
+         
+         bexpr.setStartHighlighting( position );
+
+         String b = bexpr.toString( dereferenceOp, nullString, infoString);
+         php.write( b );
+         position += b.length();
+         bexpr.setStopHighlighting( position );
+         php.write( " ; " );
+         position += 3;
+       }
+    }
+
+    [ inc=pointerAssignmentInForLoop() ]
+
+
+    <RPAREN>
+
+    {
+       op = new OpForPointer( (OpAssign) init, bexpr, (OpAssign)inc );
+       op.setLineNumber( forLineNumber );
+
+       if ( inc != null )
+       {
+	 ( (OpAssign) inc).setLineNumber( lineNumber );
+         ( (OpAssign) inc).setStartHighlighting( position );
+         ( (OpAssign) inc).setStopHighlighting( 
+                  position + ((OpAssign)inc).getSource().length() );
+       }
+       else
+          php.write( "/* empty */" );
+
+       php.write( " )\",\n");
+
+       lineNumber++;
+
+       f = new Formatter();
+       php.write(
+	    "\"" + f.format("%2d",lineNumber).toString() );
+       for(int i=0; i<indent; i++)
+           php.write( "  " );
+       php.write( "{\"");
+
+       lineNumber++;
+       indent++;  
+   }
+
+   body = block()
+
+   {    
+      if (body != null)
+      {
+        for( int i=0; i<body.length; i++)
+	  if (body[i] != null) 
+            ((OpForPointer)op).addOperation( body[i] );
+      }
+        php.write( ",\n" );
+
+        indent--;  
+        f = new Formatter();
+        php.write(
+	    "\"" + f.format("%2d",lineNumber).toString() );
+        for(int i=0; i<indent; i++)
+             php.write( "  " );
+        php.write( "}\"");
+        lineNumber++;
+
+
+
+        return op;
+   }
+}
+
+
+
+Operation ifStatement() :
+{Operation op;
+ Operation thenB[] = null;
+ Operation elseB[] = null;
+ BooleanExpression bexpr;
+}
+{
+   <IF> <LPAREN>  
+
+   {
+     if (lineNumber>1)
+        php.write( ",\n" );
+    }
+
+
+  bexpr =  booleanExpression() 
+   ")"
+
+   {  
+       op = new OpIf( bexpr );
+       op.setLineNumber( lineNumber );
+
+       
+       f = new Formatter();
+       php.write( "\"" + f.format("%2d",lineNumber).toString() );
+       int position = 2;
+       for(int i=0; i<indent; i++)
+       {
+           php.write( "  " );
+           position += 2;
+       }
+       String boolExpr = bexpr.toString(dereferenceOp, nullString, infoString); 
+       if (bexpr instanceof CompoundBooleanExpression)
+       {
+         php.write( "if ( ( " + boolExpr + " ) ");
+	 php.write( ((CompoundBooleanExpression)bexpr).getConnector() + 
+	            "\",\n");
+         bexpr.setStartHighlighting( position + 7);
+         bexpr.setStopHighlighting( position + 7 + boolExpr.length() );
+	 lineNumber++;
+
+	 f = new Formatter();
+         php.write("\"" + f.format("%2d",lineNumber).toString() );
+         position = 2;
+         for(int i=0; i<indent; i++)
+         {
+           php.write( "  " );
+           position += 2;
+         }
+         String boolExpr2 = 
+             ((CompoundBooleanExpression)bexpr).getSecond().toString(
+                                     dereferenceOp, nullString, infoString); 
+         php.write("     ( " + boolExpr2 + " ) )\"" ); 
+         ((CompoundBooleanExpression)bexpr).getSecond().setStartHighlighting( 
+	 				position + 7 );
+         ((CompoundBooleanExpression)bexpr).getSecond().setStopHighlighting( 
+					position + 7 + boolExpr2.length() );
+
+       }
+       else
+       {
+         php.write( "if ( " + boolExpr + " ) {\"");
+
+         // character position for beginning/end of boolean expr
+         bexpr.setStartHighlighting( position + 5);
+         bexpr.setStopHighlighting( position + 5 + boolExpr.length() );
+
+       }
+
+       lineNumber++;
+       indent++;  
+   }
+
+   thenB = block()
+
+   {
+        ((OpIf)op).setThenBlock( thenB );
+
+        php.write( ",\n" );
+
+        indent--;
+  
+        f = new Formatter();
+        php.write(
+	    "\"" + f.format("%2d",lineNumber).toString() );
+        for(int i=0; i<indent; i++)
+             php.write( "  " );
+        php.write( "}");
+   }
+
+
+
+   [ <ELSE> 
+
+       {
+          php.write( " else {\"" );
+
+          lineNumber++;
+          indent++;
+       }  
+
+     elseB = block() ]
+
+   {
+
+        if (elseB != null)
+        {
+           ((OpIf)op).setElseBlock( elseB );
+
+           indent--;
+
+           f = new Formatter();
+           php.write(
+              ",\n" +
+	      "\"" + f.format("%2d",lineNumber).toString() );
+           for(int i=0; i<indent; i++)
+               php.write( "  " );
+           php.write( "}\"");
+
+        }
+        else
+        {
+           php.write( "\"");
+        }
+         lineNumber++;
+        return op;
+
+    }
+}
+
+Operation[] block() :
+{ Operation ops[] = new Operation[100];
+  Operation op = null;
+  int count = 0;
+}
+{
+     <LBRACE> 
+         (  ( LOOKAHEAD(3) op = pointerOperation() | LOOKAHEAD(3) op = controlOperation() |
+              LOOKAHEAD(3) op = layoutOperation()
+             ) 
+
+             {
+                if (count==100)
+                   throw new MemoryManagerException( 
+                      "While loop body contains 100+ operations");
+                ops[ count++ ] = op;
+
+             }
+          )*
+      <RBRACE>
+   {
+       if (count==0)
+	  return null;
+       else
+          return ops;
+   }
+}
+
+PointerExpression dataExpression()  :
+{ PointerExpression p;
+  Token i;
+}
+{
+    p=pointerExpression() <DEREFERENCEOP> i=<INFO>
+
+    { 
+      if (infoString.equals( ""))  // first reference to 'info' field
+         infoString = i.image;
+      else
+         if (! i.image.equals( infoString ))
+             throw new MemoryManagerException(
+               "Wrong name for Node's data field: previously referred to as '"
+	       + infoString + "'" );
+      return p; 
+    }
+}
+
+BooleanExpression booleanExpression() :
+{  Token c=null;
+   BooleanExpression e1=null, e2=null;
+   CompoundBooleanExpression e=null;
+}
+{
+    ( e1=simpleBooleanExpression() 
+     
+      { return e1; }
+
+     | 
+      <LPAREN> e1=simpleBooleanExpression() <RPAREN>
+               c=<LOGICALCONNECTOR> 
+      <LPAREN> e2=simpleBooleanExpression() <RPAREN>
+    )
+
+    {
+       e = new CompoundBooleanExpression( e1, e2, c.image.equals("&&") );
+       return e; 
+    }
+}
+
+BooleanExpression simpleBooleanExpression() :
+{ PointerExpression left=null, right=null;
+  Token c, charL=null, charR=null;
+}
+{
+  (
+    LOOKAHEAD(3)
+    (left = pointerExpression() | <NULL>)
+    c = <EQUALCOMPARATOR> 
+    (right = pointerExpression() | <NULL>)
+
+    {
+
+       return new BooleanExpression( 
+                          "pointer",
+                          ( left == null ? new PointerExpression() : left ),
+                          ( right == null ? new PointerExpression() : right ),
+                          c.image    
+                                   );
+    }
+
+  |
+
+    (left = dataExpression() | charL=<CHAR>)
+    (c = <EQUALCOMPARATOR> | c=<ORDERCOMPARATOR>)
+    (right = dataExpression() | charR=<CHAR>)
+   
+    {
+       return new BooleanExpression( 
+                          "char",
+                          ( left == null ? 
+                            new DataExpression( charL.image.substring(1,2) ) :
+	  		    new DataExpression( left ) ),
+                          ( right == null ? 
+                            new DataExpression( charR.image.substring(1,2) ) :
+	  		    new DataExpression( right ) ),
+                          c.image    
+                                   );
+    }
+   )
+
+
+  
+}
+
+Operation layoutOperation() :
+{ Token h, d;
+  String head; }
+{
+   h=<IDENTIFIER> d=<DEREFERENCEOP> <REDRAW> <SEMICOLON>
+
+  {
+
+      if (d.image.equals("->") && (language.equals("java")))
+       	   throw new ParseException( 
+	          "operator '->' is not allowed in Java syntax" );
+      if (d.image.equals(".") && (language.equals("C++")))
+       	   throw new ParseException( 
+                  "operator '.' is not allowed in C++ syntax" );
+
+
+
+     head = h.image;
+ 
+     if (lineNumber > 1)
+          php.write( ",\n" );   
+
+     Operation op = new OpLayout( "redraw", head );
+     op.setLineNumber( lineNumber );
+
+
+     f = new Formatter();
+     php.write(
+	    "\"" + f.format("%2d",lineNumber).toString() );
+     for(int i=0; i<indent; i++)
+          php.write( "  " );
+     php.write( head + dereferenceOp +
+                "redrawListHorizontally();" + "\"");
+
+     lineNumber++;
+
+     return op;
+  }
+}
+
+
+LayoutDirective layoutDirective() :
+{ Token r, ref=null, pos=ref, c;
+}
+{
+     <COMMENT> r=<INT> c=<INT>
+     [ LOOKAHEAD(6) ref = <IDENTIFIER> [ LOOKAHEAD(6) pos = <IDENTIFIER> ]]
+     ( <ENDOFCOMMENT> | <EOF> )
+   {
+
+     return new LayoutDirective( 
+           "index",
+           Integer.parseInt( r.image ),
+           Integer.parseInt( c.image ),
+           ( ref==null ? "" : ref.image ),
+           ( pos==null ? "" : pos.image ) );
+   }
+}
