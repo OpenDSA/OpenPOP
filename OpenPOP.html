@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+  <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+  <META HTTP-EQUIV="Expires" CONTENT="0">
+  <title>Visualize your code Editor</title>
+  <style>
+   .jsavcanvas { height: 500px; }
+  </style>
+  <link rel="stylesheet" href="http://algoviz.org/OpenDSA/JSAV/css/JSAV.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+  <link rel="stylesheet" href="http://algoviz.org/OpenDSA/JSAV/css/JSAV.css" type="text/css" />
+  <link rel="stylesheet" href="http://algoviz.org/OpenDSA/lib/odsaAV-min.css" type="text/css" />
+</head>
+
+<body>
+  <div id="studentCode" style="text-align:center;" >
+    <h1>Java Editor</h1>
+
+    <h3>Write a Java program that, given a linked list of characters,
+    removes all Nodes with info 'A' from the list. All remaining
+    elements must appear in their original order: </h3><br />
+
+    <textarea cols="130" rows="20" id="studentCodeTextArea" ></textarea>
+    <br />
+    <button onclick="visualize();">Visualize my Code</button>
+    <br />
+  </div>
+
+  <form id="ssperform">
+    <p></p>
+  </form>
+  <div id="container">
+    <table class="headerTable">
+      <tr>
+        <td class="headerLeft">
+        </td>
+        <td class="headerCenter">
+          <h1>Your Code Visualization: </h1>
+        </td>
+        <td class="headerRight">
+          <a id="settings" class="jsavsettings" href="#">Settings</a>
+        </td>   
+      </tr>
+    </table>
+    <span class="jsavcounter"></span>
+    <div class="jsavcontrols"></div>
+    <p class="jsavoutput jsavline" readonly="readonly"></p>
+    <div class="jsavcanvas"></div>
+  </div>
+
+  <script src="http://algoviz.org/OpenDSA/lib/jquery.min.js"></script>
+  <script src="http://algoviz.org/OpenDSA/lib/jquery-ui.min.js"></script>
+  <script src="http://algoviz.org/OpenDSA/JSAV/lib/jquery.transform.light.js"></script>
+  <script src="http://algoviz.org/OpenDSA/JSAV/lib/raphael.js"></script>
+  <script src="http://algoviz.org/OpenDSA/JSAV/build/JSAV-min.js"></script>
+  <script src="OpenPOP.js"></script>
+
+</body>
+</html>
