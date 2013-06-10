@@ -1,0 +1,46 @@
+/* phrase structure */
+<input> ::= <optNewListLine> <operations> EOF
+<optNewListLine> ::=   CREATEPREFIX ( <charList> , STRING ) ; | /* empty */
+<charList> ::= CHAR , <charList> | CHAR
+<operations> ::= <operations> <operation> | /* empty */
+<operation> ::= <controlOp> | <pointerOp> ;
+<controlOp> ::= <ifStatement> | <whileLoop> | <forLoop> | <breakStatement>
+<ifStatement> ::= if ( <booleanExpression> ) <block> <optElseBlock>
+<optElseBlock> ::= else <block> | /* empty */
+<block> ::= { <operations> }
+<whileLoop> ::= while ( <booleanExpression> ) <block>
+<forLoop> ::= for ( <optPointerAssignment> ;   /* this one is optional */
+                    <booleanExpression> ;      /* this one is NOT optional */
+                    <optPointerAssignment> )   /* this one is optional */
+              <block>
+<optPointerAssignment> ::= <pointerAssignment> | /* empty */
+<breakStatement> ::= break ;
+<pointerOp> ::= <pointerDeclaration> | <pointerAssignment> | <dataAssignment>
+<pointerDeclaration> ::= node ID <pointerDeclarationRHS>
+<pointerDeclarationRHS> ::= = <pointerOrAllocOrNullExpression> | /* empty */
+<pointerExpressionOrNull> ::= null | <pointerExpression>
+<pointerExpression> ::= ID <optChain>
+<optChain> ::= CHAIN | /* empty */  
+<pointerAssignment>::= <pointerExpression> = <pointerOrAllocOrNullExpression>
+<pointerOrAllocOrNullExpression> ::= 
+        null | <pointerExpression> | <allocationExpression>
+<allocationExpression> ::= new node ( <dataExpressionOrChar> , null )
+<dataAssignment> ::= <dataExpression> = <dataExpressionOrChar>
+<dataExpression> ::= <pointerExpression> . info
+<dataExpressionOrChar> ::= <dataExpression> | CHAR
+<booleanExpression> ::= 
+   ( <simpleBooleanExpression> ) <logicalConnector> ( simpleBooleanExpression ) 
+   | <simpleBooleanExpression>
+<simpleBooleanExpression> ::= 
+     <pointerExpressionOrNull> <equalComparator> <pointerExpressionOrNull>
+   | <dataExpressionOrChar> <comparator> <dataExpressionOrChar>
+<comparator> ::= <orderComparator> | <equalComparator>
+<orderComparator> ::= < | <= | > | >=
+<equalComparator> ::= == | !=
+<logicalConnector> ::= && | ||
+
+/* (approximated) lexical structure */
+STRING ::= "<symbol>*"
+CHAR ::= '<character>'
+ID ::= <symbol>+
+CHAIN ::= (.next)+

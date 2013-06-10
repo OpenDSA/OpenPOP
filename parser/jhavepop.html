@@ -1,0 +1,57 @@
+<html>
+<head>
+  <script src="jhavepop_parser.js"></script>
+  <script src="jhavepop_samples.js"></script>
+  <script src="jhavepop_main.js"></script>
+  <style>
+    textarea {
+    font-family: Courier;
+    } 
+    #jhavepopinputlines {
+    font-family: Courier;
+    text-align: right;
+    } 
+  </style>
+</head>
+<body>
+
+<center>
+
+<h1>Test page for the OpenDSA version of JHAVEPOP</h1>
+<div style="width:50%; background-color:#CCF">
+<h3>Step #1</h3>
+</div>
+<strong>Enter your own JHAVEPOP input in the box below or pick a sample input:</strong><br />
+<br />
+<input type="button" id="sample1button" value="Sample 1"
+       onclick="document.getElementById('jhavepopinput').value = sample1;document.getElementById('jhavepopoutput').value = ''">
+<input type="button" id="sample2button" value="Sample 2"
+       onclick="document.getElementById('jhavepopinput').value = sample2;document.getElementById('jhavepopoutput').value = ''">
+<input type="button" id="sample3button" value="Sample 3"
+       onclick="document.getElementById('jhavepopinput').value = sample3;document.getElementById('jhavepopoutput').value = '';">
+<br /><br />
+<input type="radio" id="javabutton" name="language" value="Java" checked> Java
+<input type="radio" id="cppbutton" name="language" value="C++" 
+       onclick="alert('Sorry: C++ input is not implemented yet.'); document.getElementById('javabutton').checked = true;"> C++<br/>
+<textarea id="jhavepopinputlines" rows="20" cols="1" readonly>
+</textarea>
+<textarea id="jhavepopinput" rows="20" cols="80">
+</textarea>
+<br/>
+
+<div style="width:50%; background-color:#CCF">
+<h3>Step #2</h3>
+</div>
+<input type="button" id="parsebutton" value="Parse the input listed above"
+       onclick="go();">
+<br /><br />
+<strong>Format of parser output:</strong>
+<input type="radio" id="sourcebutton" name="output" value="source" checked>source code
+<input type="radio" id="astbutton" name="output" value="AST ">abstract syntax tree <br/>
+<br />
+<textarea id="jhavepopoutput" rows="20" cols="80" readonly>
+</textarea>
+</center>
+
+</body>
+</html>
