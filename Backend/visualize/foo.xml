@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<input_panel><textarea><label_line>Enter your Java or C++ source code below:</label_line><default_field>Remove all A's from the list
+// gridsize 1 6 java 0.3
+Node head = Utils.createList( 'A','A','B','A','C','A',"tail" );
+Node p = null; // 0 2
+</default_field><value_entered>
+// gridsize 1 6 java 0.3
+Node head = Utils.createList( 'A','A','B','A','C','A',"tail" );
+Node p = null; // 0 2
+while ((head != null) &amp;&amp; (head.info =='A')) {
+ head = head.next;
+}
+if (head == null)
+{
+ tail = null;
+}
+else
+{
+ for( p = head; p.next != null; )
+ {
+ if (p.next.info == 'A') {
+ p.next = p.next.next;
+ }
+ else {
+ p = p.next;
+ }
+ }
+}
+tail = p;
+</value_entered></textarea></input_panel>

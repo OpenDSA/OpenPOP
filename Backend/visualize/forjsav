@@ -1,0 +1,356 @@
+slide
+pointer head
+pred
+points to 0
+A
+nred
+A
+nred
+B
+nred
+A
+nred
+C
+nred
+pointer tail
+pred
+points to 5
+A
+nred
+slide
+pointer head
+points to 0
+A
+A
+pointer p
+pred
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+pred
+points to 0
+A
+A
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 0
+A
+nred
+A
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+pred
+points to 1
+A
+remove
+A
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+pred
+points to 1
+A
+remove
+A
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 1
+A
+remove
+A
+nred
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+pred
+points to 2
+A
+remove
+A
+remove
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+pred
+points to 2
+A
+remove
+A
+remove
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+B
+nred
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+pred
+points to 2
+A
+remove
+A
+remove
+pointer p
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+pred
+points to 2
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 2
+B
+A
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 2
+B
+A
+nred
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 2
+B
+A
+remove
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 2
+B
+A
+remove
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 2
+B
+A
+remove
+C
+nred
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+pred
+points to 4
+B
+A
+remove
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 4
+B
+A
+remove
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 4
+B
+A
+remove
+C
+pointer tail
+points to 5
+A
+nred
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 4
+B
+A
+remove
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 4
+B
+A
+remove
+C
+pointer tail
+points to 5
+A
+slide
+pointer head
+points to 2
+A
+remove
+A
+remove
+pointer p
+points to 4
+B
+A
+remove
+C
+pointer tail
+pred
+points to 4
+A
+remove

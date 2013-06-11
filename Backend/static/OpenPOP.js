@@ -11,7 +11,7 @@
 
     /* Send the data using post and put the results in a div */
     jQuery.ajax({
-      url: "http://opendsa.cc.vt.edu/openpop/backend/api/v1/studentcode/startvisualizing/",
+      url: "http://opendsa.cc.vt.edu/openpop/api/v1/studentcode/startvisualizing/",
       type: "post",
       data: data,
       contentType: "application/json; charset=utf-8",

@@ -1,0 +1,1795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE show PUBLIC "-//JHAVE//DTD GAIGS SHO//EN" "gaigs_sho.dtd">
+
+<show>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=1</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="0" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="1" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <data value="B">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#FF0000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=2</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="0" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="1" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#FF0000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=3;amp;start=14;amp;end=26</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="0" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="1" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=4;amp;start=14;amp;end=30</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="0" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="1" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=5</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="1" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=3;amp;start=14;amp;end=26</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="1" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=4;amp;start=14;amp;end=30</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="1" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=5</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=3;amp;start=14;amp;end=26</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=4;amp;start=14;amp;end=30</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=7;amp;start=9;amp;end=21</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=10;amp;start=12;amp;end=20</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#FF0000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=10;amp;start=23;amp;end=37</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=12;amp;start=13;amp;end=31</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="3" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=13</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=10;amp;start=23;amp;end=37</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=12;amp;start=13;amp;end=31</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=15</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#FF0000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=10;amp;start=23;amp;end=37</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=12;amp;start=13;amp;end=31</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#FF0000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=13</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=10;amp;start=23;amp;end=37</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#FF0000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="5" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+<snap>
+<title></title>
+<doc_url>JHAVEPOP.htm</doc_url>
+<pseudocode_url>mm.php?file=foobar.php;line=19</pseudocode_url>
+  <memorylayout rows="1" cols="6" horiz_spacing="0.3" debug_flag="off">
+    <bounds x1="-0.05" y1="0.3757936507936508" x2="1.05" y2="1.4757936507936509" fontsize="0.1"/>
+    <group row="0" col="0">
+      <left_ref>
+        <ref_label>head</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="2" line_color="#000000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="1" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="1">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="2" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="2">
+      <left_ref>
+        <ref_label>p</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </left_ref>
+      <data value="B">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="3">
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow row="0" col="4" line_color="#BBBBBB"/>
+      </next>
+    </group>
+    <group row="0" col="4">
+      <data value="C">
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+      </data>
+      <next>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow type="null" line_color="#000000"/>
+      </next>
+    </group>
+    <group row="0" col="5">
+      <left_ref>
+        <ref_label>tail</ref_label>
+        <box line_color="#000000" fill_color="#FFFFFF"/>
+        <arrow row="0" col="4" line_color="#FF0000"/>
+      </left_ref>
+      <data value="A">
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+      </data>
+      <next>
+        <box line_color="#BBBBBB" fill_color="#F5F5F5"/>
+        <arrow type="null" line_color="#BBBBBB"/>
+      </next>
+    </group>
+  </memorylayout>
+</snap>
+
+</show>
