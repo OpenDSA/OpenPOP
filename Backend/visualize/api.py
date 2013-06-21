@@ -23,6 +23,130 @@ from StudentCode import visualize_code
 from visualize.models import Studentcode
 
 
+from ExerciseAssess import assess_code
+from visualize.models import ExerciseAssess
+
+
+
+from ExercisewithJavaAssess import withjavaassess
+from visualize.models import ExercisewithJavaAssess
+
+from ExerciseBT import btassess
+from visualize.models import ExerciseBT
+
+
+##########################################################################################################################
+class ExerciseBTResource(ModelResource):
+    def determine_format(self, request):
+        return "application/json"
+    def is_authenticated(self, request, **kwargs):
+        return True
+    def is_authorized(self, request, **kwargs):
+        return True
+    class Meta:
+        queryset      = ExerciseBT.objects.all()
+        allowed_methods = ['get','post']
+        resource_name = 'exercisebt'
+        excludes      = []
+        #object_class = ExerciseAssess
+        serializer = Serializer(formats=['json'])
+        #authentication  = Authentication()
+        #authorization   = Authorization()
+	
+    def override_urls(self):
+        return [
+	   url(r"^(?P<resource_name>%s)/btassessing%s$" %(self._meta.resource_name, trailing_slash()),self.wrap_view('btassessing'), name="api_btassess"),
+	]
+    
+    def btassessing(self, request, **kwargs):
+        self.method_check(request, allowed=['post'])
+        if request.POST.get('code'):
+            print "api is called"
+            returnedString= btassess(request.POST.get('code'))
+            return self.create_response(request, {'data': returnedString})
+        else :
+             print "This is not an ajax call"
+             return self.create_response(request, {'data': "Empty"})
+        return  self.create_response(request, {}, HttpUnauthorized)
+
+
+##########################################################################################################################
+class ExercisewithJavaAssessResource(ModelResource):
+    def determine_format(self, request):
+        return "application/json"
+    def is_authenticated(self, request, **kwargs):
+        return True
+    def is_authorized(self, request, **kwargs):
+        return True
+    class Meta:
+        queryset      = ExercisewithJavaAssess.objects.all()
+        allowed_methods = ['get','post']
+        resource_name = 'exercisewithjavaassess'
+        excludes      = []
+        #object_class = ExerciseAssess
+        serializer = Serializer(formats=['json'])
+        #authentication  = Authentication()
+        #authorization   = Authorization()
+	
+    def override_urls(self):
+        return [
+	   url(r"^(?P<resource_name>%s)/javaassessing%s$" %(self._meta.resource_name, trailing_slash()),self.wrap_view('javaassessing'), name="api_withjavaassess"),
+	]
+    
+    def javaassessing(self, request, **kwargs):
+        self.method_check(request, allowed=['post'])
+        if request.POST.get('code'):
+            print "api is called"
+            returnedString= withjavaassess(request.POST.get('code'))
+            return self.create_response(request, {'data': returnedString})
+        else :
+             print "This is not an ajax call"
+             return self.create_response(request, {'data': "Empty"})
+        return  self.create_response(request, {}, HttpUnauthorized)
+
+
+
+##############################################################################################################################################
+
+##############################################################################################################################################
+
+
+class ExerciseAssessResource(ModelResource):
+    def determine_format(self, request):
+        return "application/json"
+    def is_authenticated(self, request, **kwargs):
+        return True
+    def is_authorized(self, request, **kwargs):
+        return True
+    class Meta:
+        queryset      = ExerciseAssess.objects.all()
+        allowed_methods = ['get','post']
+        resource_name = 'exerciseassess'
+        excludes      = []
+        #object_class = ExerciseAssess
+        serializer = Serializer(formats=['json'])
+        #authentication  = Authentication()
+        #authorization   = Authorization()
+	
+    def override_urls(self):
+        return [
+	   url(r"^(?P<resource_name>%s)/startassessing%s$" %(self._meta.resource_name, trailing_slash()),self.wrap_view('startassessing'), name="api_startassess"),
+	]
+    
+    def startassessing(self, request, **kwargs):
+        self.method_check(request, allowed=['post'])
+        if request.POST.get('code'):
+            print "api is called"
+            returnedString= assess_code(request.POST.get('code'))
+            return self.create_response(request, {'data': returnedString})
+        else :
+             print "This is not an ajax call"
+             return self.create_response(request, {'data': "Empty"})
+        return  self.create_response(request, {}, HttpUnauthorized)
+
+
+
+##############################################################################################################################################
 class StudentcodeResource(ModelResource):
     def determine_format(self, request):
         return "application/json"
@@ -52,7 +176,7 @@ class StudentcodeResource(ModelResource):
             returnedString= visualize_code(request.POST.get('code'))
             return self.create_response(request, {'data': returnedString})
         else :
-             print "This is not un ajax call"
+             print "This is not an ajax call"
              return self.create_response(request, {'data': "Empty"})
         return  self.create_response(request, {}, HttpUnauthorized)
 
