@@ -1,0 +1,65 @@
+<html>
+<head>
+  <script src="parser/jhavepop_parser.js"></script>
+  <script src="parser/jhavepop_samples.js"></script>
+  <script src="parser/jhavepop_main.js"></script>
+   <script src="jhavepopEx5.js"></script>
+  <style>
+    textarea {
+    font-family: Courier;
+    } 
+    #jhavepopinputlines {
+    font-family: Courier;
+    text-align: right;
+    } 
+  </style>
+</head>
+<body>
+
+<center>
+
+<h3>JHAVEPOP Exercise 5</h3>
+<div style="width:50%; background-color:#CCF">
+</div>
+<strong>Use a single assignment statement to set the info of the Node referred to by p equal to the info of the Node referred to by r (you must access this info through r; do not refer to the character '3' directly).
+Ready to solve it?</strong><br />
+<br />
+<table border="1">
+<tr>
+<td align = 'center'><b>Initial Configuration</b></td>
+<td align = 'center'><b>Final Output</b></td>
+</tr>
+<tr>
+<td><img src='ex5ip.jpg' align = 'middle'></td>
+<td><img src='ex5op.jpg' align = 'middle'></td>
+</tr>
+</table> 
+
+
+
+<br>
+<br/>
+<input type="radio" id="javabutton" name="language" value="Java" checked> Java
+<input type="radio" id="cppbutton" name="language" value="C++" 
+       onclick="alert('Sorry: C++ input is not implemented yet.'); document.getElementById('javabutton').checked = true;"> C++<br/>
+<textarea id="jhavepopinputlines" rows="10" cols="1" readonly>
+
+</textarea>
+<textarea id="jhavepopinput" rows="10" cols="80">
+Node p = Utils.createList('1' , '2', '3' , "r");
+</textarea>
+<br/>
+
+<div style="width:50%; background-color:#CCF">
+</div>
+<input type="button" id="parsebutton" value="Assess my answer"
+       onclick="processAST();">
+<br /><br />
+<strong>Feed Back:</strong>
+<br />
+<textarea id="jhavepopoutput" rows="10" cols="80" readonly>
+</textarea>
+</center>
+
+</body>
+</html>
