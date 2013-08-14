@@ -1,5 +1,7 @@
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -253,17 +255,27 @@ class LList implements List {
 public class studentlisttest {
 
 public static void main(String [ ] args) {
+String Mstring = null;
+try{
+BufferedReader reader = new BufferedReader(new FileReader("generatedlist"));
+Mstring = reader.readLine();
+
+}
+catch (IOException e) {
+	e.printStackTrace();
+}
+
 boolean SUCCESS = false;
-  LList Lmodel = new LList();
-  LList Lstudent = new LList();
-  Lmodel.moveToStart();
-  Lmodel.insert(5);
-  Lmodel.insert(7);
-  Lmodel.next();
-  Lmodel.next();
-  Lmodel.insert(3);
-  Lmodel.insert(17);
-  String Mstring = toString(Lmodel);
+  //LList Lmodel = new LList();
+    LList Lstudent = new LList();
+  //Lmodel.moveToStart();
+  //Lmodel.insert(5);
+  //Lmodel.insert(7);
+  //Lmodel.next();
+  //Lmodel.next();
+  //Lmodel.insert(3);
+  //Lmodel.insert(17);
+  //String Mstring = toString(Lmodel);
   exercise1(Lstudent);
   String Mstudent = toString(Lstudent);
   if (Mstring.equals( Mstudent)) SUCCESS = true;
@@ -319,3 +331,14 @@ public static String toString(List L) {
 }
 
  
+public static void exercise1(List L) { 
+ // Your code goes between these lines
+
+
+
+
+df
+
+ // Your code goes between these lines
+ } 
+}
