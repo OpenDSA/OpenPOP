@@ -17,3 +17,7 @@ class ExercisewithJavaAssess(models.Model):
 class ExerciseBT(models.Model):
     id = models.BigIntegerField(default = 0)
     code = models.TextField()
+
+class LinkedListKAEx(models.Model):
+    id = models.BigIntegerField(default = 0)
+    code = models.TextField()
