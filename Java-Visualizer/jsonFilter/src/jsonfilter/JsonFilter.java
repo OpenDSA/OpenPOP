@@ -1,8 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Kyle Reinholt 
+ * 
+ * @purpose This program will read in a json text file, filter out the execution points that are between the function startTraceNow() and endTraceNow(), 
+ *          and output the filtered executionPoints to a javaScript page that will be read in by the html file for display. 
  */
+
 package jsonfilter;
  
 import java.io.*;
@@ -14,18 +16,7 @@ import java.util.ArrayList;
 import java.lang.String;
 import java.nio.ByteBuffer;
 
-
-/**
- *
- * @author Kyle Reinholt 
- * 
- * @purpose This program will read in a json text file, filter out the execution points that are between the function startTraceNow() and endTraceNow(), 
- *          and output the filtered to execution points to be sent to the executionVisualizer in the javaScript page for Java Visualizer. 
- * 
- *
- */
-
-class Event {
+class Event { //This class makes it easier to analyze an executionPoint.  
     
     private int lineNumber; 
     private String trace; 
@@ -56,10 +47,11 @@ class Event {
         return lineNumber; 
     }
     
-    
 }
 
-class EventManager { 
+class EventManager { //This class provides a way to weed out executionPoints that aren't intended to be visualized. 
+                     // the ArrayList listOfEvents contains all of the executionPoints between startTraceNow(); and endTraceNow();
+                     // the ArrayList filteredEvents 'should' only contain executionPoints that are intended for visualization. 
     
     private ArrayList<Event> listOfEvents;
     private ArrayList<Event> filteredEvents; 
@@ -80,7 +72,7 @@ class EventManager {
         return filteredEvents.get(index);  
     }
     
-    public void addEvent(Event newEvent) {
+    public void addEvent(Event newEvent) { 
         
         listOfEvents.add(newEvent); 
     }
@@ -117,10 +109,13 @@ class EventManager {
 
                filteredEvents.get(n).setEvent(tempString);
            }
+           
         }
+        
     }
     
-    public void printAllLines(){
+/* *** Start of Test Functions *** /*
+    public void printAllLines(){a
         
         for(int i = 0; i < listOfEvents.size(); i++) {
             
@@ -131,7 +126,7 @@ class EventManager {
         }
     }
     
-    public void printFilteredEvents(){
+    public void printFilteredEvents(){ 
         
         for(int l = 0; l < filteredEvents.size(); l++) {
            
@@ -140,6 +135,7 @@ class EventManager {
             System.out.println();  
         }
     }
+/* *** End of Test Functions *** */     
     
     public void verifyEvents() { 
         
@@ -181,16 +177,11 @@ class EventManager {
 class CodeAnalyzer { 
     
     private String codeTrace; 
-    private ArrayList<String> codeList; 
-    
-    CodeAnalyzer() {
-        
-    }
+    private ArrayList<String> codeList;
     
     CodeAnalyzer(String jsonCode) {
         
         codeList = new ArrayList<>(); 
-        //System.out.println(jsonCode);
         setCodeTrace(jsonCode);  
     }
     
@@ -210,13 +201,13 @@ class CodeAnalyzer {
         
         String[] isolateMain = modify.split("main"); //retrieves everything after main function. We are only conserned with code that is being executed within main.  
         
-        String[] isolateStart = isolateMain[1].split("startTraceNow\\(\\)\\;"); //This will grab everything after startTrace4
+        String[] isolateStart = isolateMain[1].split("startTraceNow\\(\\)\\;"); //This will grab everything after startTrace
         
         String[] isolateEnd = isolateStart[1].split("endTraceNow\\(\\)\\;");
         
         String myCode = isolateEnd[0];
         
-        String newLine = myCode.replace("\\n", "newline"); 
+        String newLine = myCode.replace("\\n", "newline"); //This was the only way I could get it to split at each newline.   
         
         String myString = newLine.replaceFirst("newline", ""); 
         
@@ -228,24 +219,23 @@ class CodeAnalyzer {
             
             if(studentCode[o].isEmpty() == true){
                 
-                // don nothing
+                // do nothing
             }
             else if(studentCode[o].length() < 3) {
                 
-                System.out.println("newline detected.");
+                //System.out.println("newline detected.");
             }
             else{
                 
                 codeList.add(studentCode[o]);
                 codeList.get(o).trim(); 
-                System.out.println(studentCode[o]); 
+                
             }
              
         }
         
     }
     
-  
 }
 
 class TraceAnalyzer {
@@ -254,13 +244,8 @@ class TraceAnalyzer {
     private Stack<Character> symbolStack;
     private ArrayList<String> exePointList;  
     private int executionPoints; //integer counter of how many execution points there are
-    //private FileOutputStream out;
     private UniqueFileWriter jsonWriter;
     private EventManager eventManager; 
-    
-    TraceAnalyzer() {
-        
-    }
     
     TraceAnalyzer(String jsonTrace) {
         
@@ -281,9 +266,12 @@ class TraceAnalyzer {
         symbolStack = new Stack<>();
         
         for (int index = 0; index < copyTrace.length(); index++) {
+            
             char currentSymbol = copyTrace.charAt(index);
-            executionPoint = executionPoint + currentSymbol; 
-            switch (currentSymbol) {
+            
+            executionPoint = executionPoint + currentSymbol;  
+            
+            switch (currentSymbol) { //This switch statement isolates execution points by pairing up braces. 
             case '(':
             case '[':
             case '{': 
@@ -298,22 +286,23 @@ class TraceAnalyzer {
                     if ((currentSymbol == '}' && symbolStackTop != '{')
                             || (currentSymbol == ')' && symbolStackTop != '(')
                             || (currentSymbol == ']' && symbolStackTop != '[')) {
-                        System.out.println("Unmatched closing bracket while parsing " + currentSymbol + " at " + index+1);
+                        
                         return;
-                    }
-                } else {
-                    System.out.println("Extra closing bracket while parsing " + currentSymbol + " at character " + index+1);
-                    return;
+                        }
+                } 
+                else{
+                    
+                    return;                    
                 }
                 break;
             case ',': 
-                 if ( symbolStack.size() == 0)
-                 {
+                 if ( symbolStack.size() == 0){
+                     
                      executionPoint = executionPoint.substring(0, executionPoint.length()-1); //This removes the trailing comma at the end of each exePoint
+                     
                      if( executionPoint.contains("startTraceNow")){
                          
-                         startSwitch = true; 
-                         //verifyExePoint(startTrace,endTrace,executionPoint);
+                         startSwitch = true;  
                          executionPoint = "";
                      }
                      else if( executionPoint.contains("endTraceNow")){
@@ -321,9 +310,9 @@ class TraceAnalyzer {
                          endSwitch = true;
                          break; 
                      }
-                     else 
-                     {
-                         if(verifyExePoint(startSwitch,endSwitch,executionPoint)){
+                     else {
+                         
+                         if(verifyExePoint(startSwitch,endSwitch,executionPoint)){ //If start switch is true, and endSwitch is false, the executionPoint will be made into an event
                              
                              executionPoints = executionPoints + 1; //integer counter of how many execution points there are
                              executionPoint = ""; 
@@ -336,27 +325,23 @@ class TraceAnalyzer {
                      }
                                                            
                  }
-                 else 
-                 {
-                     
+                 else{
+                     //Do Nothing, this may be a bad practice 
                  }
                  break; 
                  
             default:
                 break;
+                
             }
+        
         }
-        
-        
-       
-       
-        
+      
     }
     
     public void handleEvents() { 
         
        eventManager.verifyEvents();
-       eventManager.printFilteredEvents();
        eventManager.modifyLineNums();
     }
     
@@ -397,6 +382,8 @@ class TraceAnalyzer {
     
     }
     
+    
+    /* *** Start of Test Functions *** /* 
     public void printExecutionTraces(){
         
         //Test function
@@ -413,6 +400,7 @@ class TraceAnalyzer {
         System.out.print( executionPoints ); 
         System.out.print(" Execution Points."); 
     }
+    /* *** End of Test Functions *** */ 
     
     public boolean verifyExePoint(boolean on, boolean off, String inPoint) {
         
@@ -423,8 +411,7 @@ class TraceAnalyzer {
         {
             exePointList.add(inPoint);  
             exeTrace.setEvent(inPoint);
-            exeTrace.setLineNumber(extractLineNum(inPoint));
-            System.out.println(extractLineNum(inPoint)); 
+            exeTrace.setLineNumber(extractLineNum(inPoint)); 
             eventManager.addEvent(exeTrace);
             addExePoint = true; 
         }
@@ -446,10 +433,9 @@ class TraceAnalyzer {
         
         lineNumber = new Scanner(input).useDelimiter("\\D+").nextInt();
         
-        return lineNumber; 
+        return lineNumber;
     }
     
-
 }
 
 class UniqueFileWriter{
@@ -459,14 +445,14 @@ class UniqueFileWriter{
     
     UniqueFileWriter() {
         
-          try{
+       try{
         
            fw = new FileWriter(filteredTrace);
            
        }catch (IOException iox) {
             //do stuff with exception
             iox.printStackTrace();
-        } 
+       } 
     }
     
     public void flushFile() { 
@@ -491,13 +477,12 @@ class UniqueFileWriter{
         
            iox.printStackTrace(); 
        }
-       
     }
     
     public void writeToFile(String input) { 
         
         
-         try{
+       try{
             
            fw.write(input);
            
@@ -515,6 +500,7 @@ class UniqueFileReader{
     private TraceAnalyzer analyzeTrace; 
     
     UniqueFileReader(String inputFile) {
+       
         lineNumber = 0; 
         
         readFile(inputFile); 
@@ -570,27 +556,21 @@ class UniqueFileReader{
                 
             }    
 
-            // Always close files.
             bufferedReader.close();            
         }
         catch(FileNotFoundException ex) {
+            
             System.out.println(
                 "Unable to open file '" + 
                 jsonFile + "'");                
         }
         catch(IOException ex) {
+            
             System.out.println(
                 "Error reading file '" 
-                + jsonFile + "'");                   
-            // Or we could just do this: 
-            // ex.printStackTrace();
+                + jsonFile + "'");                  
         }
 
-    }
-    
-    public void writeFile(){
-        
-        
     }
 
 }
@@ -601,11 +581,10 @@ public class JsonFilter {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         
         UniqueFileReader myFileReader = new UniqueFileReader("jsonfile.txt");
-        
-        
+   
     }
     
 }
+
