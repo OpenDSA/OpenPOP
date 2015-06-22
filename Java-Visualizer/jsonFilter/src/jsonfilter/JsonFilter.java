@@ -182,6 +182,7 @@ class CodeAnalyzer {
     CodeAnalyzer(String jsonCode) {
         
         codeList = new ArrayList<>(); 
+        //System.out.println(jsonCode);
         setCodeTrace(jsonCode);  
     }
     
@@ -349,6 +350,8 @@ class TraceAnalyzer {
         
         jsonWriter = new UniqueFileWriter();
         
+        jsonWriter.writeToFile("var testvisualizerTrace = ");
+        
         jsonWriter.writeToFile("{" + '"' + "code" + '"' + ':' + '"');
         for(int p = 0; p < inList.size(); p++) {
             
@@ -367,6 +370,8 @@ class TraceAnalyzer {
             {
                 jsonWriter.writeToFile(myEvent.getEvent());
                 jsonWriter.writeToFile("]" + ',' + '"' + "userlog" + '"' + ":" + '"' + "Debugger VM maxMemory: 807M" + "\\n" + '"' + "}");
+                jsonWriter.writeToFile("\n");
+                jsonWriter.writeToFile("$(document).ready(function() { \n \n \t var testvisualizer = new ExecutionVisualizer('testvisualizerDiv', testvisualizerTrace,{embeddedMode: false, lang: 'java', heightChangeCallback: redrawAllVisualizerArrows}); \n \n \tfunction redrawAllVisualizerArrows() { \n \n \t \t if (testvisualizer) testvisualizer.redrawConnectors(); \n \t } \n \n $(window).resize(redrawAllVisualizerArrows); \n});");
             }
             else 
             {
@@ -440,7 +445,7 @@ class TraceAnalyzer {
 
 class UniqueFileWriter{
     
-    private File filteredTrace = new File("filteredJSON.txt"); 
+    private File filteredTrace = new File("filteredJSON.js"); 
     private FileWriter fw; 
     
     UniqueFileWriter() {
@@ -544,11 +549,9 @@ class UniqueFileReader{
                 
                 analyzeTrace.curlyBraceTest(); 
                 analyzeTrace.handleEvents();
-                
-                
+                 
                 analyzeCode.isolateStudentCode();
-                
-      
+               
                 analyzeTrace.outputFilteredJSON(analyzeCode.getCodeList()); //passing in the code trace to be printed to the file 
                                                                             // before the execution points. 
                 //analyzeTrace.printExecutionTraces();
