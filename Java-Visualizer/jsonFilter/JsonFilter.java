@@ -1,3 +1,10 @@
+/**
+ * @author Kyle Reinholt 
+ * 
+ * @purpose This program will read in a json text file, filter out the execution points that are between the function startTraceNow() and endTraceNow(), 
+ *          and output the filtered executionPoints to a javaScript page that will be read in by the html file for display. 
+ */
+
 package jsonfilter;
  
 import java.io.*;
@@ -8,17 +15,6 @@ import java.util.Arrays;
 import java.util.ArrayList; 
 import java.lang.String;
 import java.nio.ByteBuffer;
-
-
-/**
- *
- * @author Kyle Reinholt 
- * 
- * @purpose This program will read in a json text file, filter out the execution points that are between the function startTraceNow() and endTraceNow(), 
- *          and output the filtered executionPoints to a javaScript page that will be read in by the html file for display. 
- * 
- *
- */
 
 class Event { //This class makes it easier to analyze an executionPoint.  
     
@@ -62,8 +58,8 @@ class EventManager { //This class provides a way to weed out executionPoints tha
     
     EventManager() {
         
-        listOfEvents = new ArrayList<>();
-        filteredEvents = new ArrayList<>(); 
+        listOfEvents = new ArrayList<Event>();
+        filteredEvents = new ArrayList<Event>(); 
     }
     
     public int getNumOfEvents() {
@@ -185,7 +181,7 @@ class CodeAnalyzer {
     
     CodeAnalyzer(String jsonCode) {
         
-        codeList = new ArrayList<>(); 
+        codeList = new ArrayList<String>(); 
         //System.out.println(jsonCode);
         setCodeTrace(jsonCode);  
     }
@@ -255,7 +251,7 @@ class TraceAnalyzer {
     TraceAnalyzer(String jsonTrace) {
         
         originalTrace = jsonTrace;
-        exePointList = new ArrayList<>();
+        exePointList = new ArrayList<String>();
         eventManager = new EventManager(); 
         executionPoints = 0; 
     }
@@ -268,7 +264,7 @@ class TraceAnalyzer {
         boolean startSwitch = false; 
         boolean endSwitch = false;
         
-        symbolStack = new Stack<>();
+        symbolStack = new Stack<Character>();
         
         for (int index = 0; index < copyTrace.length(); index++) {
             
@@ -594,3 +590,4 @@ public class JsonFilter {
     }
     
 }
+
