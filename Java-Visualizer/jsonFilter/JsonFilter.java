@@ -1,10 +1,3 @@
-/**
- * @author Kyle Reinholt 
- * 
- * @purpose This program will read in a json text file, filter out the execution points that are between the function startTraceNow() and endTraceNow(), 
- *          and output the filtered executionPoints to a javaScript page that will be read in by the html file for display. 
- */
-
 package jsonfilter;
  
 import java.io.*;
@@ -15,6 +8,17 @@ import java.util.Arrays;
 import java.util.ArrayList; 
 import java.lang.String;
 import java.nio.ByteBuffer;
+
+
+/**
+ *
+ * @author Kyle Reinholt 
+ * 
+ * @purpose This program will read in a json text file, filter out the execution points that are between the function startTraceNow() and endTraceNow(), 
+ *          and output the filtered executionPoints to a javaScript page that will be read in by the html file for display. 
+ * 
+ *
+ */
 
 class Event { //This class makes it easier to analyze an executionPoint.  
     
@@ -58,8 +62,8 @@ class EventManager { //This class provides a way to weed out executionPoints tha
     
     EventManager() {
         
-        listOfEvents = new ArrayList<Event>();
-        filteredEvents = new ArrayList<Event>(); 
+        listOfEvents = new ArrayList<>();
+        filteredEvents = new ArrayList<>(); 
     }
     
     public int getNumOfEvents() {
@@ -77,41 +81,55 @@ class EventManager { //This class provides a way to weed out executionPoints tha
         listOfEvents.add(newEvent); 
     }
     
-    public void modifyLineNums() {
+    public void modifyLineNums(ArrayList<String> userCode) {
         
-        for(int n = 0; n < filteredEvents.size(); n++) {
+        int lineNumber = 0; 
+        int eventNumber = 0; 
+        
+        while(lineNumber != userCode.size()) {
             
            Event modify = new Event(); 
            String tempString = ""; 
            int tempLine = 0; 
            
-           modify = filteredEvents.get(n); 
+           modify = filteredEvents.get(eventNumber); 
            
            tempString = modify.getEvent(); 
            
            tempLine = modify.getLineNumber(); 
            
-           if(n == filteredEvents.size() - 1){
+           if(userCode.get(lineNumber) == "newline"){
                
-                String originalLine = Integer.toString(tempLine);
-                String newLine = Integer.toString(n);
-                
-                tempString = tempString.replace(originalLine, newLine);
-
-                filteredEvents.get(n).setEvent(tempString);
+               
+               lineNumber = lineNumber + 1; 
            }
            else{
-               
-               String originalLine = Integer.toString(tempLine);
-               String newLine = Integer.toString(n+1);
-           
-               tempString = tempString.replace(originalLine, newLine);
+                
+                String originalLine = Integer.toString(tempLine);
+                String newLine = Integer.toString(lineNumber+1);
 
-               filteredEvents.get(n).setEvent(tempString);
+                tempString = tempString.replace(originalLine, newLine);
+
+                filteredEvents.get(eventNumber).setEvent(tempString);
+                filteredEvents.get(eventNumber).setLineNumber(lineNumber+1);
+
+                eventNumber = eventNumber + 1; 
+                lineNumber = lineNumber + 1; 
            }
            
         }
         
+        
+        
+        int ogLine = filteredEvents.get(eventNumber).getLineNumber();
+        String newTrace = filteredEvents.get(eventNumber).getEvent(); 
+               
+        String oldLine = Integer.toString(ogLine);
+        String newLine = Integer.toString(filteredEvents.get(eventNumber-1).getLineNumber());
+
+        newTrace = newTrace.replace(oldLine, newLine);
+
+        filteredEvents.get(eventNumber).setEvent(newTrace); 
     }
     
 /* *** Start of Test Functions *** /*
@@ -181,8 +199,7 @@ class CodeAnalyzer {
     
     CodeAnalyzer(String jsonCode) {
         
-        codeList = new ArrayList<String>(); 
-        //System.out.println(jsonCode);
+        codeList = new ArrayList<>(); 
         setCodeTrace(jsonCode);  
     }
     
@@ -217,24 +234,45 @@ class CodeAnalyzer {
         String[] studentCode = myString.split("newline"); 
         
         for(int o = 0; o < studentCode.length; o++){
+             
+            String temp = studentCode[o].replaceAll("\\s+",""); 
             
-            if(studentCode[o].isEmpty() == true){
+            if(temp.isEmpty() == true || temp == " " || temp == ""){
                 
-                // do nothing
+                studentCode[o] = "newline"; 
+                codeList.add(studentCode[o]); 
             }
-            else if(studentCode[o].length() < 3) {
+            else if(temp.length() < 3) { //This will capture any case where there is a blank line. Blank lines must be
+                                                   //added to the codeList so when the filteredEvents' line numbers are being modified
+                                                   //the event will not get assigned a line number that corresponds to a blank line. 
+                                                   //Although everything the visualizer needs is in the execution point, OPT will not 
+                                                   //visualize an execution point if the line is blank.
                 
-                //System.out.println("newline detected.");
+                studentCode[o] = "newline"; 
+                codeList.add(studentCode[o]);
             }
             else{
                 
                 codeList.add(studentCode[o]);
-                codeList.get(o).trim(); 
-                
             }
              
-        }
+        } 
         
+    }
+    
+    public void removeUnwantedCode() {
+        
+        for(int j = 0; j < codeList.size(); j++){
+            
+            if(codeList.get(j) == "newline"){
+                
+                codeList.set(j,""); 
+            }
+            else {
+                
+                //Do Nothing 
+            }
+        }
     }
     
 }
@@ -251,12 +289,12 @@ class TraceAnalyzer {
     TraceAnalyzer(String jsonTrace) {
         
         originalTrace = jsonTrace;
-        exePointList = new ArrayList<String>();
+        exePointList = new ArrayList<>();
         eventManager = new EventManager(); 
         executionPoints = 0; 
     }
     
-    public void curlyBraceTest() { 
+    public void filterExePoints() { 
         
         String copyTrace = originalTrace; 
         String executionPoint = ""; 
@@ -264,7 +302,7 @@ class TraceAnalyzer {
         boolean startSwitch = false; 
         boolean endSwitch = false;
         
-        symbolStack = new Stack<Character>();
+        symbolStack = new Stack<>();
         
         for (int index = 0; index < copyTrace.length(); index++) {
             
@@ -340,10 +378,10 @@ class TraceAnalyzer {
       
     }
     
-    public void handleEvents() { 
+    public void handleEvents(ArrayList<String> codeList) { 
         
        eventManager.verifyEvents();
-       eventManager.modifyLineNums();
+       eventManager.modifyLineNums(codeList);
     }
     
     public void outputFilteredJSON(ArrayList<String> inList) {
@@ -547,17 +585,17 @@ class UniqueFileReader{
                 analyzeCode = new CodeAnalyzer(codeSegment);
                 analyzeTrace = new TraceAnalyzer(traceSegment.substring(1));
                 
-                analyzeTrace.curlyBraceTest(); 
-                analyzeTrace.handleEvents();
+                analyzeTrace.filterExePoints(); // Grabs execution points between startTraceNow() and endTraceNow() from backend trace string 
                  
                 analyzeCode.isolateStudentCode();
-               
-                analyzeTrace.outputFilteredJSON(analyzeCode.getCodeList()); //passing in the code trace to be printed to the file 
-                                                                            // before the execution points. 
-                //analyzeTrace.printExecutionTraces();
-                //analyzeTrace.numOfExePnts(); 
                 
-            }    
+                analyzeTrace.handleEvents(analyzeCode.getCodeList()); //Events cannot be filtered without knowing which line they correspond with.
+                                                                      // The user code is sent to the eventVerifier to ensure the execution point
+                                                                      // matches with the line of code that created it. 
+                analyzeCode.removeUnwantedCode(); 
+               
+                analyzeTrace.outputFilteredJSON(analyzeCode.getCodeList()); //passing in the code trace to be printed to the file                                                                             
+            }                                                               // before the execution points. 
 
             bufferedReader.close();            
         }
@@ -590,4 +628,3 @@ public class JsonFilter {
     }
     
 }
-
