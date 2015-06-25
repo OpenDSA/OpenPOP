@@ -9,7 +9,7 @@ Date Created: 6/22/15
 
 // TODO: Update readme as directory contents are updated. 
 
-jsonFilter contains files for removing an enormous amount of unwanted criteria from the generated backend json trace. 
+*jsonFilter* contains files for removing an enormous amount of unwanted criteria from the generated backend json trace. 
 
-JavaTraceGen contains ONLY the files from David Pritchard's https://github.com/daveagp/java_jail repository that were used to take in java code and produce a json object (traceprinter package).  
+*JavaTraceGen* contains ONLY the files from David Pritchard's https://github.com/daveagp/java_jail repository that were used to take in java code and produce a json object (traceprinter package).  
 
