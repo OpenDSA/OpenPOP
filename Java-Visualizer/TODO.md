@@ -43,7 +43,7 @@ The inputFile.txt is formatted as follows:
 
 When the student inputs code into the textarea on the Linked List OpenDSA exercises, the code is sent back and forth via a string. It would not be difficult to concatenate,
 
-String traceCode = "public static class ClassName{ public static void main(String [] args) { //code } }"; 
+String traceCode = "public class ClassName{ public static void main(String [] args) { //code } }"; 
 
 String jsonObject = "{" + '"' + "usercode" + '"' + ':' + traceCode + '"' + "options" + '"' + ':' + "{}," + '"' + "args" + '"' + ':' + "[]," + '"' + "stdin" + '"' + ':' + '"' + '"'; 
 
