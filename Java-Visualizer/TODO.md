@@ -43,12 +43,9 @@ The inputFile.txt is formatted as follows:
 
 When the student inputs code into the <textarea> on the Linked List OpenDSA exercises, the code is sent back and forth via a string. It would not be difficult to concatenate,
 
-        String traceCode = "public static class ClassName{ 
-                            public static void main(String [] args) { //code } }"; 
+String traceCode = "public static class ClassName{ public static void main(String [] args) { //code } }"; 
 
-        String jsonObject = "{" + '"' + "usercode" + '"' + ':' + traceCode + '"' 
-                            + "options" + '"' + ':' + "{}," + '"' + "args" + '"' + ':' 
-                            + "[]," + '"' + "stdin" + '"' + ':' + '"' + '"'; 
+String jsonObject = "{" + '"' + "usercode" + '"' + ':' + traceCode + '"' + "options" + '"' + ':' + "{}," + '"' + "args" + '"' + ':' + "[]," + '"' + "stdin" + '"' + ':' + '"' + '"'; 
 
 however, it seems this should already be in the traceprinter package somewhere. I shouldn't have to write a tiny program to modify the user's code before its sent to the traceprinter and once again after its processed? 
 
