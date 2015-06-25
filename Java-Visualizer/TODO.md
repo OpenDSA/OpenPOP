@@ -24,9 +24,13 @@ Visualizations
 
 Traceprinter
 *** 
-* Figure out how the user code is formatted before the ./java/bin/java -cp .:cp:cp/javax.json-1.0.jar:java/lib/tools.jar traceprinter.InMemory '<' cp/traceprinter/test-input.txt command is run to produce the initial backend trace. 
+* Figure out how the user code is formatted before the 
 
-Reasoning: 
+./java/bin/java -cp .:cp:cp/javax.json-1.0.jar:java/lib/tools.jar traceprinter.InMemory '<' cp/traceprinter/test-input.txt 
+
+command is executed. This command is what produces the initial backend trace. 
+
+Reasoning for concern: 
 
 The inputFile.txt is formatted as follows: 
 {
@@ -37,12 +41,15 @@ The inputFile.txt is formatted as follows:
  "stdin": ""
 }
 
-When the student inputs code into the code mirror on the linked list OpenDSA exercises, the code is sent back and forth via a string. It would not be difficult to concatenate,
+When the student inputs code into the <textarea> on the Linked List OpenDSA exercises, the code is sent back and forth via a string. It would not be difficult to concatenate,
 
-        String traceCode = "public static class ClassName{ public static void main(String [] args) { //code } }"; 
+        String traceCode = "public static class ClassName{ 
+                            public static void main(String [] args) { //code } }"; 
 
-        jsonObject = "{" + '"' + "usercode" + '"' + ':' + traceCode + '"' + "options" + '"' + ':' + "{}," + '"' + "args" + '"' + ':' + "[]," + '"' + "stdin" + '"' + ':' + '"' + '"'; 
+        String jsonObject = "{" + '"' + "usercode" + '"' + ':' + traceCode + '"' 
+                            + "options" + '"' + ':' + "{}," + '"' + "args" + '"' + ':' 
+                            + "[]," + '"' + "stdin" + '"' + ':' + '"' + '"'; 
 
 however, it seems this should already be in the traceprinter package somewhere. I shouldn't have to write a tiny program to modify the user's code before its sent to the traceprinter and once again after its processed? 
 
-* The formatting of the usercode is another issue that must be solved soon. When send a json object to traceprinter.InMemory, there must not be more than one space between each character within the "usercode":"" section or the JsonParser, JsonTokenizer, and JsonReader, will all throw errors. Therefore, I must find out how the user code is formatted before it is even placed within the usercode section of the json object.
+* The formatting of the usercode is another issue that must be solved soon. When sending a json object to traceprinter.InMemory, there must not be more than one space between each character within the "usercode":"" section, or the JsonParser, JsonTokenizer, and JsonReader, will all throw errors. Therefore, I must find out how the user code is formatted before it is even placed within the usercode section of the json object.
