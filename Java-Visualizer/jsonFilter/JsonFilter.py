@@ -145,8 +145,51 @@ class EventManager(object):
         modifiedEvent.set_Event(tempString)
         modifiedEvent.set_Line(otherLine)
         self.filteredEvents[eventNumber] = modifiedEvent        
-                
-                
+
+def modifyStack(myList):
+
+    oldStack = []
+    curlyStack = []
+    listOfStackPoints = []
+    
+    for x in range(0,len(myList)):
+        curEvent = myList[x].split("stack_to_render\":[")
+        stacks = curEvent[1].split("],\"globals\"")
+
+        stackToRender = stacks[0]
+        oldStack.append(stacks[0])
+
+        stackPoint = "" 
+
+        for i in stackToRender:
+            stackPoint = stackPoint + i
+            if i == '{':
+                curlyStack.append(i)
+            elif i == '}':
+                topSymbol = curlyStack.pop()
+                if len(curlyStack) == 0:
+                    listOfStackPoints.append(stackPoint)
+                    stackPoint = ""
+                else:
+                    continue
+
+    main = ""
+    main = "main:" 
+
+    newStack = []
+    
+    for x in range(0, len(listOfStackPoints)):
+        if main in listOfStackPoints[x]:
+            #Do nothing
+            continue
+        else:
+            newStack.append(listOfStackPoints[x])
+
+    for x in range(0, len(myList)):
+        myList[x] = myList[x].replace(oldStack[x],newStack[x])
+
+    return myList
+            
     
 class TraceAnalyzer(object):
 
@@ -161,9 +204,11 @@ class TraceAnalyzer(object):
         filteredEvents()
         modifyLines = self.eventManager.modify_Lines(userCode) 
 
-        events = []
-        events = self.eventManager.trace_List()
+        raw_events = []
+        raw_events = self.eventManager.trace_List()
 
+        clean_Events = modifyStack(raw_events)
+        
         orig_stdout = sys.stdout
         f = file('filteredJSON.js', 'w')
         sys.stdout = f
@@ -180,15 +225,15 @@ class TraceAnalyzer(object):
         second = "\",\"trace\":["
 
         trace = ""
-        for y in range(0,len(events)):
-            if y == len(events)-1:
-                tempString = events[y]
+        for y in range(0,len(clean_Events)):
+            if y == len(clean_Events)-1:
+                tempString = clean_Events[y]
                 tempString = tempString[:-1]
                 trace = trace + tempString
                 trace = trace + "],\"userlog\":\"Debugger VM maxMemory: 807M \\n \"}"
                 trace = trace + "\n" + "$(document).ready(function() { \n \n \t var testvisualizer = new ExecutionVisualizer('testvisualizerDiv', testvisualizerTrace,{embeddedMode: false, lang: 'java', heightChangeCallback: redrawAllVisualizerArrows}); \n \n \tfunction redrawAllVisualizerArrows() { \n \n \t \t if (testvisualizer) testvisualizer.redrawConnectors(); \n \t } \n \n $(window).resize(redrawAllVisualizerArrows); \n});"
             else: 
-                tempString = events[y]
+                tempString = clean_Events[y]
                 trace = trace + tempString + "\n"
                 
         printToFile = first + code + second + trace
@@ -346,4 +391,3 @@ wholeTrace = wholeTrace[1:]
 codeAnalyzer(userCode, wholeTrace)
 
     
-
