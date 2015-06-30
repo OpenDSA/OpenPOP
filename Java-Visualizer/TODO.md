@@ -1,11 +1,6 @@
 TODO LIST
 =========
 
-JsonFilter
-***
-* Update the jsonFilter with functionality to remove the main function and all of its encoded variables from the "stack_to_render" section of each execution point.
-
-
 Visualizations
 *** 
 * Find a way to change the font color of the students code that is going to be visualized. It needs to be seperated from the code provided by the assignment. Example: 
