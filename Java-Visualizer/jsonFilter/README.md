@@ -1,7 +1,13 @@
 jsonFilter.py
 =============
-This is a clone of the jsonFilter.java
-I am currently translating the code from java to python. The code must be in python because the OpenDSA backend is written in python. I am still running tests on the jsonFilter.py, it is only capable of extracting the execution points between startTraceNow and endTraceNow. The eventManager functionality needs to be written and the userCode analyzer must be added to the .py file still. This README will be updated as the contents of jsonFilter.py are updated.  
+This is a python version of the jsonFilter.java
+
+I originally wrote the program in java not knowing it needed to be in python, in order for this program to be integrated in with the OpenDSA backend, it had to be in python.   
+
+*jsontrace.txt* is the sample input file for jsonFilter.py 
+
+*filteredJSON.js* is the sample output file for the jsonFilter.py
+
 
 jsonFilter.java
 ===============

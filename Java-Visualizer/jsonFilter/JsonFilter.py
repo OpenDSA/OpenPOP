@@ -3,6 +3,8 @@
 #Program: Json Filter
 #Purpose: To extract execution points from the json trace produced from InMemory.java that are intended for visualization
 
+import sys
+
 with open('jsontrace.txt','r') as f:
     read_data = f.read()
 
@@ -10,7 +12,7 @@ f.closed
 
 splitter = '"' + "trace" + '"' + ':'
 
-userCode, trace = read_data.split(splitter)
+userCode, wholeTrace = read_data.split(splitter)
 
 class Event(object):
     
@@ -35,36 +37,166 @@ class EventManager(object):
     
     def __init__(self):
         self.listOfEvents = []
+        self.filteredEvents = []
+
+    def get_Line_Number(self, index):
+        if is_empty(self.listOfEvents) == True:
+            print("list is empty")
+        else:
+            tempEvent = self.listOfEvents[index]
+            return tempEvent.lineNumber
+
+    def set_Event(self, index, event):
+        self.filteredEvents[index] = event
     
-    def get_Events(index):
-        return self.listOfEvents[index]
+    def get_Event(index):
+        return self.filteredEvents[index]
 
     def add_Event(self, event):
         self.listOfEvents.append(event)
 
+    def trace_List(self):
+        myList = []
+        for x in range(0,len(self.filteredEvents)):
+            temp = Event()
+            temp = self.filteredEvents[x]
+            myList.append(temp.trace)
+
+        return myList
+
     def print_Events(self):
-        if (len(self.listOfEvents) == 0):
+        if (len(self.filteredEvents) == 0):
             print("List of events is empty")
         else:
-            for x in range(0, len(self.listOfEvents)):
-                tempEvent = self.listOfEvents[x]
+            for x in range(0, len(self.filteredEvents)):
+                tempEvent = self.filteredEvents[x]
                 print(tempEvent.trace)
 
+    def verify_Events(self):
+        currentLine = 0
+        nextLine = 0
+        eventCounter = 0
+        counter = 1
+        
+        originalLineNum = self.get_Line_Number(0)
+        currentLine = originalLineNum
+
+        length = len(self.listOfEvents) - 1
+    
+        while counter < length+1:
+            nextLine = self.get_Line_Number(counter)
+
+            if (currentLine+1 == nextLine and nextLine > originalLineNum) or (currentLine+2 == nextLine and nextLine > originalLineNum) or (currentLine+3 == nextLine and nextLine > originalLineNum) or (currentLine+4 == nextLine and nextLine > originalLineNum) or (currentLine+5 == nextLine and nextLine > originalLineNum):
+                self.filteredEvents.append(self.listOfEvents[eventCounter])
+                eventCounter = eventCounter + 1
+                currentLine = nextLine
+                counter = counter + 1
+            else:
+                currentLine = nextLine
+                eventCounter = eventCounter + 1
+                counter = counter + 1
+
+        
+        self.filteredEvents.append(self.listOfEvents[length])
+
+    def modify_Lines(self, code):
+        lineNumber = 0
+        eventNumber = 0
+
+        while lineNumber != len(code):
+            modify = Event()
+            tempString = ""
+            tempLine = 0
+
+            modify = self.filteredEvents[eventNumber]
+            tempString = modify.trace
+            tempLine = modify.lineNumber
+
+            if(code[lineNumber] == "newline"):
+                lineNumber = lineNumber + 1
+            else:
+                originalLine = str(tempLine)
+                newLine = str(lineNumber+1)
+                tempString = tempString.replace(originalLine,newLine)
+                modifiedEvent = Event()
+                modifiedEvent.set_Event(tempString)
+                modifiedEvent.set_Line(lineNumber+1)
+                self.filteredEvents[eventNumber] = modifiedEvent
+
+                eventNumber = eventNumber + 1
+                lineNumber = lineNumber + 1
+
+        lastEvent = Event()
+        lastEvent = self.filteredEvents[eventNumber]
+        tempLine = lastEvent.lineNumber
+        tempString = lastEvent.trace
+
+        oldLine = str(tempLine)
+
+        secondTLEvent = Event()
+        secondTLEvent = self.filteredEvents[eventNumber-1]
+        otherLine = secondTLEvent.lineNumber
+
+        newLine = str(otherLine)
+
+        tempString = tempString.replace(oldLine,newLine)
+        
+        modifiedEvent = Event()
+        modifiedEvent.set_Event(tempString)
+        modifiedEvent.set_Line(otherLine)
+        self.filteredEvents[eventNumber] = modifiedEvent        
+                
+                
+    
 class TraceAnalyzer(object):
 
-    def __init__(self, trace):
-        self.__inTrace = trace 
+    def __init__(self): 
         self.eventManager = EventManager()
-        self.exe_Point_Finder
-        print "Object Created"
-        
-    @property
-    def trace(self):
-        return self.__inTrace
 
-    def printMe(self):
-        doop = self.eventManager.print_Events
-        doop()
+    def handleEverything(self, userCode, inTrace):
+        filterPoints = self.exe_Point_Finder
+        filterPoints(inTrace)
+        
+        filteredEvents = self.eventManager.verify_Events
+        filteredEvents()
+        modifyLines = self.eventManager.modify_Lines(userCode) 
+
+        events = []
+        events = self.eventManager.trace_List()
+
+        orig_stdout = sys.stdout
+        f = file('filteredJSON.js', 'w')
+        sys.stdout = f
+
+        first = "var testvisualizerTrace = {\"code\":\""
+
+        code = ""
+        
+        for x in range (0,len(userCode)):
+            if userCode[x] == "newline":
+                code = code + "\\n" + " "
+            else:
+                code = code + userCode[x] + "\\n"
+        second = "\",\"trace\":["
+
+        trace = ""
+        for y in range(0,len(events)):
+            if y == len(events)-1:
+                tempString = events[y]
+                tempString = tempString[:-1]
+                trace = trace + tempString
+                trace = trace + "],\"userlog\":\"Debugger VM maxMemory: 807M \\n \"}"
+                trace = trace + "\n" + "$(document).ready(function() { \n \n \t var testvisualizer = new ExecutionVisualizer('testvisualizerDiv', testvisualizerTrace,{embeddedMode: false, lang: 'java', heightChangeCallback: redrawAllVisualizerArrows}); \n \n \tfunction redrawAllVisualizerArrows() { \n \n \t \t if (testvisualizer) testvisualizer.redrawConnectors(); \n \t } \n \n $(window).resize(redrawAllVisualizerArrows); \n});"
+            else: 
+                tempString = events[y]
+                trace = trace + tempString + "\n"
+                
+        printToFile = first + code + second + trace
+
+        print printToFile
+        
+        sys.stdout = orig_stdout
+        f.close()
         
     def is_empty(self, any_structure):
         if any_structure:
@@ -84,16 +216,12 @@ class TraceAnalyzer(object):
         line = line.replace('}'," ")
         line = line.replace(')'," ")
         
-        print("String: ", line)
         line = [int(s) for s in line.split() if s.isdigit()]
-        print line
+        
         return line[0]
 
     def verify_Exe_Point(self, on, off, inPoint):
-
-        print("Reached verify_exe")
-        print(on)
-        print(off)
+        
         addExePoint = False
         exeTrace = Event()
 
@@ -102,7 +230,7 @@ class TraceAnalyzer(object):
             exeTrace.set_Line(self.extract_Line_Num(inPoint))
             self.eventManager.add_Event(exeTrace)
             addExePoint = True
-            print("addExePoint = True")
+            
         elif on == False and off == False:
             addExePoint = False
         else:
@@ -110,7 +238,7 @@ class TraceAnalyzer(object):
 
         return addExePoint
 
-    def exe_Point_Finder(self): #This is really messy. Sorry. I will definitely need to refactor in the future
+    def exe_Point_Finder(self, trace): #This is really messy. Sorry. I will definitely need to refactor in the future
         symbolStack = []
         exePointList = []
         otherList = []
@@ -122,7 +250,7 @@ class TraceAnalyzer(object):
         off = False
         counter = 0
         
-        for i in self.__inTrace:
+        for i in trace:
             currentSymbol = i
             exePoint = exePoint + currentSymbol
             if i == '{' or i == '[' or i == '(':
@@ -137,11 +265,8 @@ class TraceAnalyzer(object):
                 if len(symbolStack) == 0:
                     for thing in otherList:
                         exe = exe + thing
-
-                    print("on is" , on)
+                        
                     if "startTraceNow" in exe:
-                        print("StartTraceNow found")
-                        print(exe)
                         on = True
                         exe = ""
                         exePoint = ""
@@ -151,9 +276,7 @@ class TraceAnalyzer(object):
                         return
                     else:
                         flag = self.verify_Exe_Point(on, off, exe)
-                        print("flag is", flag)
                         if flag == True:
-                            print(exe)
                             exe = ""
                             exePoint = ""
                             otherList = []
@@ -167,43 +290,60 @@ class TraceAnalyzer(object):
             else:
                 continue
 
-        
+def is_empty(structure):
+    if structure:
+        return False
+    else:
+        return True
 
-trace = trace[1:]
+def codeSplitter(code):
 
-traceAnalyzer = TraceAnalyzer(trace)
-blah = traceAnalyzer.exe_Point_Finder
-blah()
+    studentCode = []
 
-blah2 = traceAnalyzer.printMe
-blah2()
+    code = code.split("startTraceNow();")
+    newCode = code[1].split("endTraceNow();")
 
-print("made it here") 
+    executedCode = newCode[0]
+
+    exeCodeList = executedCode.split("\\n")
+
+    flag = False
+    counter = 0 
     
-"""def modifyLineNums(userCode):
-lineNum = 0
-eventNum = 0"""
+    while flag != True:
+        if exeCodeList[counter] == "" or exeCodeList[counter] == " ":
+            flag = False
+            counter = counter + 1
+        elif exeCodeList[counter] != "":
+            flag = True
+
+    for x in range(counter, len(exeCodeList)):
+        temp = exeCodeList[x]
+        temp = "".join(temp.split())
+
+        if is_empty(temp):
+            studentCode.append("newline")
+        else:
+            studentCode.append(exeCodeList[x])
+
+    return studentCode
+
+
+def codeAnalyzer(code, firstTrace):
+    
+    codeToViz = []    
+    codeToViz = codeSplitter(code)
+
+    traceAnalyzer = TraceAnalyzer()
+
+    execute = traceAnalyzer.handleEverything(codeToViz, firstTrace)
 
     
-"""
-test = Event()
-test2 = Event()
-test3 = Event()
 
-testManager = EventManager()
 
-test.set_Event("First Test")
-test.set_Line(14)
-test2.set_Event("Seond Test")
-test2.set_Line(14)
-test3.set_Event("Third Test")
-test3.set_Line(14)
+wholeTrace = wholeTrace[1:]
+    
+codeAnalyzer(userCode, wholeTrace)
 
-testManager.add_Event(test)
-testManager.add_Event(test2)
-testManager.add_Event(test3)
-testManager.print_Events()
-"""
-
-        
+    
 
