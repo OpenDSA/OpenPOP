@@ -2,15 +2,16 @@
 #Date: 6/25/15
 #Program: Json Filter
 #Purpose: To extract execution points from the json trace produced from InMemory.java that are intended for visualization
-#Documentation: The in-code documentation for this filter is scarce. The seperateAndFilterTrace() function contains a flow-explanation
-#               of what is happening in this program. 
+#Documentation: There is an example at the very end of this file. The in-code documentation for this filter is not very extravagent.
+#The seperateAndFilterTrace() function contain a flow-explanation of what is happening in this program. 
 import sys
 import subprocess
 
 def generateBackendTrace(jUnitTestFile, filesPath, peruserFilesPath, studentfilename): 
 
-	filesPath = ""
-	jUnitTestFile = "test.java" 
+        
+	#filesPath = ""
+	#jUnitTestFile = "test.java" 
 
 	TestFile = open(filesPath+jUnitTestFile , 'r')
 	raw_code = TestFile.read()
@@ -27,15 +28,15 @@ def generateBackendTrace(jUnitTestFile, filesPath, peruserFilesPath, studentfile
 
 	jUnitTest = jUnitTest.replace("\"", "\\" + "\"")
 
-
-	peruserFilesPath = "/home/kyle/OpenDSArepository/OpenPOP/Java-Visualizer/jsonFilter/cp/traceprinter/" 
-	studentfilename = "output.txt"
+	#peruserFilesPath = "/Your/Path/To/cp/traceprinter/" 
+	#studentfilename = "output.txt"
 
 	generateTrace = open(peruserFilesPath+studentfilename, 'w')
 	generateTrace.write("{" + "\n" + '"' + "usercode" + '"' + ':' + '"' + jUnitTest + '"' + ',' + "\n" + '"' + "options" + '"' + ':' + '{' + '}' + ',' + "\n" + '"' + "args" 		+ '"' + ':' + '[' + ']' + ',' + "\n" + '"' + "stdin" + '"' + ':' + '"' + '"' + "\n" + '}')
 	generateTrace.close()
 
-
+	#This shell command should work after the paths for the java tools and
+	# traceprinter packages have been correctly modified. 
 	command = "./java/bin/java -cp .:cp:cp/javax.json-1.0.jar:java/lib/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt"  # the shell command
 	process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
 
@@ -45,7 +46,7 @@ def generateBackendTrace(jUnitTestFile, filesPath, peruserFilesPath, studentfile
 	backend_trace = output[0]
 	return backend_trace
 
-#This function calls the functions necessary completely execute the program. 
+#This function calls the functions necessary to completely execute the program. 
 def seperateAndFilterTrace(jUnitTestFile, filesPath, peruserFilesPath, studentfilename):
 
         #This takes the .java file from the OpenDSA backend, formats the file into a json object,
@@ -66,8 +67,10 @@ def seperateAndFilterTrace(jUnitTestFile, filesPath, peruserFilesPath, studentfi
         # and execution traces. There is functionality within the codeAnalyzer that outputs the results to
         # a "ready-to-go" javaScript file. "ready-to-go" meaning you just have to include the <div> in
         # html file to display the executionVisualizer! 
-        codeAnalyzer(userCode, wholeTrace)
+        entireJSFile = codeAnalyzer(userCode, wholeTrace)
 
+        return entireJSFile	
+	
 class Event(object):
     
     def __init__(self):
@@ -267,7 +270,7 @@ class TraceAnalyzer(object):
 
 	#At this point, everything is ready for output. The printToFile string 
 	# contains all of the information necessary for the javaScript file. 
-        
+        # Its about 20 lines down
         orig_stdout = sys.stdout
         f = file('filteredJSON.js', 'w')
         sys.stdout = f
@@ -294,14 +297,18 @@ class TraceAnalyzer(object):
             else: 
                 tempString = clean_Events[y]
                 trace = trace + tempString + "\n"
-                
+        
+	#String that contains everything for the javascript file 
+	# Maybe just send string to front end and write to file in 
+	# a directory accessible by the OpenDSA frontend?         
         printToFile = first + code + second + trace
 
         print (printToFile)
         
         sys.stdout = orig_stdout
         f.close()
-
+	
+        return printToFile
         
         
     def is_empty(self, any_structure):
@@ -443,7 +450,15 @@ def codeAnalyzer(code, firstTrace):
     traceAnalyzer = TraceAnalyzer()
 
     execute = traceAnalyzer.handleEverything(codeToViz, firstTrace)
+
+    return execute
     
+#This is an example of how to use the seperateAndFilterTrace() function. This 
+#function initiates everything. Include this in your python code with the proper 
+#parameters to get expected results. myTest is a string that contains the entire js file contents for visualizing code.
+#Send this string to the correct frontend directory, make a javaScript file and only containing myTest, then include the
+# proper links and scripts in the html page and you should be good to go. 
 
-myTest = seperateAndFilterTrace("insert jUnitTestFile here", "filesPath here", "peruserFilesPath here", "studentfilename")
+#myTest = seperateAndFilterTrace("insert jUnitTestFile here", "filesPath here", "peruserFilesPath here", "studentfilename")
 
+#print myTest
