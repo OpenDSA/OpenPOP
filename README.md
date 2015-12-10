@@ -13,9 +13,9 @@ To install the module on local machine you will need the following resources
 	c) Run the Makefile.
 		./Makefile
 		This created the libraries needed and creates teh class files of major java files that producw the trace. The main class of interest is InMemory.java, in case you want to tweak some implementations.
-Note all the jars required comes with the download , but I additionally required to dowanload javax.json-1.0.4.jar. I am not sure what was breaking it but it worked after I got a more recent version of json jars. 
+Note all the jars required comes with the download , but I additionally required to download javax.json-1.0.4.jar.  
 
-Once compiled folder traceprinter has all the tracing java files.
+Once compiled, folder traceprinter has all the tracing java files.
 
 2) Python tutor files- You can download the Puthon Tutor here https://github.com/pgbovine/OnlinePythonTutor/tree/master/v3
 	The README here gives detailed explaination of the https://github.com/pgbovine/OnlinePythonTutor/blob/master/README of the code structure of PythonTutor. It majorly consisted of three two the front end visual manipulation using java scripts. and backend trace generation and file handling which they use different debugger for different languages. For java they used Jhava jail.
