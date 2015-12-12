@@ -1,16 +1,15 @@
 # Create your views here.
-#import conf
+import config
 import sys
-sys.path.append('/vagrant/OpenDSA-server/ODSA-django')
-sys.path.append('/vagrant/OpenDSA-server/ODSA-django/openpop')
-sys.path.append('/vagrant/OpenDSA-server/ODSA-django/openpop/javavisualizer/frontAndBackendFiles/backendFiles')
+sys.path.append(config.base_path + config.submodule_path + '/javavisualizer/frontAndBackendFiles/backendFiles')
+sys.path.append(config.base_path + config.module_path)
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-import opendsa.models
 #import UserExercise, UserExerciseLog, UserData , UserProgLog
 from opendsa.exercises import update_module_proficiency
 #from opendsa import models
+from opendsa.models import *
  
 from decimal import Decimal                         
 from django.http import HttpResponse
@@ -21,7 +20,7 @@ import subprocess
 import datetime
 import codecs
 import unicodedata
-import JsonFilter
+#import JsonFilter
 from JsonFilter import *
 import string
 import time, sys
@@ -339,9 +338,6 @@ def assessprogkaex(data, testfoldername, testfilenamep, generatedList, checkDefi
          if "Well Done" in line: # static code analysis
             if progexType == "binarytree": 
                efficient,btineffFB = btcheckEfficientCode(data , testfilenamep)
-               
-               
-               
                if efficient == True:
                   feedback[0] = True
                   return feedback , peruserFilesPath
@@ -351,8 +347,8 @@ def assessprogkaex(data, testfoldername, testfilenamep, generatedList, checkDefi
                   return feedback , peruserFilesPath					
             elif progexType =="pointers": 
                efficient,pntrineffFB = pntrcheckEfficientCode(data , testfilenamep)                             
-               javascriptFileData = seperateAndFilterTrace(studentfilename, "/vagrant/OpenDSA-server/ODSA-django/openpop/build/pntrtest/pntrequalspntrPROG/Medha/", "/vagrant/OpenDSA-server/ODSA-django/openpop/build/pntrtest/pntrequalspntrPROG/", "Medhaa")
-               codeScript = open("/vagrant/OpenDSA/Exercises/Pointers/visualResponses/codeScript.js", 'w')
+               javascriptFileData = seperateAndFilterTrace(studentfilename, config.base_path + "/OpenPOP/build/pntrtest/pntrequalspntrPROG/Medha/", config.base_path + "/OpenPOP/build/pntrtest/pntrequalspntrPROG/Medha/", "Medha")
+               codeScript = open(config.base_path + "/OpenDSA/Exercises/Pointers/visualResponses/codeScript.js", 'w')
                codeScript.write(javascriptFileData)               
                codeScript.close()
        
