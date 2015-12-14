@@ -1,1 +1,0 @@
-Link p = createList(1,2,3);Link q = p.next();p = q;

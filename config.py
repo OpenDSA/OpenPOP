@@ -1,6 +1,0 @@
-base_path = '/vagrant'
-submodule_path = '/OpenPOP'
-module_path = '/OpenDSA-server/ODSA-django'
-secret_key = 'opendsa_secret_key'
-user = 'opendsa'
-password = 'opendsa'
