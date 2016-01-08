@@ -2,7 +2,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 [02/Apr/2013 11:10:03] "OPTIONS /api/v1/studentcode/startvisualizing/ HTTP/1.1" 200 0
 Parsing source code... done
@@ -28,7 +28,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -92,7 +92,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1320,7 +1320,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1368,7 +1368,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1417,7 +1417,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1454,7 +1454,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1496,7 +1496,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1573,7 +1573,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1688,7 +1688,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1729,7 +1729,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1792,7 +1792,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1829,7 +1829,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1866,7 +1866,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1908,7 +1908,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -1984,7 +1984,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2083,7 +2083,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2172,7 +2172,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2230,7 +2230,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2308,7 +2308,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2423,7 +2423,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2460,7 +2460,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2502,7 +2502,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2570,7 +2570,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2633,7 +2633,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2695,7 +2695,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2872,7 +2872,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -2971,7 +2971,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -3096,7 +3096,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -3703,7 +3703,7 @@ Validating models...
 
 0 errors found
 Django version 1.4.3, using settings 'settings'
-Development server is running at http://opendsa.cc.vt.edu:8090/
+Development server is running at http://opendsa.cs.vt.edu:8090/
 Quit the server with CONTROL-C.
 api is called
 I am in the begining of visualizing the code
@@ -4514,8 +4514,8 @@ before the java call
 api is called
 I am in the begining of visualizing the code
 Node p = head ; // 1 1 RIGHT
-p = p.next ; 
-p = p.next ; 
+p = p.next ;
+p = p.next ;
 Node temp = head ; // 1 0 LEFT left
 head = p.next ;
 tail.next = temp ;
@@ -4574,8 +4574,8 @@ Creating showfile... done
 [10/Apr/2013 13:50:58] "POST /api/v1/studentcode/startvisualizing/ HTTP/1.1" 200 30727
 [10/Apr/2013 13:53:33] "OPTIONS /api/v1/studentcode/startvisualizing/ HTTP/1.1" 200 0
 
-p = p.next ; 
-p = p.next ; 
+p = p.next ;
+p = p.next ;
 before the java call
 api is called
 I am in the begining of visualizing the code
