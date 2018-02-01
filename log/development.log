@@ -1,0 +1,686 @@
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:20:14 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx1", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    p = p.next;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx1"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.8ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx1"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.8ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    p = p.next;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 20], ["LIMIT", 1]]
+Completed 200 OK in 81ms (Views: 9.1ms | ActiveRecord: 7.7ms)
+
+
+Started POST "/answers/solve" for 192.168.33.10 at 2018-01-12 15:35:03 +0000
+Cannot render console from 192.168.33.10! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx1", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    Link m;\n    p = p,next;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx1"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.5ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx1"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.6ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    Link m;\n    p = p,next;\n    "], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (18.9ms)[0m  [1m[32mINSERT INTO "answers" ("StudentCode", "exercise_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["StudentCode", "\n    Link m;\n    p = p,next;\n    "], ["exercise_id", 1], ["created_at", "2018-01-12 15:35:04.192267"], ["updated_at", "2018-01-12 15:35:04.192267"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTrace Load (0.8ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 42], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 1126ms (ActiveRecord: 26.6ms)
+
+
+  
+NoMethodError (undefined method `trace' for nil:NilClass):
+  
+app/controllers/answers_controller.rb:91:in `generate_code_trace'
+app/controllers/answers_controller.rb:50:in `solve'
+Started GET "/exercises" for 192.168.33.1 at 2018-01-12 15:47:53 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ExercisesController#index as HTML
+  Rendering exercises/index.html.erb within layouts/application
+  [1m[36mExercise Load (2.5ms)[0m  [1m[34mSELECT "exercises".* FROM "exercises"[0m
+  Rendered exercises/index.html.erb within layouts/application (20.5ms)
+Completed 200 OK in 1382ms (Views: 1348.7ms | ActiveRecord: 4.2ms)
+
+
+Started GET "/exercises/7" for 192.168.33.1 at 2018-01-12 15:48:28 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ExercisesController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mExercise Load (0.0ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  Rendering exercises/show.html.erb within layouts/application
+  [1m[36mAnswer Load (0.8ms)[0m  [1m[34mSELECT "answers".* FROM "answers" WHERE "answers"."exercise_id" = ?[0m  [["exercise_id", 7]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 8], ["LIMIT", 1]]
+  Rendered collection of answers/_answer.html.erb [1 times] (20.6ms)
+  Rendered exercises/show.html.erb within layouts/application (128.8ms)
+Completed 200 OK in 256ms (Views: 230.5ms | ActiveRecord: 3.4ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:49:19 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.6ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.6ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "answers" ("StudentCode", "exercise_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["StudentCode", "\n    r.next = p;\n    "], ["exercise_id", 7], ["created_at", "2018-01-12 15:49:19.655074"], ["updated_at", "2018-01-12 15:49:19.655074"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTrace Load (0.4ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "traces" ("exercise_trace", "answer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["exercise_trace", "{\"stdout\":\"\",\"event\":\"step_line\",\"line\":2,\"stack_to_render\":[{\"func_name\":\"changeNext:2\",\"encoded_locals\":{\"p\":[\"REF\",175],\"r\":[\"REF\",173]},\"ordered_varnames\":[\"p\",\"r\"],\"parent_frame_id_list\":[],\"is_highlighted\":true,\"is_zombie\":false,\"is_parent\":false,\"unique_hash\":\"282\",\"frame_id\":282}],\"globals\":{},\"ordered_globals\":[],\"func_name\":\"changeNext\",\"heap\":{\"173\":[\"INSTANCE\",\"Link\",[\"next\",null],[\"data\",3]],\"175\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",174]],[\"data\",1]],\"174\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",173]],[\"data\",2]]}},\n{\"stdout\":\"\",\"event\":\"step_line\",\"line\":2,\"stack_to_render\":[{\"func_name\":\"changeNext:2\",\"encoded_locals\":{\"p\":[\"REF\",175],\"r\":[\"REF\",173]},\"ordered_varnames\":[\"p\",\"r\"],\"parent_frame_id_list\":[],\"is_highlighted\":true,\"is_zombie\":false,\"is_parent\":false,\"unique_hash\":\"290\",\"frame_id\":290}],\"globals\":{},\"ordered_globals\":[],\"func_name\":\"changeNext\",\"heap\":{\"173\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",175]],[\"data\",3]],\"175\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",174]],[\"data\",1]],\"174\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",173]],[\"data\",2]]}}"], ["answer_id", 43], ["created_at", "2018-01-12 15:49:24.650996"], ["updated_at", "2018-01-12 15:49:24.650996"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 5007ms (Views: 0.4ms | ActiveRecord: 6.8ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:50:42 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.7ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+Completed 200 OK in 74ms (Views: 0.6ms | ActiveRecord: 7.8ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:52:52 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.6ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.5ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.4ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+Completed 200 OK in 5ms (Views: 0.3ms | ActiveRecord: 2.0ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:53:52 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r = p.next;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.5ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r = p.next;\n    "], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "answers" ("StudentCode", "exercise_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["StudentCode", "\n    r = p.next;\n    "], ["exercise_id", 7], ["created_at", "2018-01-12 15:53:52.950116"], ["updated_at", "2018-01-12 15:53:52.950116"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 44], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "traces" ("exercise_trace", "answer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["exercise_trace", "{\"stdout\":\"\",\"event\":\"step_line\",\"line\":2,\"stack_to_render\":[{\"func_name\":\"changeNext:2\",\"encoded_locals\":{\"p\":[\"REF\",175],\"r\":[\"REF\",173]},\"ordered_varnames\":[\"p\",\"r\"],\"parent_frame_id_list\":[],\"is_highlighted\":true,\"is_zombie\":false,\"is_parent\":false,\"unique_hash\":\"282\",\"frame_id\":282}],\"globals\":{},\"ordered_globals\":[],\"func_name\":\"changeNext\",\"heap\":{\"173\":[\"INSTANCE\",\"Link\",[\"next\",null],[\"data\",3]],\"175\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",174]],[\"data\",1]],\"174\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",173]],[\"data\",2]]}},\n{\"stdout\":\"\",\"event\":\"step_line\",\"line\":2,\"stack_to_render\":[{\"func_name\":\"changeNext:2\",\"encoded_locals\":{\"p\":[\"REF\",175],\"r\":[\"REF\",174]},\"ordered_varnames\":[\"p\",\"r\"],\"parent_frame_id_list\":[],\"is_highlighted\":true,\"is_zombie\":false,\"is_parent\":false,\"unique_hash\":\"290\",\"frame_id\":290}],\"globals\":{},\"ordered_globals\":[],\"func_name\":\"changeNext\",\"heap\":{\"174\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",173]],[\"data\",2]],\"173\":[\"INSTANCE\",\"Link\",[\"next\",null],[\"data\",3]],\"175\":[\"INSTANCE\",\"Link\",[\"next\",[\"REF\",174]],[\"data\",1]]}}"], ["answer_id", 44], ["created_at", "2018-01-12 15:53:56.570544"], ["updated_at", "2018-01-12 15:53:56.570544"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 3641ms (Views: 0.4ms | ActiveRecord: 6.3ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:54:15 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.2ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.0ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.0ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.0ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:55:50 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.6ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.4ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.3ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+Completed 200 OK in 5ms (Views: 0.4ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 15:55:59 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.6ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+Completed 200 OK in 7ms (Views: 0.6ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/app/assets/javascripts" for 192.168.33.1 at 2018-01-12 15:57:30 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/app/assets/javascripts"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  
+ActionController::RoutingError (No route matches [GET] "/assets/javascripts"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `block in call'
+activesupport (5.1.4) lib/active_support/logger_silence.rb:20:in `silence'
+activesupport (5.1.4) lib/active_support/logger.rb:63:in `block (3 levels) in broadcast'
+activesupport (5.1.4) lib/active_support/logger_silence.rb:20:in `silence'
+activesupport (5.1.4) lib/active_support/logger.rb:61:in `block (2 levels) in broadcast'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  
+ActionController::RoutingError (No route matches [GET] "/assets/javascripts/JsavWrapper.js"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `block in call'
+activesupport (5.1.4) lib/active_support/logger_silence.rb:20:in `silence'
+activesupport (5.1.4) lib/active_support/logger.rb:63:in `block (3 levels) in broadcast'
+activesupport (5.1.4) lib/active_support/logger_silence.rb:20:in `silence'
+activesupport (5.1.4) lib/active_support/logger.rb:61:in `block (2 levels) in broadcast'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:11:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 16:31:37 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (1.4ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.5ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+Completed 200 OK in 7ms (Views: 1.1ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 16:52:05 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx7", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    r.next = p;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx7"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx7"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.4ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    r.next = p;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 43], ["LIMIT", 1]]
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 1.6ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 17:05:06 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx1", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    p = p.next;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx1"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.5ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx1"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.3ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    p = p.next;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.4ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 20], ["LIMIT", 1]]
+Completed 200 OK in 4ms (Views: 0.3ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/answers/solve" for 192.168.33.20 at 2018-01-12 17:05:20 +0000
+Cannot render console from 192.168.33.20! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#solve as */*
+  Parameters: {"exercise_id"=>"JHAVEPOPEx1", "code"=>"public static Link changeNext(Link p, Link r)\n{\n    p = p.next;\n    return p;\n}\n", "answer"=>{"exercise_id"=>"JHAVEPOPEx1"}}
+Can't verify CSRF token authenticity.
+  [1m[36mExercise Load (0.5ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."exercise_id" = ? LIMIT ?[0m  [["exercise_id", "JHAVEPOPEx1"], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.3ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."StudentCode" = ? LIMIT ?[0m  [["StudentCode", "\n    p = p.next;\n    "], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.4ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 20], ["LIMIT", 1]]
+Completed 200 OK in 4ms (Views: 0.3ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 192.168.33.1 at 2018-01-19 17:12:05 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /var/lib/gems/2.3.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (4.8ms)
+Completed 200 OK in 18ms (Views: 11.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/exercises" for 192.168.33.1 at 2018-01-19 17:12:09 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ExercisesController#index as HTML
+  Rendering exercises/index.html.erb within layouts/application
+  [1m[36mExercise Load (2.8ms)[0m  [1m[34mSELECT "exercises".* FROM "exercises"[0m
+  Rendered exercises/index.html.erb within layouts/application (30.7ms)
+Completed 200 OK in 1691ms (Views: 1623.7ms | ActiveRecord: 6.6ms)
+
+
+Started GET "/exercises/1" for 192.168.33.1 at 2018-01-19 17:27:34 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ExercisesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mExercise Load (0.4ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering exercises/show.html.erb within layouts/application
+  [1m[36mAnswer Load (0.6ms)[0m  [1m[34mSELECT "answers".* FROM "answers" WHERE "answers"."exercise_id" = ?[0m  [["exercise_id", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 1], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 20], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 30], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 42], ["LIMIT", 1]]
+  Rendered collection of answers/_answer.html.erb [4 times] (45.3ms)
+  Rendered exercises/show.html.erb within layouts/application (194.2ms)
+Completed 200 OK in 351ms (Views: 318.2ms | ActiveRecord: 8.3ms)
+
+
+Started GET "/answers/visualize/exercises/1/answers/1" for 192.168.33.1 at 2018-01-19 17:27:36 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"1", "id"=>"1"}
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.8ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.6ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 1], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (157.5ms)
+Completed 200 OK in 297ms (Views: 265.7ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/answers/visualize/exercises/1/answers/.json" for 192.168.33.1 at 2018-01-19 17:27:37 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/answers/visualize/exercises/1/answers/.json"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/exercises/18" for 192.168.33.1 at 2018-01-19 17:27:59 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ExercisesController#show as HTML
+  Parameters: {"id"=>"18"}
+  [1m[36mExercise Load (0.5ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  Rendering exercises/show.html.erb within layouts/application
+  [1m[36mAnswer Load (0.4ms)[0m  [1m[34mSELECT "answers".* FROM "answers" WHERE "answers"."exercise_id" = ?[0m  [["exercise_id", 18]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 28], ["LIMIT", 1]]
+  Rendered collection of answers/_answer.html.erb [1 times] (2.3ms)
+  Rendered exercises/show.html.erb within layouts/application (12.4ms)
+Completed 200 OK in 121ms (Views: 112.4ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/answers/visualize/exercises/18/answers/28" for 192.168.33.1 at 2018-01-19 17:28:01 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"18", "id"=>"28"}
+  [1m[36mExercise Load (0.6ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.6ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 18], ["id", 28], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.5ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 28], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (58.8ms)
+Completed 200 OK in 183ms (Views: 165.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/exercises/8" for 192.168.33.1 at 2018-01-19 17:28:06 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ExercisesController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mExercise Load (0.5ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  Rendering exercises/show.html.erb within layouts/application
+  [1m[36mAnswer Load (0.4ms)[0m  [1m[34mSELECT "answers".* FROM "answers" WHERE "answers"."exercise_id" = ?[0m  [["exercise_id", 8]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendered collection of answers/_answer.html.erb [1 times] (4.4ms)
+  Rendered exercises/show.html.erb within layouts/application (19.5ms)
+Completed 200 OK in 158ms (Views: 149.6ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/9" for 192.168.33.1 at 2018-01-19 17:28:09 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"8", "id"=>"9"}
+  [1m[36mExercise Load (1.0ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.7ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 8], ["id", 9], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (50.4ms)
+Completed 200 OK in 150ms (Views: 133.6ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/.json" for 192.168.33.1 at 2018-01-19 17:28:09 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/answers/visualize/exercises/8/answers/.json"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/answers/visualize/exercises/8/answers/9" for 192.168.33.1 at 2018-01-19 17:29:31 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"8", "id"=>"9"}
+  [1m[36mExercise Load (0.9ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAnswer Load (1.2ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 8], ["id", 9], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.9ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (64.4ms)
+Completed 200 OK in 195ms (Views: 176.4ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/.json" for 192.168.33.1 at 2018-01-19 17:29:31 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/answers/visualize/exercises/8/answers/.json"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/exercises/8" for 192.168.33.1 at 2018-01-19 17:31:04 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ExercisesController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mExercise Load (0.6ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  Rendering exercises/show.html.erb within layouts/application
+  [1m[36mAnswer Load (0.8ms)[0m  [1m[34mSELECT "answers".* FROM "answers" WHERE "answers"."exercise_id" = ?[0m  [["exercise_id", 8]]
+  [1m[36mTrace Load (1.9ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendered collection of answers/_answer.html.erb [1 times] (40.8ms)
+  Rendered exercises/show.html.erb within layouts/application (125.9ms)
+Completed 200 OK in 1045ms (Views: 992.9ms | ActiveRecord: 10.0ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/9" for 192.168.33.1 at 2018-01-19 17:31:07 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"8", "id"=>"9"}
+  [1m[36mExercise Load (0.5ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.5ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 8], ["id", 9], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.8ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (86.4ms)
+Completed 200 OK in 206ms (Views: 187.6ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/9" for 192.168.33.1 at 2018-01-19 17:31:15 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"8", "id"=>"9"}
+  [1m[36mExercise Load (0.9ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.8ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 8], ["id", 9], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.8ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (75.9ms)
+Completed 200 OK in 265ms (Views: 232.7ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/9" for 192.168.33.1 at 2018-01-19 17:32:37 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"8", "id"=>"9"}
+  [1m[36mExercise Load (0.6ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.7ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 8], ["id", 9], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.4ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (47.3ms)
+Completed 200 OK in 155ms (Views: 142.4ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/9" for 192.168.33.1 at 2018-01-19 17:32:42 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"8", "id"=>"9"}
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.7ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 8], ["id", 9], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.4ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (74.9ms)
+Completed 200 OK in 213ms (Views: 197.7ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/exercises/1" for 192.168.33.1 at 2018-01-19 17:32:49 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ExercisesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mExercise Load (0.8ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering exercises/show.html.erb within layouts/application
+  [1m[36mAnswer Load (0.7ms)[0m  [1m[34mSELECT "answers".* FROM "answers" WHERE "answers"."exercise_id" = ?[0m  [["exercise_id", 1]]
+  [1m[36mTrace Load (0.6ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 1], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 20], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.0ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 30], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 42], ["LIMIT", 1]]
+  Rendered collection of answers/_answer.html.erb [4 times] (12.2ms)
+  Rendered exercises/show.html.erb within layouts/application (25.2ms)
+Completed 200 OK in 151ms (Views: 138.4ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/answers/visualize/exercises/1/answers/1" for 192.168.33.1 at 2018-01-19 17:32:51 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"1", "id"=>"1"}
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.6ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.7ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 1], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (58.2ms)
+Completed 200 OK in 153ms (Views: 135.6ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/answers/visualize/exercises/1/answers/1" for 192.168.33.1 at 2018-01-19 17:34:20 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"1", "id"=>"1"}
+  [1m[36mExercise Load (0.4ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.4ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.4ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 1], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (97.3ms)
+Completed 200 OK in 298ms (Views: 286.9ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/answers/visualize/exercises/1/answers/.json" for 192.168.33.1 at 2018-01-19 17:34:21 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/answers/visualize/exercises/1/answers/.json"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/exercises/8" for 192.168.33.1 at 2018-01-19 17:34:29 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ExercisesController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mExercise Load (0.6ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  Rendering exercises/show.html.erb within layouts/application
+  [1m[36mAnswer Load (0.8ms)[0m  [1m[34mSELECT "answers".* FROM "answers" WHERE "answers"."exercise_id" = ?[0m  [["exercise_id", 8]]
+  [1m[36mTrace Load (5.6ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendered collection of answers/_answer.html.erb [1 times] (8.1ms)
+  Rendered exercises/show.html.erb within layouts/application (25.4ms)
+Completed 200 OK in 160ms (Views: 142.2ms | ActiveRecord: 6.9ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/9" for 192.168.33.1 at 2018-01-19 17:34:31 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AnswersController#visualize as HTML
+  Parameters: {"exercise_id"=>"8", "id"=>"9"}
+  [1m[36mExercise Load (0.7ms)[0m  [1m[34mSELECT  "exercises".* FROM "exercises" WHERE "exercises"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAnswer Load (0.6ms)[0m  [1m[34mSELECT  "answers".* FROM "answers" WHERE "answers"."exercise_id" = ? AND "answers"."id" = ? LIMIT ?[0m  [["exercise_id", 8], ["id", 9], ["LIMIT", 1]]
+  [1m[36mTrace Load (0.6ms)[0m  [1m[34mSELECT  "traces".* FROM "traces" WHERE "traces"."answer_id" = ? LIMIT ?[0m  [["answer_id", 9], ["LIMIT", 1]]
+  Rendering answers/visualize.html.erb within layouts/application
+  Rendered answers/visualize.html.erb within layouts/application (56.2ms)
+Completed 200 OK in 173ms (Views: 156.8ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/answers/visualize/exercises/8/answers/.json" for 192.168.33.1 at 2018-01-19 17:34:32 +0000
+Cannot render console from 192.168.33.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  
+ActionController::RoutingError (No route matches [GET] "/answers/visualize/exercises/8/answers/.json"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:20:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'

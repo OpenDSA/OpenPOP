@@ -1,14 +1,24 @@
-OpenPOP
-=======
+# README
 
-HTML5 version of JhavePOP, with automated assessment of problems.
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-See http://jhave.org/jhavepop to see the original JhavePOP.
+Things you may want to cover:
 
-NEW ADDITION
-============
+* Ruby version
 
-The Java-Visualizer subrepository contains files for java-code visualizations based off of David Pritchard's Java-Visualizer from Philip Guo's Online Python Tutor. 
+* System dependencies
 
-Currently the repository is incomplete. 
+* Configuration
 
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  StudentCode: MyText
+  exercise: one
+
+two:
+  StudentCode: MyText
+  exercise: two
