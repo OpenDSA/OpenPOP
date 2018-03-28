@@ -5,6 +5,7 @@ function drawCircularArrow(last, first, av, top)
     longArrow.hide();
     return longArrow;
 }
+
 function connection(obj1, obj2, jsav, position) {
     if (obj1 === obj2) { return; }
     var pos1 = obj1.offset();
@@ -59,6 +60,7 @@ var VisualizedLinkedList = new function (){
         this.av = av;
         this.linkedList = av.ds.list({nodegap: 30, top: 40, left: 400});
     };
+    this.ListOfRedLabels = [];
     this.LinkedListSteps = [];
     this.linkedListItems = [];
     this.linkedListReferences = [];
@@ -67,6 +69,15 @@ var VisualizedLinkedList = new function (){
     this.head = null;
     this.tail = null;
     this.circularEdge = false;
+    this.blackifyAll = function (listOfObjects) {
+        for (var obj in listOfObjects){
+            if(typeof(obj.css) !== 'undefined')
+                obj.css({"stroke" : "black"});
+            else
+                if(obj < this.listOfOtherLinks.length)
+                    this.listOfOtherLinks[parseInt(obj)].arrow.css({"stroke" : "black"});
+        }
+    };
     this.size = function () {
         return this.linkedListItems.length;
     };
@@ -91,8 +102,10 @@ var VisualizedLinkedList = new function (){
     };
     this.moveHead = function(index){
         var i = index;
+        window.alert("here");
         if(this.headPointerPositionChanged(i))
         {
+
             if(!this.circular){ //if no one else is pointing to the first node
                 var node = this.linkedList.get(this.findHeadPosition(this.LinkedListSteps[i - 1].pointers));
                 node.highlight();
@@ -100,8 +113,9 @@ var VisualizedLinkedList = new function (){
                 this.setHeadPointer(this.LinkedListSteps[i].pointers);
                 //this.head.css("color", "red");
                 this.head.arrow.css({"stroke" : "red"});
-                this.av.step();
-                this.head.arrow.css({"stroke" : "black"});
+                this.ListOfRedLabels.push(this.head.arrow);
+                //this.av.step();
+                //this.head.arrow.css({"stroke" : "black"});
                 node.hide();
                 node.edgeToNext().hide();
             }
@@ -132,6 +146,9 @@ var VisualizedLinkedList = new function (){
         this.setTailPointer(this.LinkedListSteps[startIteration].pointers, startIteration);
         this.av.step();
         for (this.i = startIteration+1; this.i < this.LinkedListSteps.length; this.i++){
+            if(this.ListOfRedLabels.length >0){
+                this.blackifyAll(this.ListOfRedLabels);
+            }
             this.linkedListItems = this.LinkedListSteps[this.i].listItems;
             this.linkedListReferences = this.LinkedListSteps[this.i].refs;
             this.linkedItemsNext = this.LinkedListSteps[this.i].nexts;
@@ -171,6 +188,7 @@ var VisualizedLinkedList = new function (){
             }
             else {
                 this.head.arrow.css({"stroke": "red"});
+                this.ListOfRedLabels.push(this.head.arrow);
                 this.setHeadPointer(this.LinkedListSteps[index].pointers);
                 this.av.step();
             }
@@ -198,6 +216,7 @@ var VisualizedLinkedList = new function (){
                     if(this.headPointerPositionChanged(index)) {//the the new item is the new head of the list
                         this.setHeadPointer(this.LinkedListSteps[index].pointers);
                         this.head.arrow.css({"stroke" : "red"});
+                        this.ListOfRedLabels.push(this.head.arrow);
                     }
                 }
                 else {
@@ -226,6 +245,7 @@ var VisualizedLinkedList = new function (){
                             var newLink = this.av.pointer(p.variable, newNode,{anchor:"center bottom", myAnchor:"right top",top:-5, left:-35, arrowAnchor: "center bottom"});
                             newNode.highlight();
                             newLink.arrow.css({"stroke": "red"});
+                            this.ListOfRedLabels.push(newLink.arrow);
                             this.av.step();
                             this.linkedList.addFirst(newNode);
                             this.layout();
@@ -233,6 +253,7 @@ var VisualizedLinkedList = new function (){
                             this.i++;
                             this.head.target(newNode);
                             this.head.arrow.css({"stroke": "red"});
+                            this.ListOfRedLabels.push(this.head.arrow);
                             this.layout();
                             newNode.unhighlight();
                             newLink.hide();
@@ -280,6 +301,7 @@ var VisualizedLinkedList = new function (){
                             this.av, this.linkedList.position());
                         circularEdge.show();
                         circularEdge.css({stroke: "red"});
+                        this.ListOfRedLabels.push(circularEdge);
                         this.linkedList.get(indexOfChangedNode).next(this.linkedList.get(indexOfNewNext));
                         this.linkedList.get(indexOfChangedNode).edgeToNext().hide();
                         return true;
@@ -342,6 +364,7 @@ var VisualizedLinkedList = new function (){
             dashline.hide();
             this.linkedList.remove(i);
             nodeFrom.edgeToNext().css({"stroke" : "red"});
+            this.ListOfRedLabels.push(nodeFrom.edgeToNext());
             this.layout();
         }
 
@@ -372,9 +395,10 @@ var VisualizedLinkedList = new function (){
                     this.av.step();
                     this.linkedList.get(length - i - 1).value(current);
                     this.linkedList.get(length - i - 1).css({"color":"red"});
+                    this.ListOfRedLabels.push(this.linkedList.get(length - i - 1));
                     this.linkedList.get(length - i - 1).unhighlight();
-                    this.av.step();
-                    this.linkedList.get(length - i - 1).css({"color":"black"});
+                    //this.av.step();
+                    //this.linkedList.get(length - i - 1).css({"color":"black"});
                     changed = true;
                 }
             }
@@ -385,15 +409,18 @@ var VisualizedLinkedList = new function (){
         this.circular = true;
         this.circularEdge = drawCircularArrow(this.linkedList.get(0), this.linkedList.get(2), this.av, this.linkedList.position());
         this.circularEdge.css({"stroke" : "red"});
+        this.ListOfRedLabels.push(this.circularEdge);
         this.circularEdge.show();
-        //this.linkedList.last().next(this.linkedList.first());
-        //var edge = this.linkedList.get(this.linkedListItems.length - 1).edgeToNext();
-        //edge.hide();
-        this.av.step();
+        //these lines are required to show problem 7 correctly
+        this.linkedList.last().next(this.linkedList.first());
+        var edge = this.linkedList.get(this.linkedListItems.length - 1).edgeToNext();
+        edge.hide();
+        this.layout();
+        ////this.av.step();
         //this.circularEdge = null;
         //this.circularEdge = drawCircularArrow(this.linkedList.get(0), this.linkedList.get(2), this.av, this.linkedList.position(), "black");;
-        this.circularEdge.css({"stroke" : "black"});
-        this.circularEdge.show();
+        ////this.circularEdge.css({"stroke" : "black"});
+        ////this.circularEdge.show();
         return true;
 
     };
@@ -403,19 +430,41 @@ var VisualizedLinkedList = new function (){
         else
         {
             this.circularEdge.hide();
-            this.linkedList.last().next(null);
-            this.linkedList.layout()();
-            this.linkedList.last().next(this.linkedList.first());
+            //this.linkedList.last().next(null);
+            var target = this.linkedList.get(this.linkedListItems.length -1).next();
+            this.linkedList.get(this.linkedListItems.length -1).next(null);
+            this.linkedList.layout();
+            this.linkedList.get(this.linkedListItems.length -1).next(target);
+            this.linkedList.get(this.linkedListItems.length -1).edgeToNext().hide();
             this.circularEdge.show();
         }
     };
+    this.removeNodeFromList = function (index, currentNodeRef, currentNodeIndex) {
+        var i;
+      for ( i= 0;  i< this.LinkedListSteps[index].nexts.length; i++){
+          if(this.LinkedListSteps[index].nexts[i] === currentNodeRef){
+              return;//will not be removed
+          }
+      }
+      //No other link points to the node. So it should be removed
+        //1- hide it
+        this.av.step();
+        this.linkedList.get(currentNodeIndex).edgeToNext().hide();
+        this.linkedList.get(currentNodeIndex).hide();
+        this.av.step();
+        this.linkedList.remove(currentNodeIndex);
+        this.layout();
+    };
     this.setHeadPointer = function (listOfVariableNames) {
 
-        var index = this.findHeadPosition(listOfVariableNames)
+        var index = this.findHeadPosition(listOfVariableNames);
 
         this.head.target(this.linkedList.get(index));
-        //this.head.show();
-
+        if(this.i >0) {
+            var nodeRef = this.LinkedListSteps[this.i - 1].pointers[0].REF;
+            this.removeNodeFromList(this.i, nodeRef, 0);
+            //this.head.show();
+        }
     };
     this.setTailPointer = function (listOfVariableNames, iterationIndex) {
         var index = -1;
@@ -434,8 +483,9 @@ var VisualizedLinkedList = new function (){
         else if(this.tailPointerPositionChanged(iterationIndex)){
             this.tail.target(this.linkedList.get(index2));
             this.tail.arrow.css({"stroke" : "red"});
-            this.av.step();
-            this.tail.arrow.css({"stroke" : "black"});
+            this.ListOfRedLabels.push(this.tail.arrow);
+            //this.av.step();
+            //this.tail.arrow.css({"stroke" : "black"});
         }
     };
     this.addNewListItems = function (listOfItems) {
@@ -534,8 +584,9 @@ var VisualizedLinkedList = new function (){
                             var l = this.listOfOtherLinks[indexOfPointerInListOfLinks];
                             l.target(this.linkedList.get(index2));
                             l.arrow.css({"stroke": "red"});
-                            this.av.step();
-                            l.arrow.css({"stroke": "black"});
+                            this.ListOfRedLabels.push(indexOfPointerInListOfLinks);
+                            //this.av.step();
+                            //l.arrow.css({"stroke": "black"});
                             changed = true;
                         }
                     }
