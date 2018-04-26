@@ -102,7 +102,7 @@ var VisualizedLinkedList = new function (){
     };
     this.moveHead = function(index){
         var i = index;
-        window.alert("here");
+        //window.alert("here");
         if(this.headPointerPositionChanged(i))
         {
 
@@ -724,7 +724,7 @@ function visualize(testvisualizerTrace) {
             pointers: listOfVariableNames
         };
         VisualizedLinkedList.addNewListItems(object);
-        window.alert(object.toSource());
+        //window.alert(object.toSource());
     }
     //window.alert(VisualizedLinkedList.LinkedListSteps.toSource());
     VisualizedLinkedList.visualize();

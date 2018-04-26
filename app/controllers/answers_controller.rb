@@ -18,21 +18,21 @@ class AnswersController < ApplicationController
   end
 
   def visualize
-    puts params.inspect
+    #puts params.inspect
     @exercise = Exercise.find(params[:exercise_id])
 
     @answer = @exercise.answers.find(params[:id])
-    puts @answer.trace
+    #puts @answer.trace
     if @answer.trace.nil?
-      puts"new trace created"
-      puts @answer.trace
+      #puts"new trace created"
+      #puts @answer.trace
       trace = generate_code_trace(@exercise.code, @answer.StudentCode)
       @trace = @answer.create_trace(exercise_trace: trace)
     else
-      puts"old trace used"
+      #puts"old trace used"
       @trace = @answer.trace
     end
-    puts @trace.exercise_trace
+    #puts @trace.exercise_trace
     @openpop_results = build_visualization(@trace.exercise_trace, @answer.StudentCode)
   end
 
@@ -42,18 +42,18 @@ class AnswersController < ApplicationController
     student_answer = student_answer.split('{')[1].split('return')[0]
     @answer = Answer.find_by_StudentCode(student_answer)
     if @answer.nil?
-      puts"new one created"
+      #puts"new one created"
       @answer = @exercise.answers.create(StudentCode: student_answer)
     end
     if @answer.trace.nil?
-      puts"new trace created"
+      #puts"new trace created"
       trace = generate_code_trace(@exercise.code, student_answer)
       @trace = @answer.create_trace(exercise_trace: trace)
     else
-      puts"old trace used"
+      #puts"old trace used"
         @trace = @answer.trace
     end
-    puts @trace.exercise_trace
+    #puts @trace.exercise_trace
     #results = JSON.parse('[' + trace + ']')
     #respond_with json: trace
     respond_to do |format|
@@ -68,7 +68,7 @@ class AnswersController < ApplicationController
     solution = params[:solution]
     @exercise = Exercise.find_by_exercise_id(id)
     @answer = Answer.create(StudentCode: solution)
-    puts @exercise.code
+    #puts @exercise.code
     @answer = @exercise.answers.create(StudentCode: solution)
     redirect_to "/answers/visualize/exercises/#{@exercise.id}/answers/#{@answer.id}"
   end
