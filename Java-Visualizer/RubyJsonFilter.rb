@@ -1,3 +1,4 @@
+
 class String
   def numeric?
     Float(self) != nil rescue false
@@ -137,8 +138,13 @@ class EventManager
   def modify_lines (code)
     line_number = 0
     event_number = 0
-
-    while line_number != code.length
+    loop_counter = 0 #add this code to prevent an exception occured because of using {} in student solution code
+    if @filtered_events.length < code.length 
+      loop_counter = @filtered_events.length
+    else
+      loop_counter = code.length
+    end
+    while line_number != loop_counter
       #modify = Event.new
       #temp_string = ""
       #temp_line = 0

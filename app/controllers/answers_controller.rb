@@ -1,3 +1,4 @@
+
 class AnswersController < ApplicationController
 
   respond_to :json, :html
@@ -13,7 +14,12 @@ class AnswersController < ApplicationController
   def destroy
     @exercise = Exercise.find(params[:exercise_id])
     @answer = @exercise.answers.find(params[:id])
-    @answer.destroy
+    if @answer.trace.nil?
+      @answer.destroy
+    else
+      @answer.trace.destroy
+      @answer.destroy
+    end
     redirect_to exercise_path(@exercise)
   end
 
@@ -39,7 +45,7 @@ class AnswersController < ApplicationController
   def solve
     @exercise = Exercise.find_by_exercise_id(params[:exercise_id])
     student_answer = params[:code]
-    student_answer = student_answer.split('{')[1].split('return')[0]
+    student_answer = student_answer[student_answer.index('{')+1..student_answer.index('return')-1]
     @answer = Answer.find_by_StudentCode(student_answer)
     if @answer.nil?
       #puts"new one created"

@@ -1,3 +1,4 @@
+
 "use strict";
 function drawCircularArrow(last, first, av, top)
 {
@@ -102,7 +103,7 @@ var VisualizedLinkedList = new function (){
     };
     this.moveHead = function(index){
         var i = index;
-        //window.alert("here");
+        window.alert("here");
         if(this.headPointerPositionChanged(i))
         {
 
@@ -132,11 +133,13 @@ var VisualizedLinkedList = new function (){
           return false;
     };
     this.visualize = function ( ) {
-        this.av.displayInit();
+        //this.av.displayInit(); \\if We want to make the first slide empty
         var startIteration = 0;
         while(this.showEmptyLinkedList(startIteration)){
             startIteration += 1;
         }
+        while(this.findHeadPosition(this.LinkedListSteps[startIteration].pointers) === -1)
+            startIteration += 1;
         //window.alert(startIteration);
         this.linkedListItems = this.LinkedListSteps[startIteration].listItems;
         this.linkedListReferences = this.LinkedListSteps[startIteration].refs;
@@ -144,7 +147,7 @@ var VisualizedLinkedList = new function (){
         this.createLinkedList();
         this.setHeadPointer(this.LinkedListSteps[startIteration].pointers);
         this.setTailPointer(this.LinkedListSteps[startIteration].pointers, startIteration);
-        this.av.step();
+        this.av.displayInit();//this.av.step();
         for (this.i = startIteration+1; this.i < this.LinkedListSteps.length; this.i++){
             if(this.ListOfRedLabels.length >0){
                 this.blackifyAll(this.ListOfRedLabels);
@@ -446,10 +449,15 @@ var VisualizedLinkedList = new function (){
               return;//will not be removed
           }
       }
+      for (i = 0; i <this.listOfOtherLinksPointTo.length; i++){
+        if(this.listOfOtherLinksPointTo[i] === currentNodeRef){
+            return;//will not be removed
+        }
+      }
       //No other link points to the node. So it should be removed
         //1- hide it
         this.av.step();
-        this.linkedList.get(currentNodeIndex).edgeToNext().hide();
+       // this.linkedList.get(currentNodeIndex).edgeToNext().hide();
         this.linkedList.get(currentNodeIndex).hide();
         this.av.step();
         this.linkedList.remove(currentNodeIndex);
@@ -460,8 +468,9 @@ var VisualizedLinkedList = new function (){
         var index = this.findHeadPosition(listOfVariableNames);
 
         this.head.target(this.linkedList.get(index));
-        if(this.i >0) {
-            var nodeRef = this.LinkedListSteps[this.i - 1].pointers[0].REF;
+        if(this.i >0) 
+        {
+            var nodeRef = this.LinkedListSteps[this.i -1].pointers[0].REF;
             this.removeNodeFromList(this.i, nodeRef, 0);
             //this.head.show();
         }
@@ -524,6 +533,8 @@ var VisualizedLinkedList = new function (){
                 break;
             }
         }
+        if(index === -1)
+            return -1;
         var ref = listOfVariableNames[index].REF;
         var index2 = this.size() - 1 - this.getListItemIndexByReference(ref);
         //window.alert(index2);
@@ -563,6 +574,7 @@ var VisualizedLinkedList = new function (){
     {
         if(index == 0)
             return false;
+        //find the last occurance for the same link name in previous steps
         if(this.findLinkPosition(this.LinkedListSteps[index].pointers, linkName) !==
             this.findLinkPosition(this.LinkedListSteps[index - 1].pointers, linkName))
             return true;
@@ -601,6 +613,7 @@ var VisualizedLinkedList = new function (){
                             other = this.av.pointer(link.variable, this.linkedList.get(index2), {left: 35});
                         this.listOfOtherLinks.push(other);
                         this.listOfOtherLinksNames.push(link.variable);
+                        this.listOfOtherLinksPointTo.push(ref);
                         changed = true;
                     }
                 }
@@ -610,6 +623,7 @@ var VisualizedLinkedList = new function (){
     };
     this.listOfOtherLinks = [];
     this.listOfOtherLinksNames = [];
+    this.listOfOtherLinksPointTo = [];
 };
 
 
@@ -624,8 +638,7 @@ function visualize(testvisualizerTrace) {
 
 
     var av; // pseudocode display
-    // Load the config object with interpreter and code created by odsaUtils.js
-    var config = ODSA.UTILS.loadConfig();      // Settings for the AV
+    // Settings for the AV
     av = new JSAV($('.avcontainer'));
     VisualizedLinkedList.objectConstructor(av);
 
@@ -695,25 +708,28 @@ function visualize(testvisualizerTrace) {
                 if (value.constructor === Array && value.length === 4) {
                     //window.alert(value[3][1].toSource());
                     next = value[2];
-                    var storedValue;
-                    if (value[3][1].constructor === Array) {//The Array contains the data and its type so take the data only
-                        storedValue = value[3][1][1];
-                    }
-                    else {
-                        storedValue = value[3][1];
-                    }
-                    if(typeof storedValue === 'number' && storedValue > 9 )//it should be a letter
+                    if(value[3][1] != null)
                     {
-                        storedValue = String.fromCharCode(storedValue);
-                    }
-                    linkedListItems.push(storedValue);
-                    linkedListReferences.push(ref);
-                    if (next[1] != null) {
-                        linkedItemsNext.push(next[1][1]);
-                    }
-                    else {
-                        linkedItemsNext.push(null);
-                    }
+                        var storedValue;
+                        if (value[3][1].constructor === Array) {//The Array contains the data and its type so take the data only
+                            storedValue = value[3][1][1];
+                        }
+                        else {
+                            storedValue = value[3][1];
+                        }
+                        if(typeof storedValue === 'number' && storedValue > 9 )//it should be a letter
+                        {
+                            storedValue = String.fromCharCode(storedValue);
+                        }
+                        linkedListItems.push(storedValue);
+                        linkedListReferences.push(ref);
+                        if (next[1] != null) {
+                            linkedItemsNext.push(next[1][1]);
+                        }
+                        else {
+                            linkedItemsNext.push(null);
+                        }
+		            }
                 }
             }
         }
@@ -723,7 +739,11 @@ function visualize(testvisualizerTrace) {
             nexts: linkedItemsNext,
             pointers: listOfVariableNames
         };
-        VisualizedLinkedList.addNewListItems(object);
+        //filter all steps that has "__return__"
+        if(object.pointers.length>0 && object.pointers[0].variable === "p" && object.pointers[object.pointers.length - 1].variable !== "__return__")
+            VisualizedLinkedList.addNewListItems(object);    
+        
+        
         //window.alert(object.toSource());
     }
     //window.alert(VisualizedLinkedList.LinkedListSteps.toSource());
