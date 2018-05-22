@@ -57,9 +57,9 @@ function connection(obj1, obj2, jsav, position) {
             "stroke-width": 2});*/
 }
 var VisualizedLinkedList = new function (){
-    this.objectConstructor = function (av) {
+    this.objectConstructor = function (av, codeObject) {
         this.av = av;
-        this.linkedList = av.ds.list({nodegap: 30, top: 40, left: 400});
+        this.linkedList = av.ds.list({nodegap: 30, top: 40, left: codeObject.element.outerWidth() + 100});
     };
     this.ListOfRedLabels = [];
     this.LinkedListSteps = [];
@@ -147,7 +147,9 @@ var VisualizedLinkedList = new function (){
         this.createLinkedList();
         this.setHeadPointer(this.LinkedListSteps[startIteration].pointers);
         this.setTailPointer(this.LinkedListSteps[startIteration].pointers, startIteration);
+        this.av.umsg("Initial Configuration");
         this.av.displayInit();//this.av.step();
+        this.av.umsg(" ");
         for (this.i = startIteration+1; this.i < this.LinkedListSteps.length; this.i++){
             if(this.ListOfRedLabels.length >0){
                 this.blackifyAll(this.ListOfRedLabels);
@@ -157,10 +159,11 @@ var VisualizedLinkedList = new function (){
             this.linkedItemsNext = this.LinkedListSteps[this.i].nexts;
             this.linkedListReferences = this.LinkedListSteps[this.i].refs;
             //determine the change and visualize it
-            if(this.determineTheChange(this.i))
-            //next slide
-                this.av.step();
+            if(this.determineTheChange(this.i)){
+               this.av.step();
+            }
         }
+        this.av.umsg("Final Configuration");
         this.av.recorded();
     };
     this.determineTheChange = function (index) {
@@ -173,7 +176,7 @@ var VisualizedLinkedList = new function (){
             this.checkIfCircularList(index);
             if (this.circular && this.linkedList.get(0).edgeToNext() !== null) {
                 this.convertToCircularList();
-                change = true;
+                return true;
             }
         }
         if(currentListItems.length > previousListItems.length){
@@ -194,6 +197,7 @@ var VisualizedLinkedList = new function (){
                 this.ListOfRedLabels.push(this.head.arrow);
                 this.setHeadPointer(this.LinkedListSteps[index].pointers);
                 this.av.step();
+                return true;
             }
         }
         if(currentListItems.length === previousListItems.length){
@@ -319,7 +323,8 @@ var VisualizedLinkedList = new function (){
             }
 
         }
-        return false;
+        else //no changes at all so return false
+            return false;
     };
     this.changeListNexts = function(index){
         var currentListOfRefs = this.LinkedListSteps[index].nexts;
@@ -384,6 +389,7 @@ var VisualizedLinkedList = new function (){
           }
           if(circular)
               this.circular = true;
+        return circular;
     };
     this.changeListValues = function (index) {
         var changed = false;
@@ -446,12 +452,12 @@ var VisualizedLinkedList = new function (){
         var i;
       for ( i= 0;  i< this.LinkedListSteps[index].nexts.length; i++){
           if(this.LinkedListSteps[index].nexts[i] === currentNodeRef){
-              return;//will not be removed
+              return false;//will not be removed
           }
       }
       for (i = 0; i <this.listOfOtherLinksPointTo.length; i++){
         if(this.listOfOtherLinksPointTo[i] === currentNodeRef){
-            return;//will not be removed
+            return false;//will not be removed
         }
       }
       //No other link points to the node. So it should be removed
@@ -462,6 +468,7 @@ var VisualizedLinkedList = new function (){
         this.av.step();
         this.linkedList.remove(currentNodeIndex);
         this.layout();
+        return true;
     };
     this.setHeadPointer = function (listOfVariableNames) {
 
@@ -640,11 +647,11 @@ function visualize(testvisualizerTrace) {
     var av; // pseudocode display
     // Settings for the AV
     av = new JSAV($('.avcontainer'));
-    VisualizedLinkedList.objectConstructor(av);
+    var visualizationCode = testvisualizerTrace.code,
+    pseudo = av.code(visualizationCode, {top:40, left: 50})
+    VisualizedLinkedList.objectConstructor(av, pseudo);
 
     var removed = [],
-        visualizationCode = testvisualizerTrace.code,
-        pseudo = av.code(visualizationCode, {top:40, left: 50}),
         visualizationTrace = testvisualizerTrace.trace,
         codeLines = visualizationCode.replace(/(\r\n|\n|\r)/gm, "<br>").split("<br>"),
         traceObject,
@@ -654,7 +661,7 @@ function visualize(testvisualizerTrace) {
         Heap,
         leftMargin = 400,
         topMargin = 40,
-        linkedList = av.ds.list({nodegap: 30, top: topMargin, left: leftMargin}),
+        //linkedList = av.ds.list({nodegap: 30, top: topMargin, left: leftMargin}),
         i,
         j,
         k,
@@ -671,7 +678,7 @@ function visualize(testvisualizerTrace) {
             linkedItemsNext = [];
 
         notCircular = false;
-        linkedList = av.ds.list({nodegap: nodeGap, top: topMargin, left: leftMargin});
+        //linkedList = av.ds.list({nodegap: nodeGap, top: topMargin, left: leftMargin});
         while(codeLines[lineIndex-1]==="")
             lineIndex++;
         if(i != 0) {
@@ -729,7 +736,7 @@ function visualize(testvisualizerTrace) {
                         else {
                             linkedItemsNext.push(null);
                         }
-		            }
+                    }
                 }
             }
         }
@@ -741,10 +748,7 @@ function visualize(testvisualizerTrace) {
         };
         //filter all steps that has "__return__"
         if(object.pointers.length>0 && object.pointers[0].variable === "p" && object.pointers[object.pointers.length - 1].variable !== "__return__")
-            VisualizedLinkedList.addNewListItems(object);    
-        
-        
-        //window.alert(object.toSource());
+            VisualizedLinkedList.addNewListItems(object);
     }
     //window.alert(VisualizedLinkedList.LinkedListSteps.toSource());
     VisualizedLinkedList.visualize();
