@@ -57,10 +57,25 @@ function connection(obj1, obj2, jsav, position) {
             "stroke-width": 2});*/
 }
 var VisualizedLinkedList = new function (){
-    this.objectConstructor = function (av, codeObject) {
+        this.objectConstructor = function (av, code) {
         this.av = av;
-        this.linkedList = av.ds.list({nodegap: 30, top: 40, left: codeObject.element.outerWidth() + 100});
+        this.studentCode = code;
+        this.studentCode = this.filterStudentCode();
+        this.codeObject =  this.av.code(this.studentCode, {top:40, left: 50})
+        this.linkedList = av.ds.list({nodegap: 30, top: 40, left: this.codeObject.element.outerWidth() + 100});
     };
+    this.filterStudentCode = function(){
+        var lines = this.studentCode.split('\n');
+        var newLines = [];
+        lines.forEach(line => {
+            if(line.trim() !== "")
+                newLines.push(line);
+        });
+        if(newLines.length > 1)
+            return newLines.join('\n');
+        else
+            return newLines[0];
+    }
     this.ListOfRedLabels = [];
     this.LinkedListSteps = [];
     this.linkedListItems = [];
@@ -135,6 +150,7 @@ var VisualizedLinkedList = new function (){
     this.visualize = function ( ) {
         //this.av.displayInit(); \\if We want to make the first slide empty
         var startIteration = 0;
+        var codeLineNumber = 0;
         while(this.showEmptyLinkedList(startIteration)){
             startIteration += 1;
         }
@@ -151,6 +167,7 @@ var VisualizedLinkedList = new function (){
         this.av.displayInit();//this.av.step();
         this.av.umsg(" ");
         for (this.i = startIteration+1; this.i < this.LinkedListSteps.length; this.i++){
+            this.heighlightCode(codeLineNumber)
             if(this.ListOfRedLabels.length >0){
                 this.blackifyAll(this.ListOfRedLabels);
             }
@@ -160,12 +177,16 @@ var VisualizedLinkedList = new function (){
             this.linkedListReferences = this.LinkedListSteps[this.i].refs;
             //determine the change and visualize it
             if(this.determineTheChange(this.i)){
+                codeLineNumber++;
                this.av.step();
             }
         }
         this.av.umsg("Final Configuration");
         this.av.recorded();
     };
+    this.heighlightCode = function(lineNumber) {
+        var lines = this.studentCode.split('\n');
+    }
     this.determineTheChange = function (index) {
         var currentListItems = this.LinkedListSteps[index].listItems;
         var previousListItems = this.LinkedListSteps[index - 1].listItems;
@@ -196,7 +217,7 @@ var VisualizedLinkedList = new function (){
                 this.head.arrow.css({"stroke": "red"});
                 this.ListOfRedLabels.push(this.head.arrow);
                 this.setHeadPointer(this.LinkedListSteps[index].pointers);
-                this.av.step();
+                //this.av.step();
                 return true;
             }
         }
@@ -463,7 +484,7 @@ var VisualizedLinkedList = new function (){
       //No other link points to the node. So it should be removed
         //1- hide it
         this.av.step();
-       // this.linkedList.get(currentNodeIndex).edgeToNext().hide();
+        this.linkedList.get(currentNodeIndex).edgeToNext().hide();
         this.linkedList.get(currentNodeIndex).hide();
         this.av.step();
         this.linkedList.remove(currentNodeIndex);
@@ -647,9 +668,8 @@ function visualize(testvisualizerTrace) {
     var av; // pseudocode display
     // Settings for the AV
     av = new JSAV($('.avcontainer'));
-    var visualizationCode = testvisualizerTrace.code,
-    pseudo = av.code(visualizationCode, {top:40, left: 50})
-    VisualizedLinkedList.objectConstructor(av, pseudo);
+    var visualizationCode = testvisualizerTrace.code;
+    VisualizedLinkedList.objectConstructor(av, visualizationCode);
 
     var removed = [],
         visualizationTrace = testvisualizerTrace.trace,
@@ -671,7 +691,6 @@ function visualize(testvisualizerTrace) {
         maxj,
         nodeGap = 30,
         notCircular = false;
-    var lineIndex = 1;
     for(i =0, maxi = visualizationTrace.length; i<maxi; i+=1) {
         var linkedListItems = [],
             linkedListReferences = [],
@@ -679,11 +698,6 @@ function visualize(testvisualizerTrace) {
 
         notCircular = false;
         //linkedList = av.ds.list({nodegap: nodeGap, top: topMargin, left: leftMargin});
-        while(codeLines[lineIndex-1]==="")
-            lineIndex++;
-        if(i != 0) {
-            pseudo.setCurrentLine(lineIndex++);
-        }
         for(k = 0, maxk = removed.length; k<maxk; k+=1)
             removed[k].hide();
         traceObject = visualizationTrace[i];
