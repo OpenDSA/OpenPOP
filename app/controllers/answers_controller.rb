@@ -1,6 +1,4 @@
-
 class AnswersController < ApplicationController
-
   respond_to :json, :html
   def create
     if @exercise.nil? and @answer.nil?
@@ -14,32 +12,29 @@ class AnswersController < ApplicationController
   def destroy
     @exercise = Exercise.find(params[:exercise_id])
     @answer = @exercise.answers.find(params[:id])
-    if @answer.trace.nil?
-      @answer.destroy
-    else
-      @answer.trace.destroy
-      @answer.destroy
-    end
+    @answer.trace.destroy unless @answer.trace.nil?
+    @answer.destroy
     redirect_to exercise_path(@exercise)
   end
 
   def visualize
-    #puts params.inspect
+    # puts params.inspect
     @exercise = Exercise.find(params[:exercise_id])
 
     @answer = @exercise.answers.find(params[:id])
-    #puts @answer.trace
+    # puts @answer.trace
     if @answer.trace.nil?
-      #puts"new trace created"
-      #puts @answer.trace
+      # puts"new trace created"
+      # puts @answer.trace
       trace = generate_code_trace(@exercise.code, @answer.StudentCode)
       @trace = @answer.create_trace(exercise_trace: trace)
     else
-      #puts"old trace used"
+      #  puts"old trace used"
       @trace = @answer.trace
     end
-    #puts @trace.exercise_trace
-    @openpop_results = build_visualization(@trace.exercise_trace, @answer.StudentCode)
+    # puts @trace.exercise_trace
+    @openpop_results = build_visualization(@trace.exercise_trace,
+                                           @answer.StudentCode)
   end
 
   def solve
@@ -85,34 +80,16 @@ class AnswersController < ApplicationController
   end
 
   def generate_code_trace(exercise, code)
-    wrapper_code = exercise#@exercise.code
-    answer_text = code #@answer.StudentCode
+    wrapper_code = exercise# @exercise.code
+    answer_text = code # @answer.StudentCode
     path = File.join(File.dirname(File.expand_path('../..', __FILE__)), 'Java-Visualizer')
-    pwd = Dir.pwd
     Dir.chdir path
     require path + '/' + 'RubyJsonFilter.rb'
     code_body = wrapper_code.sub(/\b__\b/, answer_text)
-    code_body.gsub! "\r",''
-    code_body.gsub! '\r',''
-    code_trace = main_method('',code_body)
-    #remove the last comma
-    trace = ""
-    (0...code_trace.length).each do |y|
-      if y == code_trace.length - 1
-        temp_string = code_trace[y]
-        temp_string = temp_string[0...-1]
-        trace = trace + temp_string
-      else
-        temp_string = code_trace[y]
-        trace = trace + temp_string + "\n"
-      end
-    end
-    #results = "<script>" + codeTrace.split('$')[0] + "</script>"
-    ##@openpop_results = "<script>" + create_student_full_code('{p=r;\n return 0;}').split('$')[0] + "</script>"
-    #results.sub!('$', '</script><script> $')
-    #@openpop_results = results
-    #Dir.chdir pwd
-    return trace
+    code_body.gsub! "\r", ''
+    code_body.gsub! '\r', ''
+    trace = main_method('', code_body)
+    trace
   end
 
   def build_visualization(trace, student_code)
