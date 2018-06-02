@@ -118,7 +118,6 @@ var VisualizedLinkedList = new function (){
     };
     this.moveHead = function(index){
         var i = index;
-        window.alert("here");
         if(this.headPointerPositionChanged(i))
         {
 
@@ -672,7 +671,7 @@ function visualize(testvisualizerTrace) {
     VisualizedLinkedList.objectConstructor(av, visualizationCode);
 
     var removed = [],
-        visualizationTrace = testvisualizerTrace.trace,
+        visualizationTrace = testvisualizerTrace.trace[0],
         codeLines = visualizationCode.replace(/(\r\n|\n|\r)/gm, "<br>").split("<br>"),
         traceObject,
         traceStack,
@@ -701,25 +700,24 @@ function visualize(testvisualizerTrace) {
         for(k = 0, maxk = removed.length; k<maxk; k+=1)
             removed[k].hide();
         traceObject = visualizationTrace[i];
-        traceStack = traceObject.stack_to_render[0];
-        traceHeap = traceObject.heap;
+        traceStack = traceObject.stack;
+        Heap = traceObject.heap;
+        var traceCode = traceObject.code,
+        ordered_varnames = traceStack.ordered_variable_names,
+        encoded_locals = traceStack.encoded_locals;
         listOfVariableNames=[];
         //load the variables from ordered_varnames to array listOfVariableNames
-        for(j = 0, maxj = traceObject.stack_to_render[0].ordered_varnames.length; j<maxj; j+=1){
-            var variable = traceObject.stack_to_render[0].ordered_varnames[j];
-            if(traceObject.stack_to_render[0].encoded_locals[variable] != null) {
-                var REF = traceObject.stack_to_render[0].encoded_locals[variable][1];
+        for(j = 0, maxj = ordered_varnames.length; j<maxj; j+=1){
+            var variable = ordered_varnames[j];
+            if(encoded_locals[variable] != null) {
+                var REF = encoded_locals[variable][1];
                 listOfVariableNames.push({variable: variable, REF: REF});
-
-
             }
             else {
                 listOfVariableNames.push({variable: variable, REF: null});
-
             }
         }
         //load heap part
-        Heap = traceObject.heap;
         for(ref in Heap)
         {
             var value,
