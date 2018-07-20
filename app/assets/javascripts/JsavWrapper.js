@@ -1,767 +1,1151 @@
+'use strict';
 
-"use strict";
-function drawCircularArrow(last, first, av, top)
-{
-    var longArrow = connection(first.element, last.element, av, top);
-    longArrow.hide();
-    return longArrow;
-}
-
-function connection(obj1, obj2, jsav, position) {
-    if (obj1 === obj2) { return; }
-    var pos1 = obj1.offset();
-    var pos2 = obj2.offset();
-    var fx = pos1.left + obj1.outerWidth()/2.0 ;
-    var tx = pos2.left - obj2.outerWidth()/2.0 ;
-    var fy = position.top + obj1.outerHeight();///2.0
-    /*var ty = position.top + obj2.outerHeight();
-    var fx1 = fx,
-        fy1 = fy,
-        tx1 = tx,
-        ty1 = ty;
-    var disx = ((fx - tx - 22) > 0) ? 1 : ((fx - tx - 22) === 0) ? 0 : -1;
-    var disy = ((fy - ty) > 0) ? 1 : ((fy - ty) === 0) ? 0 : -1;
-
-    var dx = Math.max(Math.abs(fx - tx) / 2, 35);
-    var dy = Math.max(Math.abs(fy - ty) / 2, 35);
-
-    if ((fy - ty > -25) && (fy - ty < 25) && ((tx - fx < 36) || (tx - fx > 38))) {
-        dx = Math.min(Math.abs(fx - tx), 20);
-        dy = Math.min(Math.abs(fx - tx) / 3, 50);
-
-        ty -= 15;
-        fx1 = fx;
-        fy1 = fy - dy;
-        tx1 = tx - dx;
-        ty1 = ty - dy;
-    } else if (disx === 1) {
-    */
-        tx += 22;
-        /*
-        ty += 15 * disy;
-        fx1 = fx + dx;
-        fy1 = fy - dy * disy;
-        tx1 = tx;
-        ty1 = ty + dy * disy;
-    } else if (disx === -1) {
-        fx1 = fx + dx;
-        fy1 = fy;
-        tx1 = tx - dx;
-        ty1 = ty;
+function comparer(otherArray) {
+    return function(current) {
+        return otherArray.filter(function(other) {
+            return other.getData() === current.getData() && other.getReference() === current.getReference()
+                //no compare for the next to enable detecting the deleted nodes only
+        }).length == 0;
     }
-*/
-    return jsav.g.path(["M", fx, fy, "h", 20, "v", 30, "h", (tx - fx - 30 - 20), "v", -30, "h", 20].join(","),
-        {"arrow-end": "classic-wide-long", opacity: 0,
-            "stroke-width": 2});/*jsav.g.path(["M", fx, fy, "C", -fx1, -fy1, -tx1, -ty1, tx, ty].join(","),
-        {"arrow-end": "classic-wide-long", opacity: 0,
-            "stroke-width": 2});*/
 }
-var VisualizedLinkedList = new function (){
-        this.objectConstructor = function (av, code) {
-        this.av = av;
-        this.studentCode = code;
-        this.studentCode = this.filterStudentCode();
-        this.codeObject =  this.av.code(this.studentCode, {top:40, left: 50})
-        this.linkedList = av.ds.list({nodegap: 30, top: 40, left: this.codeObject.element.outerWidth() + 100});
-    };
-    this.filterStudentCode = function(){
-        var lines = this.studentCode.split('\n');
-        var newLines = [];
-        lines.forEach(line => {
-            if(line.trim() !== "")
-                newLines.push(line);
+//*******************************************************************************
+//classes for link list manipulation
+//*******************************************************************************
+/**
+ * function to initialize a linked list node
+ * @param {Object} nodeData the data value for the node
+ * @param {reference} nodeReference The reference value for the pointer
+ * @param {reference} nodeNext The reference value for the next node in the chain
+ */
+function LinkedListNode(nodeData, nodeReference, nodeNext) {
+    this.nodeData = nodeData;
+    this.nodeReference = nodeReference;
+    this.nodeNext = nodeNext;
+}
+LinkedListNode.prototype = {
+    constructor: LinkedListNode,
+    /**
+     * get the node value
+     */
+    getData: function() {
+        return this.nodeData;
+    },
+    /**
+     * set the value of the node
+     * @param {Object} value the node value
+     */
+    setData: function(value) {
+        this.nodeData = value;
+    },
+    /**
+     * get the reference value for the node
+     */
+    getReference: function() {
+        return this.nodeReference;
+    },
+    /**
+     * set the reference value for the node
+     * @param {reference} value the reference value for the node
+     */
+    setReference: function(value) {
+        this.nodeReference = value;
+    },
+    /**
+     * get the reference for the next node in the chain
+     */
+    getNext: function() {
+        return this.nodeNext;
+    },
+    /**
+     * set the reference for the next node in the chain
+     * @param {reference} value the reference value for the next node in the chain
+     */
+    setNext: function(value) {
+        this.nodeNext = value;
+    },
+    /**
+     * checks if the current node is equal to the other node
+     * @param {LinkedListNode} OtherNode the other node that will be compared to the current node
+     */
+    equals: function(OtherNode) {
+        return (this.nodeData === OtherNode.nodeData && this.nodeReference === OtherNode.nodeReference &&
+            this.nodeNext === OtherNode.nodeNext);
+    },
+    difference: function(OtherNode, diff, index) {
+        var str = null;
+        if (this.nodeData !== OtherNode.nodeData)
+            str = { nodeIndex: index, data: this.getData(), To: OtherNode.getData() };
+        /*if (this.nodeReference !== OtherNode.nodeReference)
+            str += '"reference": ' + this.nodeReference + ', "To": ' + OtherNode.nodeReference + '}';*/
+        if (this.nodeNext !== OtherNode.nodeNext)
+            str = { nodeIndex: index, next: this.getNext(), To: OtherNode.getNext() };
+        diff.linkedListForStep.node = JSON.stringify(str);
+        return diff;
+    }
+};
+//**********************************************************************
+/**
+ * function to initialize a pointer to a linked list node
+ * @param {String} pointerName pointer name
+ * @param {reference} pointeeReference the reference for pointee node
+ * @param {reference} linkedNodePosition pointee position
+ */
+function Pointer(pointerName, pointeeReference /*, pointerPointee*/ , linkedNodePosition) {
+    this.pointerName = pointerName;
+    this.pointeeReference = pointeeReference;
+    //this.pointerPointee = pointerPointee;
+    this.LinkedNodePosition = linkedNodePosition;
+    this.JsavPointer = null;
+
+}
+Pointer.prototype = {
+    constructor: Pointer,
+    clone: function() {
+        return new Pointer(this.pointerName, this.pointeeReference, this.linkedNodePosition);
+    },
+    /**
+     * get pointer name
+     */
+    getName: function() {
+        return this.pointerName;
+    },
+    /**
+     * set pointer name
+     * @param {String} value pointer name value
+     */
+    setName: function(value) {
+        this.pointerName = value;
+    },
+    /**
+     * get the pointer memory reference value
+     */
+    getPointeeReference: function() {
+        return this.pointeeReference;
+    },
+    /**
+     * set the pointer memory reference value
+     * @param {reference} value pointer memory reference value
+     */
+    setPointeeReference: function(value) {
+        this.pointeeReference = value;
+    },
+    /**
+     * get the linked list node pointee index
+     */
+    getPointeePosition: function() {
+        return this.LinkedNodePosition;
+    },
+    /**
+     * set the linked list node pointee index
+     * @param {Integer} value the linked list node pointee index
+     */
+    setPointeePosition: function(value) {
+        this.LinkedNodePosition = value;
+    },
+    /**
+     * checks if the current pointer is equal to the other pointer
+     * @param {Pointer} OtherPointer the other pointer that will be compared to the current pointer
+     */
+    equals: function(OtherPointer) {
+        return (this.pointerName === OtherPointer.pointerName &&
+            this.pointeeReference === OtherPointer.pointeeReference &&
+            /*            this.pointerPointee.equals(OtherPointer.pointerPointee) &&*/
+            this.LinkedNodePosition === OtherPointer.LinkedNodePosition);
+    },
+    difference: function(OtherPointer, diff, index) {
+        var str = null;
+        if (this.pointerName !== OtherPointer.pointerName)
+            str = { pointerIndex: index, name: this.pointerName, To: OtherPointer.pointerName };
+        else if (this.pointeeReference !== OtherPointer.pointeeReference)
+            str = { pointerIndex: index, reference: this.pointeeReference, To: OtherPointer.pointeeReference };
+        //the below is commented as we do not need to check if the location is changed or not as if the reference changed then the location will change
+        //and if the reference did not change this means that the list has some addition or deletion and the code will handel this change
+        else if (this.LinkedNodePosition !== OtherPointer.LinkedNodePosition)
+            str = { pointerIndex: index, nodePosition: this.LinkedNodePosition, To: OtherPointer.LinkedNodePosition };
+        diff.pointerForStep.pointer = JSON.stringify(str);
+        return diff;
+    },
+    drawPointer: function(av, JsavLinkedList) {
+        if (this.getPointeePosition() !== -1) {
+            if (this.JsavPointer === null)
+                this.JsavPointer = av.pointer(this.getName(), JsavLinkedList.get(this.getPointeePosition()));
+            else
+                this.JsavPointer.target(JsavLinkedList.get(this.getPointeePosition()));
+        } else {
+            if (this.JsavPointer === null) {
+                this.JsavPointer = av.pointer(this.getName(), JsavLinkedList);
+            }
+            this.JsavPointer.target(null);
+        }
+    },
+    movePointerToNewNode: function(nodeIndex, toPointeeReference, JsavLinkedList, av) {
+        this.setPointeePosition(nodeIndex);
+        this.setPointeeReference(toPointeeReference);
+        //pointer.setPointee(newNode);
+        this.drawPointer(av, JsavLinkedList);
+    },
+    movePointerToSeparateNode: function(node, reference, av) {
+        this.setPointeePosition(-1); //we do not know the index of this node yet
+        this.setPointeeReference(reference);
+        if (this.JsavPointer === null)
+            this.JsavPointer = av.pointer(this.getName(), node);
+        else
+            this.JsavPointer.target(node);
+    },
+    makeNull: function(av, JsavLinkedList) {
+        this.setPointeePosition(-1);
+        this.setPointeeReference(null);
+        this.drawPointer(av, JsavLinkedList);
+    }
+};
+//**********************************************************************
+/**
+ * prototype that creates a linked list for a single step
+ * @param {Object} traceHeapForStep The trace heap for a single step
+ */
+function LinkedList(traceHeapForStep) {
+    this.LinkedListNodes = [];
+    this.circularList = false;
+    for (var i = 0; i < traceHeapForStep.length; i++) {
+        var traceItem = traceHeapForStep[i];
+        this.LinkedListNodes.push(new LinkedListNode(traceItem.value.LinkNodeData,
+            traceItem.reference,
+            traceItem.value.LinkNodeNext));
+    }
+    this.checkIfCircularList();
+}
+LinkedList.prototype = {
+    constructor: LinkedList,
+    /**
+     * returns the number of nodes inside the linked list
+     */
+    size: function() {
+        return this.LinkedListNodes.length;
+    },
+    /**
+     * returns the node at the given index
+     */
+    getNode: function(index) {
+        return this.LinkedListNodes[index]
+    },
+    /**
+     * returns the reference of the node that has the given reference
+     */
+    getNodeByReference: function(reference) {
+        var resultNode = null;
+        this.LinkedListNodes.forEach(function(node, index) {
+            if (node.getReference() === reference.toString())
+                resultNode = node;
         });
-        if(newLines.length > 1)
+        return resultNode;
+    },
+    getNodeLocation: function(reference) {
+        var resultNode = null;
+        this.LinkedListNodes.forEach(function(node, index) {
+            if (node.getReference() === reference.toString())
+                resultNode = index;
+        });
+        return resultNode;
+    },
+    /**
+     * checks if the current linked list is equal to the other linked list
+     * @param {LinkedList} OtherLinkedList the other linked list that will be compared to the current linked list
+     */
+    equals: function(OtherLinkedList) {
+        if (this.size() !== OtherLinkedList.size())
+            return false;
+        for (var i = 0; i < this.size(); i++) {
+            if (!this.getNode(i).equals(OtherLinkedList.getNode(i)))
+                return false;
+        }
+        return true;
+    },
+    difference: function(OtherLinkedList, diff) {
+        if (this.size() !== OtherLinkedList.size()) { //determine if there is addition or deletion
+            if (this.size() < OtherLinkedList.size())
+                diff.linkedListForStep.size = JSON.stringify({ addNodes: this.size(), To: OtherLinkedList.size() });
+            else {
+                diff.linkedListForStep.size = JSON.stringify({ removeNodes: this.size(), To: OtherLinkedList.size() });
+            }
+        } else { //same size but different nodes
+            for (var i = 0; i < this.size(); i++) {
+                if (!this.getNode(i).equals(OtherLinkedList.getNode(i))) {
+                    diff.linkedListForStep.node = {};
+                    diff = this.getNode(i).difference(OtherLinkedList.getNode(i), diff, i);
+                }
+            }
+        }
+        return diff;
+    },
+    removeAt: function(index) {
+        this.LinkedListNodes.splice(index, 1);
+    },
+    checkIfCircularList: function() {
+        var circular = true;
+        if (this.getNode(this.size() - 1).getNext() === null)
+            circular = false;
+        this.circularList = circular;
+
+    },
+    isCircular: function() {
+        return this.circularList;
+    }
+};
+//************************************************************************
+/**
+ * function to create a linked list for each trace
+ * @param {List} trace the complete trace
+ */
+function CreateListOfLinkedLists(trace) {
+    var linkLists = [];
+    for (var i = 0; i < trace.size(); i++)
+        linkLists.push(new LinkedList(trace.getTraceHeap(i)));
+    return linkLists;
+}
+
+/**
+ * prototype to represent the pointers used to point at nodes in the linked list
+ * @param {TraceStack} traceStackForStep Trace object that represent on step
+ * @param {LinkedList} LinkedListForStep Linked List for the step
+ */
+function LinkedListPointersForStep(traceStackForStep, LinkedListForStep) {
+    this.stepPointers = [];
+    for (var i = 0; i < traceStackForStep.encodedLocals.length; i++) {
+        var currentLocal = traceStackForStep.encodedLocals[i];
+        if (currentLocal.referenceValue !== null)
+            this.stepPointers.push(new Pointer(currentLocal.variableName,
+                currentLocal.referenceValue,
+                /*                LinkedListForStep.getNodeByReference(currentLocal.referenceValue),*/
+                LinkedListForStep.getNodeLocation(currentLocal.referenceValue)));
+        else
+            this.stepPointers.push(new Pointer(currentLocal.variableName,
+                currentLocal.referenceValue,
+                /*                null, */
+                -1));
+    }
+}
+LinkedListPointersForStep.prototype = {
+    constructor: LinkedListPointersForStep,
+    /**
+     * returns the number of pointers in the list
+     */
+    size: function() {
+        return this.stepPointers.length;
+    },
+    /**
+     * return the pointer at the specified index
+     */
+    getPointer: function(index) {
+        return this.stepPointers[index];
+    },
+    /**
+     * checks if the current LinkedListPointersForStep is equal to the other LinkedListPointersForStep
+     * @param {LinkedListPointersForStep} OtherLinkedListPointersForStep the other LinkedListPointersForStep that will be compared to the current LinkedListPointersForStep
+     */
+    equals: function(OtherLinkedListPointersForStep) {
+        if (this.size() !== OtherLinkedListPointersForStep.size())
+            return false;
+        for (var i = 0; i < this.size(); i++) {
+            if (!this.getPointer(i).equals(OtherLinkedListPointersForStep.getPointer(i)))
+                return false;
+        }
+        return true;
+    },
+    difference: function(OtherLinkedListPointersForStep, diff) {
+        if (this.size() !== OtherLinkedListPointersForStep.size()) {
+            if (this.size() < OtherLinkedListPointersForStep.size())
+                diff.pointerForStep.size = JSON.stringify({ addPointers: this.size(), To: OtherLinkedListPointersForStep.size() });
+            else
+                diff.pointerForStep.size = JSON.stringify({ removePointers: this.size(), To: OtherLinkedListPointersForStep.size() });
+        } else { //same size put change in pointers locations
+            for (var i = 0; i < this.size(); i++) {
+                if (!this.getPointer(i).equals(OtherLinkedListPointersForStep.getPointer(i))) {
+                    diff.pointerForStep.pointer = {};
+                    diff = this.getPointer(i).difference(OtherLinkedListPointersForStep.getPointer(i), diff, i);
+                }
+            }
+        }
+        return diff;
+    },
+    addPointer: function(pointerName, pointeeReference, LinkedListNodePosition) {
+        var newnode = new Pointer(pointerName, pointeeReference, LinkedListNodePosition);
+        this.stepPointers.push(newnode);
+        return newnode;
+    }
+};
+
+//****************************************************************************************
+//classes for Trace manipulation
+//****************************************************************************************
+/**
+ * prototype to represent the encoded locals for the heap stack
+ * @param {String} key the variable name
+ * @param {reference} value the variable memory reference
+ */
+function EncodedLocal(key, value) {
+    this.variableName = key;
+    this.referenceValue = (value === null) ? null : value[1];
+}
+//**********************************************************************
+/**
+ * prototype to represent the heap for Link class only
+ * @param {reference} key the reference for the current node in the list
+ * @param {reference} next the reference for the next node in the list
+ * @param {Object} data the value of the current node in the list
+ */
+function LinkClassValue(next, data) {
+    this.LinkNodeNext = null;
+    if (next[1] !== null && next[1].constructor === Array)
+        this.LinkNodeNext = next[1][1];
+    this.LinkNodeData = null;
+    if (data[1].constructor === Array)
+        this.LinkNodeData = data[1][1];
+    else
+        this.LinkNodeData = data[1];
+}
+//**********************************************************************
+/**
+ * prototype to represent a trace heap element
+ * @param {reference} key the reference value of the current heap element
+ * @param {List} value the list of values of the current heap element
+ */
+function TraceHeap(key, value) {
+    this.reference = key;
+    this.value = null;
+    if (value[1] === "Link") { //link class value
+        this.value = new LinkClassValue(value[2], value[3]);
+    } else { //new classes not implemented yet
+        window.alert("Other Classes");
+    }
+}
+//**********************************************************************
+/**
+ * prototype to represent the trace stack
+ * @param {Object} traceStack the trace stack value
+ */
+function TraceStack(traceStack) {
+    this.orderedVariableNames = traceStack.ordered_variable_names;
+    this.encodedLocals = [];
+    for (var key in traceStack.encoded_locals) {
+        this.encodedLocals.push(new EncodedLocal(key, traceStack.encoded_locals[key]));
+    }
+}
+TraceStack.prototype = {
+    constructor: TraceStack,
+    /**
+     * returns the specified encoded local at the given index
+     */
+    getEncodedLocals: function(index) {
+        return this.encodedLocals[index];
+    }
+};
+//**********************************************************************
+/**
+ * prototype to represent a single trace item
+ * @param {Object} trace trace item
+ */
+function Trace(trace) {
+    this.trace = trace;
+    this.traceCode = trace.code;
+    this.traceCodeLineNumber = trace.lineNumber;
+    this.traceStack = new TraceStack(trace.stack);
+    this.traceHeap = [];
+    for (var key in trace.heap)
+        this.traceHeap.push(new TraceHeap(key, trace.heap[key]));
+}
+//**********************************************************************
+/**
+ * prototype that represents the OpenPOP trace
+ * @param {Object} traceList Object that represents the OpenPOP trace
+ */
+function TraceList(traceList) {
+    this.listOfTraces = [];
+    for (var i = 0;  i<traceList[0].length; i++) {
+        var trace = traceList[0][i];
+        this.listOfTraces.push(new Trace(trace));
+    }
+}
+TraceList.prototype = {
+    constructor: TraceList,
+    /**
+     * get the number of traces
+     */
+    size: function() {
+        return this.listOfTraces.length;
+    },
+    /**
+     * get the trace item at the specified index
+     */
+    getTraceItem: function(index) {
+        if (index < this.size())
+            return this.listOfTraces[index];
+    },
+    /**
+     * get the code for the trace item at the specified index
+     */
+    getTraceCode: function(index) {
+        if (index < this.size())
+            return this.listOfTraces[index].traceCode;
+    },
+    /**
+     * get the stack for the trace at the specified index
+     */
+    getTraceStack: function(index) {
+        if (index < this.size())
+            return this.listOfTraces[index].traceStack;
+    },
+    /**
+     * get the heap for the  trace at the specified index
+     */
+    getTraceHeap: function(index) {
+        if (index < this.size())
+            return this.listOfTraces[index].traceHeap;
+    }
+};
+//**********************************************************************
+/**
+ * prototype to represent the code written by students
+ * @param {String} code string that contains the student solution
+ */
+function StudentCode(code) {
+    this.code = this.filterCode(code);
+}
+StudentCode.prototype = {
+    constructor: StudentCode,
+    /**
+     * remove empty lines
+     */
+    filterCode: function(code) {
+        var lines = code.split('\n');
+        var newLines = [];
+        var tabs = 0;
+        lines.forEach(function(line) {
+            if (line === '}')
+                tabs--;
+            if (line.trim() !== "") {
+                for (var i = 0; i < tabs; i++)
+                    line = '    ' + line;
+                newLines.push(line);
+            }
+            if (line === '{')
+                tabs++;
+
+        });
+        newLines.push('return statement');
+        if (newLines.length > 1)
             return newLines.join('\n');
         else
             return newLines[0];
+    },
+    /**
+     * returns the code line based on the line number
+     */
+    getCodeAtLine: function(lineNumber) {
+        var line = null;
+        this.code.forEach(function(element, index) {
+            if (index === lineNumber) {
+                line = element;
+            }
+        });
+        return line;
+    },
+    /**
+     * returns the line number for the given code
+     */
+    getCodeLineNumber: function(codeLine) {
+        var line = null;
+        this.code.forEach(function(element, index) {
+            if (element === codeLine) {
+                line = index;
+            }
+        });
+        return line;
+    },
+    getCode: function() {
+        return this.code;
     }
-    this.ListOfRedLabels = [];
-    this.LinkedListSteps = [];
-    this.linkedListItems = [];
-    this.linkedListReferences = [];
-    this.linkedItemsNext = [];
-    this.circular = false;
-    this.head = null;
-    this.tail = null;
-    this.circularEdge = false;
-    this.blackifyAll = function (listOfObjects) {
-        for (var obj in listOfObjects){
-            if(typeof(obj.css) !== 'undefined')
-                obj.css({"stroke" : "black"});
-            else
-                if(obj < this.listOfOtherLinks.length)
-                    this.listOfOtherLinks[parseInt(obj)].arrow.css({"stroke" : "black"});
+};
+//****************************************************************************************
+/**
+ * classes for the visualization steps
+ * @param {Trace} traceForStep the trace object correspond to a single step
+ */
+function VisualizationStep(traceForStep) {
+    this.traceForStep = traceForStep;
+    this.linkedListForStep = new LinkedList(traceForStep.traceHeap);
+    this.pointerForStep = new LinkedListPointersForStep(traceForStep.traceStack, this.linkedListForStep);
+    this.stepCodeLine = traceForStep.traceCode;
+    this.stepCodeLineNumber = traceForStep.traceCodeLineNumber;
+}
+VisualizationStep.prototype = {
+    constructor: VisualizationStep,
+    /**
+     * gets the linked list for this step
+     */
+    getLinkedListForStep: function() {
+        return this.linkedListForStep;
+    },
+    /**
+     * gets the pointers for this step
+     */
+    getPointersForStep: function() {
+        return this.pointerForStep;
+    },
+    /**
+     * gets the code for this step
+     */
+    getStepCode: function() {
+        return this.stepCodeLine;
+    },
+    /**
+     * checks if the current VisualizationStep is equal to the other VisualizationStep
+     * @param {VisualizationStep} OtherVisualizationStep the other VisualizationStep that will be compared to the current VisualizationStep
+     */
+    equals: function(OtherVisualizationStep) {
+        return (this.linkedListForStep.equals(OtherVisualizationStep.linkedListForStep) &&
+            this.pointerForStep.equals(OtherVisualizationStep.pointerForStep));
+    },
+    /**
+     * calculate the difference between the current step and the next step
+     */
+    difference: function(next) {
+        var diff = {};
+        if (!this.linkedListForStep.equals(next.linkedListForStep)) {
+            diff.linkedListForStep = {};
+            diff = this.linkedListForStep.difference(next.linkedListForStep, diff);
         }
-    };
-    this.size = function () {
-        return this.linkedListItems.length;
-    };
-    this.createLinkedList = function () {
-        //window.alert(this.LinkedListSteps.toSource());
-        for(var j=0; j<this.linkedListItems.length; j+=1)
-        {
-            this.linkedList.addFirst(this.linkedListItems[j]);
+        if (!this.pointerForStep.equals(next.pointerForStep)) {
+            diff.pointerForStep = {};
+            diff = this.pointerForStep.difference(next.pointerForStep, diff);
         }
-        this.layout();
-        this.head = this.av.pointer("p", this.linkedList.get(0));
-        this.setTailPointer(this.LinkedListSteps[0].pointers, 0);
-        this.drawOtherLinks(0);
-    };
-    this.getListItemIndexByReference = function (REF) {
-        for (var i = 0; i < this.linkedListReferences.length; i++)
-        {
-            if(this.linkedListReferences[i] == REF)
-                return i;
-        }
-        return -1;
-    };
-    this.moveHead = function(index){
-        var i = index;
-        if(this.headPointerPositionChanged(i))
-        {
-
-            if(!this.circular){ //if no one else is pointing to the first node
-                var node = this.linkedList.get(this.findHeadPosition(this.LinkedListSteps[i - 1].pointers));
-                node.highlight();
-                this.av.step();
-                this.setHeadPointer(this.LinkedListSteps[i].pointers);
-                //this.head.css("color", "red");
-                this.head.arrow.css({"stroke" : "red"});
-                this.ListOfRedLabels.push(this.head.arrow);
-                //this.av.step();
-                //this.head.arrow.css({"stroke" : "black"});
-                node.hide();
-                node.edgeToNext().hide();
-            }
-            else
-                this.setHeadPointer(this.LinkedListSteps[i].pointers);
-        }
-    };
-    this.showEmptyLinkedList = function (index) {
-      if(this.LinkedListSteps[index].listItems.length === 0){
-
-          return true;
-      }
-      else
-          return false;
-    };
-    this.visualize = function ( ) {
-        //this.av.displayInit(); \\if We want to make the first slide empty
-        var startIteration = 0;
-        var codeLineNumber = 0;
-        while(this.showEmptyLinkedList(startIteration)){
-            startIteration += 1;
-        }
-        while(this.findHeadPosition(this.LinkedListSteps[startIteration].pointers) === -1)
-            startIteration += 1;
-        //window.alert(startIteration);
-        this.linkedListItems = this.LinkedListSteps[startIteration].listItems;
-        this.linkedListReferences = this.LinkedListSteps[startIteration].refs;
-        this.linkedItemsNext = this.LinkedListSteps[startIteration].nexts;
-        this.createLinkedList();
-        this.setHeadPointer(this.LinkedListSteps[startIteration].pointers);
-        this.setTailPointer(this.LinkedListSteps[startIteration].pointers, startIteration);
-        this.av.umsg("Initial Configuration");
-        this.av.displayInit();//this.av.step();
-        this.av.umsg(" ");
-        for (this.i = startIteration+1; this.i < this.LinkedListSteps.length; this.i++){
-            this.heighlightCode(codeLineNumber)
-            if(this.ListOfRedLabels.length >0){
-                this.blackifyAll(this.ListOfRedLabels);
-            }
-            this.linkedListItems = this.LinkedListSteps[this.i].listItems;
-            this.linkedListReferences = this.LinkedListSteps[this.i].refs;
-            this.linkedItemsNext = this.LinkedListSteps[this.i].nexts;
-            this.linkedListReferences = this.LinkedListSteps[this.i].refs;
-            //determine the change and visualize it
-            if(this.determineTheChange(this.i)){
-                codeLineNumber++;
-               this.av.step();
-            }
-        }
-        this.av.umsg("Final Configuration");
-        this.av.recorded();
-    };
-    this.heighlightCode = function(lineNumber) {
-        var lines = this.studentCode.split('\n');
+        return diff;
+    },
+    getStepCodeLineNumber: function() {
+        return this.stepCodeLineNumber;
     }
-    this.determineTheChange = function (index) {
-        var currentListItems = this.LinkedListSteps[index].listItems;
-        var previousListItems = this.LinkedListSteps[index - 1].listItems;
-        var currentListOfRefs = this.LinkedListSteps[index].nexts;
-        var previousListOfRefs = this.LinkedListSteps[index - 1].nexts;
-        var change = false;
-        if(!this.circular) {
-            this.checkIfCircularList(index);
-            if (this.circular && this.linkedList.get(0).edgeToNext() !== null) {
-                this.convertToCircularList();
-                return true;
+};
+/**
+ * create all step for the visualization
+ * @param {TraceList} traces list of all traces
+ */
+function Visualization(traces, code) {
+    this.steps = [];
+    this.code = code;
+    for (var i = 0; i < traces.size(); i++) {
+        this.steps.push(new VisualizationStep(traces.getTraceItem(i)));
+    }
+    var linkedListForStep = new LinkedList(traces.getTraceItem(0).traceHeap);
+    this.pointersForVisualization = new LinkedListPointersForStep(traces.getTraceItem(0).traceStack, linkedListForStep);
+    this.currentStep = 0;
+    this.visualizer = new JSAV($('.avcontainer'));
+    this.codeObject = this.visualizer.code(code.getCode(), { top: 40, left: 50 });
+    this.codeObject.show();
+    this.drawInitialState();
+    this.visualizeAllSteps();
+    this.drawFinalState();
+}
+Visualization.prototype = {
+    constructor: Visualization,
+    /**
+     * returns the current step
+     */
+    getCurrentStep: function() {
+        return this.steps[this.currentStep];
+    },
+    getCurrentIndex: function() {
+        return this.currentStep;
+    },
+    /**
+     * 1- check change in the linked list number, values, order
+        2- check change in pointers pointee (becomes null), position, add new pointer
+        return the step with the next step with the change or the last step (return statement step)
+     */
+    getNextStep: function() {
+        if (this.currentStep < this.size() - 1) {
+            while (this.currentStep < this.size() - 1) {
+                var nextStep = this.steps[this.currentStep + 1];
+                var currentStep = this.steps[this.currentStep];
+                this.currentStep++;
+                if (!currentStep.equals(nextStep))
+                    return nextStep;
+            }
+            if (this.currentStep == this.size() - 1) //return the last step (return statement step)
+                return this.steps[this.currentStep];
+        } else
+            window.alert("Steps Out of Bound");
+    },
+    /**
+     * reset the current step value
+     */
+    resetSteps: function() {
+        this.currentStep = 0;
+    },
+    size: function() {
+        return this.steps.length;
+    },
+    getStep: function(index) {
+        if (index < this.size())
+            return this.steps[index];
+    },
+    /**
+     * use the diff to identify the changes. The changes are in the form of Json object string
+     */
+    determineTheChange: function(diff) {
+        var listOfChanges = [];
+        if (diff.hasOwnProperty('linkedListForStep')) { //this means there is a change in the linked lists
+            if (diff.linkedListForStep.hasOwnProperty('size')) { //change in the list size means that a node added or deleted
+                listOfChanges.push(diff.linkedListForStep.size);
+            }
+            if (diff.linkedListForStep.hasOwnProperty('node')) { //change in nodes
+                listOfChanges.push(diff.linkedListForStep.node);
             }
         }
-        if(currentListItems.length > previousListItems.length){
-            change = change | this.insertNewItemsToList(index);
-        }
-        if(currentListOfRefs.length < previousListOfRefs.length){
-            change = change | this.changeListNexts(index);
-        }
-        if(this.LinkedListSteps[index-1].listItems.length === this.LinkedListSteps[index].listItems.length){
-            change = change | this.changeListValues(index);
-        }
-        if(this.headPointerPositionChanged(index)) {
-            if (currentListItems === previousListItems) {
-                change = change | this.moveHead(index);
+        if (diff.hasOwnProperty('pointerForStep')) { //this means there is a change in the pointers
+            if (diff.pointerForStep.hasOwnProperty('size')) { //change in the number of pointers, means add new pointer or remove a pointer
+                listOfChanges.push(diff.pointerForStep.size);
             }
-            else {
-                this.head.arrow.css({"stroke": "red"});
-                this.ListOfRedLabels.push(this.head.arrow);
-                this.setHeadPointer(this.LinkedListSteps[index].pointers);
-                //this.av.step();
-                return true;
+            if (diff.pointerForStep.hasOwnProperty('pointer')) { //change in pointer it self, change its name, location, ...
+                listOfChanges.push(diff.pointerForStep.pointer);
             }
-        }
-        if(currentListItems.length === previousListItems.length){
-            change = change | this.changeListNodesOrder(index);
-        }
-        change = change | this.drawOtherLinks(index);
-        change = change | this.setTailPointer(this.LinkedListSteps[index].pointers, index);
 
-        return change;
-    };
-    this.insertNewItemsToList = function(index){
-        var currentListItems = this.LinkedListSteps[index].listItems;
-        var previousListItems = this.LinkedListSteps[index - 1].listItems;
-        if(currentListItems.length > previousListItems.length) //there is new item added to the list
-        {
-            var newNodeValue = this.linkedListItems[this.linkedListItems.length - 1];
-            var newNodeRef = this.linkedListReferences[this.linkedListReferences.length - 1];
-            var newNodeNext = this.LinkedListSteps[index].nexts[this.LinkedListSteps[index].nexts.length - 1];
-            //window.alert(this.linkedItemsNext.indexOf(parseInt(newNodeRef)));
-            if(newNodeNext != null || newNodeNext === null && this.linkedItemsNext.indexOf(parseInt(newNodeRef)) >= 0) {//the new node added directly to the list
-                if (this.linkedItemsNext.indexOf(parseInt(newNodeRef)) < 0) {//if not found means that this node is in the head
-                    this.linkedList.addFirst(newNodeValue);
-                    if(this.headPointerPositionChanged(index)) {//the the new item is the new head of the list
-                        this.setHeadPointer(this.LinkedListSteps[index].pointers);
-                        this.head.arrow.css({"stroke" : "red"});
-                        this.ListOfRedLabels.push(this.head.arrow);
+        }
+        return listOfChanges;
+    },
+    drawInitialState: function() {
+        this.JsavLinkedList = new JsavLinkedListObject(this.codeObject, this.visualizer);
+        var initialLinkedList = this.steps[0].getLinkedListForStep();
+        for (var i = 0; i < initialLinkedList.size(); i++) {
+            this.JsavLinkedList.addLast(initialLinkedList.getNode(i).getData());
+        }
+        if (initialLinkedList.isCircular())
+            this.JsavLinkedList.circular = true;
+        this.JsavLinkedList.layout();
+        var initialPointers = this.pointersForVisualization;
+        for (i = 0; i < initialPointers.size(); i++) {
+            var pointer = initialPointers.getPointer(i);
+            if (pointer.getPointeeReference() === null)
+                this.nullifyPointer(i);
+            else
+                pointer.drawPointer(this.visualizer, this.JsavLinkedList.getJsavLinkedList());
+
+        }
+        this.visualizer.umsg("Initial Configuration");
+        this.codeObject.setCurrentLine(0);
+        this.visualizer.displayInit();
+    },
+    drawFinalState: function() {
+        this.visualizer.umsg("Final Configuration");
+        var lastStep = this.steps[this.size() - 1];
+        this.codeObject.setCurrentLine(lastStep.getStepCodeLineNumber());
+        this.visualizer.recorded();
+    },
+    /**
+     * move a pointer based on its index inside the list of pointers for a step, to any position in the linked list
+     * @param {Integer} pointerIndex pointer index inside the list of pointers for a step
+     * @param {Integer} toIndex the index for a node in the Linked list to be pointed by the pointer
+     */
+    movePointer: function(pointerIndex, toIndex, toPointeeReference) {
+        var pointer = this.pointersForVisualization.getPointer(pointerIndex);
+        if (toIndex !== -1) {
+            pointer.movePointerToNewNode(toIndex, toPointeeReference, this.JsavLinkedList.getJsavLinkedList(), this.visualizer);
+            this.visualizer.umsg('change pointer ' + pointer.getName(0) + ' pointee');
+            this.JsavLinkedList.layout();
+        } else //make the pointer null
+            pointer.makeNull(this.visualizer);
+    },
+    /**
+     * function to make pointer pointes to a node that is not in the list
+     */
+    movePointerToSeparateNode: function(pointerIndex, node, nodeReference) {
+        var pointer = this.pointersForVisualization.getPointer(pointerIndex);
+        pointer.movePointerToSeparateNode(node, nodeReference, this.visualizer);
+        this.visualizer.umsg('change pointer ' + pointer.getName(0) + ' pointee');
+        this.JsavLinkedList.layout();
+    },
+    nullifyPointer: function(pointerIndex) {
+        var pointer = this.pointersForVisualization.getPointer(pointerIndex);
+        this.visualizer.umsg("Pointer " + pointer.getName() + " points to NULL");
+        pointer.makeNull(this.visualizer, this.JsavLinkedList.getJsavLinkedList());
+        //if there is a node pointed only by this pointer, it should be removed from the list
+    },
+    visualizeAllSteps: function() {
+        while (this.currentStep < this.size() - 1) {
+            var current = this.getCurrentStep();
+            var index = this.getCurrentIndex();
+            var next = this.getNextStep();
+            this.visualizeChanges(current, next);
+            //FIX ME temp solution to code line number issue
+            var lineNumber = next.getStepCodeLineNumber();
+            this.codeObject.setCurrentLine(lineNumber > 1 ? lineNumber - 1 : lineNumber);
+            this.visualizer.step();
+        }
+    },
+    visualizeChanges: function(current, next) {
+        var diff = current.difference(next);
+        var str = this.determineTheChange(diff);
+        var value = str[0];
+        var changeObject = JSON.parse(value);
+        if (changeObject.hasOwnProperty('pointerIndex') || changeObject.hasOwnProperty('addPointers'))
+            this.visualizePointers(current, changeObject);
+        else if (changeObject.hasOwnProperty('nodeIndex'))
+            this.visualizeLinkedListNodes(current, next, changeObject);
+        else if (changeObject.hasOwnProperty('removeNodes')) {
+            if (str.length > 1) { //means that there is another change in the list
+                for (var i = 1; i < str.length; i++) { //search for a pointer change
+                    var anotherValue = str[i];
+                    if (anotherValue !== "IGNORE") {
+                        var anotherChange = JSON.parse(anotherValue);
+                        if (anotherChange.hasOwnProperty('pointerIndex')) { //found
+                            this.remove_nodesFromTheList(current, next, changeObject, anotherChange);
+                        }
+                    } else
+                        this.remove_nodesFromTheList(current, next, changeObject, null);
+                }
+            } else
+                this.remove_nodesFromTheList(current, next, changeObject, null);
+        } else if (changeObject.hasOwnProperty('addNodes')) {
+            if (str.length > 1)
+                for (var i = 1; i < str.length; i++) { //search for a pointer change
+                    var anotherValue = str[i];
+                    var anotherChange = JSON.parse(anotherValue);
+                    if (anotherChange.hasOwnProperty('pointerIndex')) { //found
+                        this.add_nodesToTheList(current, next, changeObject, anotherChange);
                     }
                 }
+            else
+                this.add_nodesToTheList(current, next, changeObject, null);
+        } else
+            window.alert("Other Type of Change");
+
+    },
+    visualizePointers: function(current, changeObject) {
+        if (changeObject.hasOwnProperty('pointerIndex')) {
+            if (changeObject.hasOwnProperty('reference')) {
+                if (changeObject.To === null) {
+                    this.nullifyPointer(changeObject.pointerIndex);
+                } else {
+                    var toReference = changeObject.To;
+                    var node = current.getLinkedListForStep().getNodeByReference(toReference.toString());
+                    var NodeIndex = this.JsavLinkedList.getNodeIndexByValue(node.getData());
+                    this.movePointer(changeObject.pointerIndex, NodeIndex, toReference.toString());
+                }
+            } else {
+                var toIndex = changeObject.To;
+                var pointerIndex = changeObject.pointerIndex;
+                if (toIndex === -1)
+                    this.nullifyPointer(pointerIndex);
                 else {
-                    this.linkedList.addLast(newNodeValue);
-                    this.linkedList.get(this.linkedListItems.length - 1).highlight();
-                    if(this.linkedList.get(this.linkedListItems.length - 2).highlight())
-                        this.linkedList.get(this.linkedListItems.length - 2).unhighlight();
-                }
-                this.layout();
-                return true;
-
-            }
-            else{//new node added first then linked to the list
-                //first we need to look ahead and see it it will be in the head ot the tail of the list
-                var newNodeNextInNextStep = this.LinkedListSteps[index + 1].nexts[this.LinkedListSteps[index + 1].nexts.length - 1];
-                var pointers = this.LinkedListSteps[index].pointers;
-                if(newNodeNextInNextStep == pointers[0].REF) {//points to the head
-                    for(var j = 0; j< pointers.length; j++){
-                        if(pointers[j].REF == newNodeRef){
-                            var p = pointers[j];
-                            var newNode = this.linkedList.newNode(newNodeValue);
-                            newNode.css({
-                                top: 0,
-                                left: -80//first
-                            });
-                            var newLink = this.av.pointer(p.variable, newNode,{anchor:"center bottom", myAnchor:"right top",top:-5, left:-35, arrowAnchor: "center bottom"});
-                            newNode.highlight();
-                            newLink.arrow.css({"stroke": "red"});
-                            this.ListOfRedLabels.push(newLink.arrow);
-                            this.av.step();
-                            this.linkedList.addFirst(newNode);
-                            this.layout();
-                            this.av.step();
-                            this.i++;
-                            this.head.target(newNode);
-                            this.head.arrow.css({"stroke": "red"});
-                            this.ListOfRedLabels.push(this.head.arrow);
-                            this.layout();
-                            newNode.unhighlight();
-                            newLink.hide();
-                        }
-                    }
-                }
-                return true;
-            }
-        }
-        return false;
-    };
-    this.changeListNodesOrder = function (index) {//the same number of nodes but with different nexts
-        var currentListItems = this.LinkedListSteps[index].listItems;
-        var previousListItems = this.LinkedListSteps[index - 1].listItems;
-        if(currentListItems.length === previousListItems.length){
-            var currentListNexts = this.LinkedListSteps[index].nexts;
-            var previoustListNexts = this.LinkedListSteps[index - 1].nexts;
-            var changed = -1;
-            for(var j = 0; j< currentListNexts.length; j++){
-                if(currentListNexts[j] != previoustListNexts[j]){
-                    changed = j;
-                    break;
+                    var node = current.getLinkedListForStep().getNode(toIndex);
+                    this.movePointer(pointerIndex, node.getReference(), toIndex);
                 }
             }
-            if(changed === -1)
-                return false;//no changes
-            else{
-                if(currentListNexts[changed] === null) {//remove the next arrow
-                    var ref = this.LinkedListSteps[index].refs[changed];
-                    var index2 = this.size() - 1 - this.getListItemIndexByReference(ref);
-                    this.linkedList.get(index2).edgeToNext().hide();
-                    //this.layout();
-                    return true;
-                }
-                else if(previoustListNexts[changed] === null){//it was null but now points to a new node
-                    var next = currentListNexts[changed];
-                    var indexOfNewNext =  this.size() - 1 - this.getListItemIndexByReference(next);
-                    var refOfChangedNode = this.LinkedListSteps[index].refs[changed];
-                    var indexOfChangedNode = this.size() - 1 - this.getListItemIndexByReference(refOfChangedNode);
-                    //this.linkedList.get(indexOfChangedNode).next(this.linkedList.get(indexOfNewNext));
-
-                    if(!this.circular)
-                    {
-                        var circularEdge = drawCircularArrow(this.linkedList.get(indexOfNewNext), this.linkedList.get(indexOfChangedNode),
-                            this.av, this.linkedList.position());
-                        circularEdge.show();
-                        circularEdge.css({stroke: "red"});
-                        this.ListOfRedLabels.push(circularEdge);
-                        this.linkedList.get(indexOfChangedNode).next(this.linkedList.get(indexOfNewNext));
-                        this.linkedList.get(indexOfChangedNode).edgeToNext().hide();
-                        return true;
-                    }
-                    else
-                        return false;
-
-                }
-                else
-                    window.alert("Another Case");
-
+        } else if (changeObject.hasOwnProperty('addPointers')) {
+            this.addNewPointerAndVisualizeIt(changeObject);
+        }
+    },
+    /**
+     * there is a change in the order of nodes (next values), or the values of nodes
+     */
+    visualizeLinkedListNodes: function(current, next, changeObject) {
+        if (changeObject.hasOwnProperty('data')) { //change of node data values
+            var nodeIndex = changeObject.nodeIndex;
+            var newData = changeObject.To;
+            this.visualizer.umsg("Change the value of node number " + nodeIndex + " From: " + this.JsavLinkedList.get(nodeIndex).value() + " To: " + newData);
+            this.JsavLinkedList.get(nodeIndex).value(newData);
+        } else if (changeObject.hasOwnProperty('next')) {
+            //first check if the node is part of the list or not
+            var partOfTheList = false;
+            var nodeIndex = changeObject.nodeIndex;
+            var node = current.getLinkedListForStep().getNode(nodeIndex);
+            for (var i = 0; i < current.getLinkedListForStep().size(); i++) {
+                var listNode = current.getLinkedListForStep().getNode(i);
+                if (listNode.getNext() !== null && listNode.getNext().toString() === node.getReference())
+                    partOfTheList = true;
             }
+            if (!partOfTheList) {
+                var newNode = this.JsavLinkedList.getNodeNotPartOfTheListByData(current.getLinkedListForStep().getNode(nodeIndex).getData());
+                var nextIndex = current.getLinkedListForStep().getNodeLocation(changeObject.To.toString());
+                if (nextIndex == 0) { //add the new node at first
+                    this.JsavLinkedList.addFirst(newNode);
+                    this.JsavLinkedList.layout();
+                    this.visualizer.umsg("add the node with value " + current.getLinkedListForStep().getNode(nodeIndex).getData() + " at the first position in the list");
+                    //correct all lists as the 
+                } else
+                    newNode.next(this.JsavLinkedList.get(nextIndex));
 
-        }
-        else //no changes at all so return false
-            return false;
-    };
-    this.changeListNexts = function(index){
-        var currentListOfRefs = this.LinkedListSteps[index].nexts;
-        var previousListOfRefs = this.LinkedListSteps[index - 1].nexts;
-        var length  = previousListOfRefs.length;
-        var chaged = false;
-        if(currentListOfRefs.length < previousListOfRefs.length) //there is a delete in nexts
-        {
-            chaged = true;
-            var i = length - 1;
-            while (currentListOfRefs.indexOf(previousListOfRefs[i]) >= 0) //found so not this item
-                i--;
-            //now i - 1 is removed
-            i = i - 1;
-
-            var nodeFrom = this.linkedList.get(i-1);
-            var nodeTo = this.linkedList.get(i);
-            nodeTo.highlight();
-            this.av.step();
-            var pos1 = nodeFrom.element.offset();
-            var pos2 = nodeTo.element.offset();
-            var fx = pos1.left + nodeFrom.element.outerWidth()/2.0 ;
-            var tx = pos2.left - nodeTo.element.outerWidth()/2.0 ;
-            var fy = this.linkedList.position().top + nodeFrom.element.outerHeight();
-            var ty = this.linkedList.position().top + nodeTo.element.outerHeight();
-            var leftMargin = fx,
-                topMargin = fy;
-            var dashline = this.av.g.polyline([[leftMargin, topMargin],
-                    [leftMargin + 15, topMargin],
-                    [leftMargin + 15, topMargin + 45],
-                    [leftMargin + 90, topMargin + 45],
-                    [leftMargin + 90, topMargin],
-                    [leftMargin + 105, topMargin]],
-                {"arrow-end": "classic-wide-long",
-                    opacity: 0, "stroke-width": 2,
-                    "stroke-dasharray": "-", stroke: "red"});
-            dashline.show();
-            nodeFrom.edgeToNext().hide();
-            this.av.step();
-            dashline.css({"stroke" : "black"});
-            nodeTo.unhighlight();
-            nodeTo.edgeToNext().hide();
-            nodeTo.hide();
-            this.av.step();
-            dashline.hide();
-            this.linkedList.remove(i);
-            nodeFrom.edgeToNext().css({"stroke" : "red"});
-            this.ListOfRedLabels.push(nodeFrom.edgeToNext());
-            this.layout();
-        }
-
-        return chaged;
-    };
-    this.checkIfCircularList = function(index){
-          var currentListOfRefs = this.LinkedListSteps[index].nexts;
-          var circular = true;
-          for(var i = 0; i< currentListOfRefs.length; i++){
-              if(currentListOfRefs[i] == null) {
-                  circular = false;
-                  break;
-              }
-          }
-          if(circular)
-              this.circular = true;
-        return circular;
-    };
-    this.changeListValues = function (index) {
-        var changed = false;
-        if(this.LinkedListSteps[index-1].listItems.length === this.LinkedListSteps[index].listItems.length) {
-            var length = this.LinkedListSteps[index - 1].listItems.length;
-            for (var i = 0; i < length; i++) {
-
-                var previous = this.LinkedListSteps[index - 1].listItems[i];
-                var current = this.LinkedListSteps[index].listItems[i];
-                if (previous != current) {
-                    this.linkedList.get(length - i - 1).highlight();
-                    this.av.step();
-                    this.linkedList.get(length - i - 1).value(current);
-                    this.linkedList.get(length - i - 1).css({"color":"red"});
-                    this.ListOfRedLabels.push(this.linkedList.get(length - i - 1));
-                    this.linkedList.get(length - i - 1).unhighlight();
-                    //this.av.step();
-                    //this.linkedList.get(length - i - 1).css({"color":"black"});
-                    changed = true;
-                }
-            }
-        }
-        return changed;
-    };
-    this.convertToCircularList = function () {
-        this.circular = true;
-        this.circularEdge = drawCircularArrow(this.linkedList.get(0), this.linkedList.get(2), this.av, this.linkedList.position());
-        this.circularEdge.css({"stroke" : "red"});
-        this.ListOfRedLabels.push(this.circularEdge);
-        this.circularEdge.show();
-        //these lines are required to show problem 7 correctly
-        this.linkedList.last().next(this.linkedList.first());
-        var edge = this.linkedList.get(this.linkedListItems.length - 1).edgeToNext();
-        edge.hide();
-        this.layout();
-        ////this.av.step();
-        //this.circularEdge = null;
-        //this.circularEdge = drawCircularArrow(this.linkedList.get(0), this.linkedList.get(2), this.av, this.linkedList.position(), "black");;
-        ////this.circularEdge.css({"stroke" : "black"});
-        ////this.circularEdge.show();
-        return true;
-
-    };
-    this.layout = function () {
-        if(!this.circular)
-            this.linkedList.layout();
-        else
-        {
-            this.circularEdge.hide();
-            //this.linkedList.last().next(null);
-            var target = this.linkedList.get(this.linkedListItems.length -1).next();
-            this.linkedList.get(this.linkedListItems.length -1).next(null);
-            this.linkedList.layout();
-            this.linkedList.get(this.linkedListItems.length -1).next(target);
-            this.linkedList.get(this.linkedListItems.length -1).edgeToNext().hide();
-            this.circularEdge.show();
-        }
-    };
-    this.removeNodeFromList = function (index, currentNodeRef, currentNodeIndex) {
-        var i;
-      for ( i= 0;  i< this.LinkedListSteps[index].nexts.length; i++){
-          if(this.LinkedListSteps[index].nexts[i] === currentNodeRef){
-              return false;//will not be removed
-          }
-      }
-      for (i = 0; i <this.listOfOtherLinksPointTo.length; i++){
-        if(this.listOfOtherLinksPointTo[i] === currentNodeRef){
-            return false;//will not be removed
-        }
-      }
-      //No other link points to the node. So it should be removed
-        //1- hide it
-        this.av.step();
-        this.linkedList.get(currentNodeIndex).edgeToNext().hide();
-        this.linkedList.get(currentNodeIndex).hide();
-        this.av.step();
-        this.linkedList.remove(currentNodeIndex);
-        this.layout();
-        return true;
-    };
-    this.setHeadPointer = function (listOfVariableNames) {
-
-        var index = this.findHeadPosition(listOfVariableNames);
-
-        this.head.target(this.linkedList.get(index));
-        if(this.i >0) 
-        {
-            var nodeRef = this.LinkedListSteps[this.i -1].pointers[0].REF;
-            this.removeNodeFromList(this.i, nodeRef, 0);
-            //this.head.show();
-        }
-    };
-    this.setTailPointer = function (listOfVariableNames, iterationIndex) {
-        var index = -1;
-        for(var i =0; i< listOfVariableNames.length; i++)
-            if(listOfVariableNames[i].variable === "r")
+            } else if (!current.getLinkedListForStep().isCircular() && next.getLinkedListForStep().isCircular()) //make the linked list circular
             {
-                index = i;
-                break;
-            }
-        if(index === -1)
-            return;
-        var ref = listOfVariableNames[index].REF;
-        var index2 = this.size() - 1 - this.getListItemIndexByReference(ref);
-        if(this.tail == null)
-            this.tail = this.av.pointer("r", this.linkedList.get(index2),{left:35});
-        else if(this.tailPointerPositionChanged(iterationIndex)){
-            this.tail.target(this.linkedList.get(index2));
-            this.tail.arrow.css({"stroke" : "red"});
-            this.ListOfRedLabels.push(this.tail.arrow);
-            //this.av.step();
-            //this.tail.arrow.css({"stroke" : "black"});
-        }
-    };
-    this.addNewListItems = function (listOfItems) {
-        this.LinkedListSteps.push(listOfItems);
-        //window.alert(this.LinkedListSteps.toSource());
-    };
-    this.getIndexOf = function (item) {
-
-    };
-    this.headPointerPositionChanged = function(index)
-    {
-        if(index == 0)
-            return false;
-        if(this.findHeadPosition(this.LinkedListSteps[index].pointers) !== this.findHeadPosition(this.LinkedListSteps[index - 1].pointers))
-            return true;
-        else
-            return false;
-    };
-    this.tailPointerPositionChanged = function(index)
-    {
-        if(index == 0)
-            return false;
-        if(this.findTailPosition(this.LinkedListSteps[index].pointers) !==
-            this.findTailPosition(this.LinkedListSteps[index - 1].pointers))
-            return true;
-        else
-            return false;
-    };
-    this.findHeadPosition = function(listOfVariableNames){
-        var index = -1;
-        //window.alert(listOfVariableNames.toSource());
-        for(var i =0; i< listOfVariableNames.length; i++) {
-            if (listOfVariableNames[i].variable === "p") {
-                index = i;
-                //window.alert(index);
-                break;
+                this.JsavLinkedList.circular = true;
+                this.JsavLinkedList.layout();
+                this.visualizer.umsg("set the next link for the node with value " + current.getLinkedListForStep().getNode(changeObject.nodeIndex).getData() + " to the node with value " +
+                    next.getLinkedListForStep().getNodeByReference(changeObject.To).getData());
+            } else if (current.getLinkedListForStep().isCircular() && !next.getLinkedListForStep().isCircular()) { //remove the circular edge
+                //implement me
+                window.alert("implement Me");
+            } else if (changeObject.To === null) { //remove the next link
+                var jsavNode = this.JsavLinkedList.get(changeObject.nodeIndex);
+                jsavNode.next(null);
+                jsavNode.edgeToNext().hide();
+                this.visualizer.umsg("set the next link for the node with value " + current.getLinkedListForStep().getNode(changeObject.nodeIndex).getData() + " to null");
             }
         }
-        if(index === -1)
-            return -1;
-        var ref = listOfVariableNames[index].REF;
-        var index2 = this.size() - 1 - this.getListItemIndexByReference(ref);
-        //window.alert(index2);
-        return index2;
-    };
-    this.findTailPosition = function(listOfVariableNames){
-        var index = -1;
-        //window.alert(listOfVariableNames.toSource());
-        for(var i =0; i< listOfVariableNames.length; i++) {
-            if (listOfVariableNames[i].variable === "r") {
-                index = i;
-                //window.alert(index);
-                break;
-            }
-        }
-        var ref = listOfVariableNames[index].REF;
-        var index2 = this.size() - 1 - this.getListItemIndexByReference(ref);
-        //window.alert(index2);
-        return index2;
-    };
-    this.findLinkPosition = function(listOfVariableNames, linkName){
-        var index = -1;
-        //window.alert(listOfVariableNames.toSource());
-        for(var i =0; i< listOfVariableNames.length; i++) {
-            if (listOfVariableNames[i].variable === linkName) {
-                index = i;
-                //window.alert(index);
-                break;
-            }
-        }
-        var ref = listOfVariableNames[index].REF;
-        var index2 = this.size() - 1 - this.getListItemIndexByReference(ref);
-        //window.alert(index2);
-        return index2;
-    };
-    this.linkPointerPositionChanged = function(index, linkName)
-    {
-        if(index == 0)
-            return false;
-        //find the last occurance for the same link name in previous steps
-        if(this.findLinkPosition(this.LinkedListSteps[index].pointers, linkName) !==
-            this.findLinkPosition(this.LinkedListSteps[index - 1].pointers, linkName))
-            return true;
-        else
-            return false;
-    };
-    this.drawOtherLinks = function(index){
-        var changed = false;
-        for( var i = 0; i< this.LinkedListSteps[index].pointers.length; i++)
+    },
+    /**
+     * There is a change in the number of nodes inside the list. So, we need to detect, apply and visualize the change
+     */
+    remove_nodesFromTheList: function(current, next, changeObject, pointerChange) {
+        var removedNodes = current.getLinkedListForStep().LinkedListNodes.
+        filter(comparer(next.getLinkedListForStep().LinkedListNodes));
+        if (changeObject.To === 0) //means that the list will be null
         {
-            var link = this.LinkedListSteps[index].pointers[i];
-            if(link.variable !== "p" && link.variable !== "r") {
-                var ref = link.REF;
-                if (ref != null) {
-                    var index2 = this.size() - 1 - this.getListItemIndexByReference(ref);
-                    var indexOfPointerInListOfLinks = this.listOfOtherLinksNames.indexOf(link.variable);
-                    if (indexOfPointerInListOfLinks >= 0) {//link already exist
-                        if(this.linkPointerPositionChanged(index, link.variable)) {//position changed
-                            var l = this.listOfOtherLinks[indexOfPointerInListOfLinks];
-                            l.target(this.linkedList.get(index2));
-                            l.arrow.css({"stroke": "red"});
-                            this.ListOfRedLabels.push(indexOfPointerInListOfLinks);
-                            //this.av.step();
-                            //l.arrow.css({"stroke": "black"});
-                            changed = true;
-                        }
-                    }
-                    else {//create new link
-                        var other;
-                        if (this.tail != null)// tail
-                            other = this.av.pointer(link.variable, this.linkedList.get(index2), {
-                                left: +15
-                            });
-
-                        else//there no tail
-                            other = this.av.pointer(link.variable, this.linkedList.get(index2), {left: 35});
-                        this.listOfOtherLinks.push(other);
-                        this.listOfOtherLinksNames.push(link.variable);
-                        this.listOfOtherLinksPointTo.push(ref);
-                        changed = true;
-                    }
+            for (var i = 0; i < this.pointersForVisualization.size(); i++) //make all pointers to null
+                this.nullifyPointer(i);
+            for (i = current.getLinkedListForStep().size() - 1; i >= 0; i--) {
+                this.JsavLinkedList.remove(i);
+                //Update the current Linked List stpe nodes
+                current.getLinkedListForStep().removeAt(i);
+            }
+            return;
+        }
+        //We need to determine if we should remove first or move the pointer first
+        //if the pointer pointes to a node after a removed node so it is normal to see a change in the index of the node
+        //if it points to a node before the removed one so we should apply the pointer change
+        var after = false;
+        var oldPointerPointeeIndex = pointerChange.nodePosition;
+        var differenceInIndices = pointerChange.nodePosition - pointerChange.To;
+        for (var i = 0; i < removedNodes.length; i++) {
+            var node = removedNodes[i];
+            var nodeIndex = current.getLinkedListForStep().getNodeLocation(node.getReference());
+            if (nodeIndex < oldPointerPointeeIndex)
+                differenceInIndices--;
+        }
+        if (pointerChange !== null && differenceInIndices !== 0) {
+            var pointer = this.pointersForVisualization.getPointer(pointerChange.pointerIndex);
+            var toIndex = -1;
+            if (pointerChange.hasOwnProperty('nodeReference'))
+                toIndex = current.getLinkedListForStep().getNodeLocation(pointerChange.To);
+            else if (pointerChange.hasOwnProperty('nodePosition'))
+                toIndex = current.getLinkedListForStep().getNode(pointerChange.To);
+            this.movePointer(pointerChange.pointerIndex, toIndex, pointerChange.To);
+            this.visualizer.step();
+            pointerChange = null; //done
+        }
+        //remove every node from the linked list
+        for (var i = 0; i < removedNodes.length; i++) {
+            var node = removedNodes[i];
+            var nodeIndex = current.getLinkedListForStep().getNodeLocation(node.getReference());
+            if (nodeIndex != 0) { //means that the node is in the middle of the list. So, we need to visualize the remove
+                var parentNode = this.JsavLinkedList.get(nodeIndex - 1);
+                parentNode.edgeToNext().hide();
+                var edge = this.JsavLinkedList.connection(parentNode.element, this.JsavLinkedList.get(nodeIndex + 1).element);
+                edge.show();
+                this.visualizer.umsg("change the next of the node with value " + current.getLinkedListForStep().getNode(nodeIndex - 1).getData() + " to point to the node with value " +
+                    current.getLinkedListForStep().getNode(nodeIndex + 1).getData());
+                this.visualizer.step();
+                edge.hide();
+            }
+            this.visualizer.umsg('remove node with data equals ' + current.getLinkedListForStep().getNode(nodeIndex).getData());
+            this.JsavLinkedList.remove(nodeIndex);
+            //Update the current Linked List stpe nodes
+            current.getLinkedListForStep().removeAt(nodeIndex);
+            this.JsavLinkedList.layout();
+            if (i !== removedNodes.length - 1)
+                this.visualizer.step();
+        }
+        //correct the indices of pointers pointee location. The difference occurred due to deleted nodes
+        this.correctPointersForVisualization(next);
+    },
+    add_nodesToTheList: function(current, next, changeObject, pointerChange) {
+        var addedNodes = next.getLinkedListForStep().LinkedListNodes.filter(comparer(current.getLinkedListForStep().LinkedListNodes));
+        for (var i = 0; i < addedNodes.length; i++) {
+            var node = addedNodes[i];
+            var nodeIndex = next.getLinkedListForStep().getNodeLocation(node.getReference());
+            //if this new node is not pointed by any other node, so this node is not in the list
+            var partOfTheList = false;
+            var newNodeReference = node.getReference();
+            for (var j = 0; j < next.getLinkedListForStep().size(); j++) {
+                if (j !== nodeIndex) {
+                    if (next.getLinkedListForStep().getNode(j).getNext() !== null &&
+                        next.getLinkedListForStep().getNode(j).getNext().toString() === newNodeReference)
+                        partOfTheList = true;
                 }
             }
+            if (!partOfTheList) { //means that the node is either will be added at the beginning of the list or the node is separate from the list
+                //check to see if the node will be added in the beginning of the list
+                var atBeginning = false;
+                var node = addedNodes[i];
+                for (var j = 0; j < next.getLinkedListForStep().size(); j++) {
+                    if (j !== nodeIndex) {
+                        if (next.getLinkedListForStep().getNode(j).getNext() !== null &&
+                            next.getLinkedListForStep().getNode(j).getReference().toString() === node.getNext().toString())
+                            atBeginning = true;
+                    }
+                }
+                if (atBeginning) {
+                    this.JsavLinkedList.addFirst(node.getData());
+                    this.JsavLinkedList.layout();
+                    this.visualizer.umsg("add new node with value " + node.getData() + " at the beginning of the list");
+                } else { //means the node is separated from the list
+                    var newNode = this.JsavLinkedList.newNode(node.getData());
+                    newNode.css({
+                        top: +100,
+                        left: 0 //first
+                    });
+                }
+                if (pointerChange.hasOwnProperty('reference') && pointerChange.To.toString() === newNodeReference) {
+                    if (atBeginning) {
+                        this.visualizer.step();
+                        this.movePointer(pointerChange.pointerIndex, 0, node.getReference());
+                    } else {
+                        this.movePointerToSeparateNode(pointerChange.pointerIndex, newNode, newNodeReference);
+                    }
+                    this.visualizer.umsg("make pointer " + this.pointersForVisualization.getPointer(pointerChange.pointerIndex).getName() + " points to node with value " + node.getData());
+                    pointerChange = null; //to prevent re-displaying the pointer latter in this function
+                }
+            } else {
+                this.JsavLinkedList.add(nodeIndex, node.getData());
+                this.visualizer.umsg("Create new Node with data value " + node.getData() + ' and add it to the list at location ' + nodeIndex);
+                this.JsavLinkedList.layout();
+            }
         }
-        return changed;
-    };
-    this.listOfOtherLinks = [];
-    this.listOfOtherLinksNames = [];
-    this.listOfOtherLinksPointTo = [];
+        //now if there is a change in pointers we will visualize it
+        if (pointerChange !== null) {
+            if (pointerChange.hasOwnProperty('reference')) {
+                var toIndex = next.getLinkedListForStep().getNodeLocation(pointerChange.To);
+                this.visualizer.step();
+
+                this.movePointer(pointerChange.pointerIndex, toIndex, pointerChange.To);
+            }
+        }
+    },
+    /**
+     * modify the pointers references and pointee location for the next step
+     */
+    correctPointersForVisualization: function(nextStep) {
+        for (var i = 0; i < this.pointersForVisualization.size(); i++) {
+            var pointer = this.pointersForVisualization.getPointer(i);
+            var nextStepPointer = nextStep.getPointersForStep().getPointer(i);
+            if (pointer.getName() === nextStepPointer.getName()) {
+                pointer.setPointeePosition(nextStepPointer.getPointeePosition());
+                pointer.setPointeeReference(nextStepPointer.getPointeeReference());
+            } else
+                window.alert("LOOK AT ME");
+        }
+    },
+    addNewPointerAndVisualizeIt: function(changeObject) {
+        var currentList = this.getCurrentStep().getPointersForStep();
+        var newPointer = currentList.getPointer(changeObject.addPointers);
+        newPointer = this.pointersForVisualization.addPointer(newPointer.getName(),
+            newPointer.getPointeeReference(),
+            newPointer.getPointeePosition());
+        this.visualizer.umsg('add new pointer ' + newPointer.getName());
+        newPointer.drawPointer(this.visualizer, this.JsavLinkedList.getJsavLinkedList());
+    }
 };
 
-
-function visualize(testvisualizerTrace) {
-    function indexOf(ref, linkedListElements) {
-        for (var i=0; i< linkedListElements.length; i++)
-        {
-            if(linkedListElements[i].address === ref)
-                return i;
-        }
-    }
-
-
-    var av; // pseudocode display
-    // Settings for the AV
-    av = new JSAV($('.avcontainer'));
-    var visualizationCode = testvisualizerTrace.code;
-    VisualizedLinkedList.objectConstructor(av, visualizationCode);
-
-    var removed = [],
-        visualizationTrace = testvisualizerTrace.trace[0],
-        codeLines = visualizationCode.replace(/(\r\n|\n|\r)/gm, "<br>").split("<br>"),
-        traceObject,
-        traceStack,
-        traceHeap,
-        listOfVariableNames,
-        Heap,
-        leftMargin = 400,
-        topMargin = 40,
-        //linkedList = av.ds.list({nodegap: 30, top: topMargin, left: leftMargin}),
-        i,
-        j,
-        k,
-        ref,
-        maxi,
-        maxk,
-        maxj,
-        nodeGap = 30,
-        notCircular = false;
-    for(i =0, maxi = visualizationTrace.length; i<maxi; i+=1) {
-        var linkedListItems = [],
-            linkedListReferences = [],
-            linkedItemsNext = [];
-
-        notCircular = false;
-        //linkedList = av.ds.list({nodegap: nodeGap, top: topMargin, left: leftMargin});
-        for(k = 0, maxk = removed.length; k<maxk; k+=1)
-            removed[k].hide();
-        traceObject = visualizationTrace[i];
-        traceStack = traceObject.stack;
-        Heap = traceObject.heap;
-        var traceCode = traceObject.code,
-        ordered_varnames = traceStack.ordered_variable_names,
-        encoded_locals = traceStack.encoded_locals;
-        listOfVariableNames=[];
-        //load the variables from ordered_varnames to array listOfVariableNames
-        for(j = 0, maxj = ordered_varnames.length; j<maxj; j+=1){
-            var variable = ordered_varnames[j];
-            if(encoded_locals[variable] != null) {
-                var REF = encoded_locals[variable][1];
-                listOfVariableNames.push({variable: variable, REF: REF});
-            }
-            else {
-                listOfVariableNames.push({variable: variable, REF: null});
-            }
-        }
-        //load heap part
-        for(ref in Heap)
-        {
-            var value,
-                next;
-            if(Heap.hasOwnProperty(ref)) {
-                value = Heap[ref];
-                if (value.constructor === Array && value.length === 4) {
-                    //window.alert(value[3][1].toSource());
-                    next = value[2];
-                    if(value[3][1] != null)
-                    {
-                        var storedValue;
-                        if (value[3][1].constructor === Array) {//The Array contains the data and its type so take the data only
-                            storedValue = value[3][1][1];
-                        }
-                        else {
-                            storedValue = value[3][1];
-                        }
-                        if(typeof storedValue === 'number' && storedValue > 9 )//it should be a letter
-                        {
-                            storedValue = String.fromCharCode(storedValue);
-                        }
-                        linkedListItems.push(storedValue);
-                        linkedListReferences.push(ref);
-                        if (next[1] != null) {
-                            linkedItemsNext.push(next[1][1]);
-                        }
-                        else {
-                            linkedItemsNext.push(null);
-                        }
-                    }
-                }
-            }
-        }
-        var object = {
-            listItems : linkedListItems,
-            refs: linkedListReferences,
-            nexts: linkedItemsNext,
-            pointers: listOfVariableNames
-        };
-        //filter all steps that has "__return__"
-        if(object.pointers.length>0 && object.pointers[0].variable === "p" && object.pointers[object.pointers.length - 1].variable !== "__return__")
-            VisualizedLinkedList.addNewListItems(object);
-    }
-    //window.alert(VisualizedLinkedList.LinkedListSteps.toSource());
-    VisualizedLinkedList.visualize();
+function JsavLinkedListObject(codeObject, av) {
+    this.JsavLinkedList = av.ds.list({ nodegap: 30, top: 40, left: codeObject.element.outerWidth() + 100 });
+    this.circular = false;
+    this.size = 0;
+    this.av = av;
+    this.listOfNewNodesNotPartOfTheList = [];
 }
+JsavLinkedListObject.prototype = {
+    constructor: JsavLinkedListObject,
+    newNode: function(data) {
+        var newnode = this.JsavLinkedList.newNode(data);
+        this.listOfNewNodesNotPartOfTheList.push(newnode);
+        return newnode;
+    },
+    getNodeNotPartOfTheListByData: function(data) {
+        for (var i = 0; i < this.listOfNewNodesNotPartOfTheList.length; i++)
+            if (this.listOfNewNodesNotPartOfTheList[i].value() === data)
+                return this.listOfNewNodesNotPartOfTheList[i];
+    },
+    addFirst: function(data) {
+        this.JsavLinkedList.addFirst(data);
+        this.size++;
+    },
+    addLast: function(data) {
+        this.JsavLinkedList.addLast(data);
+        this.size++;
+    },
+    add: function(index, data) {
+        this.JsavLinkedList.add(index, data);
+        this.size++;
+    },
+    getJsavLinkedList: function() {
+        return this.JsavLinkedList;
+    },
+    get: function(index) {
+        return this.JsavLinkedList.get(index);
+    },
+    remove: function(index) {
+        this.size--;
+        return this.JsavLinkedList.remove(index);
+    },
+    CreateCircularArrow: function(last, first) {
+        this.circularEdge = this.connection(last.element, first.element);
+        this.circularEdge.hide();
+    },
+    connection: function(obj1, obj2) {
+        var position = this.position();
+        if (obj1 === obj2) { return; }
+        var pos1 = obj1.offset();
+        var pos2 = obj2.offset();
+        var fx = pos1.left + obj1.outerWidth() / 2.0;
+        var tx = pos2.left - obj2.outerWidth() / 2.0;
+        var fy = position.top + obj1.outerHeight(); ///2.0
+        tx += 22;
+        return this.av.g.path(["M", fx, fy, "h", 20, "v", 30, "h", (tx - fx - 30 - 20), "v", -30, "h", 20].join(","), {
+            "arrow-end": "classic-wide-long",
+            opacity: 0,
+            "stroke-width": 2
+        });
+    },
+    convertToCircularList: function() {
+        this.CreateCircularArrow(this.get(this.size - 1), this.get(0));
+        this.circularEdge.show();
+        this.last().next(this.first());
+        var edge = this.get(this.size - 1).edgeToNext();
+        edge.hide();
+        return true;
+    },
+    layout: function() {
+        this.JsavLinkedList.layout();
+        if (this.circular)
+            this.convertToCircularList();
+    },
+    size: function() {
+        return this.JsavLinkedList.size();
+    },
+    position: function() {
+        return this.JsavLinkedList.position();
+    },
+    last: function() {
+        return this.JsavLinkedList.last();
+    },
+    first: function() {
+        return this.JsavLinkedList.first();
+    },
+    getNodeIndexByValue: function(value) {
+        for (var i = 0; i < this.JsavLinkedList.size(); i++)
+            if (this.JsavLinkedList.get(i).value() === value)
+                return i;
+    }
+};
+//****************************************************************************************
+//Finished the classes part
+//Start Code for the main function
+//****************************************************************************************
+function visualize(testVisualizerTrace) {
+    var traces = new TraceList(testVisualizerTrace.trace);
+    var code = new StudentCode(testVisualizerTrace.code);
+    var vis = new Visualization(traces, code);
+    //var n = next.getLinkedListForStep().getNodeByReference(s);
+}
+/*major changes to take care
+1- we modified the Link.creatList to create the list from the beginning to the end
+2- we modified the RubyJsonFilter to ignore the traces with <init> function call
+3- we modified the RubyJsonFilter to add data that has integers
+*/

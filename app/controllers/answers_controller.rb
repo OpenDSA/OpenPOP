@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
     end
 
     redirect_to exercise_path(@exercise)
-    end
+  end
 
   def destroy
     @exercise = Exercise.find(params[:exercise_id])
@@ -60,9 +60,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.json { render :json => @trace }  # note, no :location or :status options
     end
-
   end
-
 
   def oldsolve
     id = params[:exerciseByID]

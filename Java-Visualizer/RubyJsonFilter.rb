@@ -15,7 +15,6 @@ class FilteredTraces
     @traces_json_array = []
     @traces = []
     @new_traces = []
-    # byebug
     @code = params[1]
     @code << ''
     @code << 'return statement'
@@ -42,21 +41,23 @@ class FilteredTraces
   def create_new_traces
     @traces.each do |trace|
       trace_stack = trace.stack_to_render[0]
+      unless(trace_stack.func_name.include? '<init>')
       trace_stack_ordered_variable_names = trace_stack.ordered_varnames
       trace_stack_encoded_locals = trace_stack.encoded_locals
       trace_heap = trace.heap
-      # byebug
       trace_code = @code[trace.line]
       filtered_trace = filter_trace([
                                       trace_stack_ordered_variable_names,
                                       trace_stack_encoded_locals,
                                       trace_heap,
-                                      trace_code
+                                      trace_code,
+                                      trace.line
                                     ])
       @new_traces << filtered_trace
       trace_string = Yajl::Encoder.encode(filtered_trace)
       @traces_json_array << trace_string
       @traces_json_string += trace_string + ','
+      end
     end
   end
 
@@ -70,9 +71,10 @@ class FilteredTraces
     end
     trace['heap'] = {}
     params[2].each_pair do |key, value|
-      trace['heap'][key] = value if value.length > 2
+      trace['heap'][key] = value if value.is_a?(Array) && value.length > 2
     end
     trace['code'] = params[3]
+    trace['lineNumber'] = params[4]
     trace
   end
 
@@ -101,7 +103,8 @@ def generate_backend_trace(junit_test_file,
                 "\n" + '"' + 'stdin' + '"' + ':' + '"' + '"' + "\n" + '}'
   student_file.puts(full_string)
   student_file.close
-  `java -cp .:cp:cp/javax.json-1.0.4.jar:java/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
+  output = `java -cp .:cp:cp/javax.json-1.0.4.jar:java/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
+  output
 end
 
 def seperate_and_filter_trace(junit_test_file,
@@ -195,6 +198,7 @@ class EventManager
     event_number = 0
     initial_line_number = @list_of_events[0].line_number
     @list_of_events.each do |modify|
+
       temp_string = modify.trace
       temp_line = modify.line_number
       line_number = temp_line % initial_line_number
@@ -281,7 +285,7 @@ class TraceAnalyzer
       elsif i == '}' or i == ')' or i == ']'
         if empty?(symbol_stack) == false
           top_symbol = symbol_stack.pop
-          if i == '}' && top_symbol != '{'
+          if i == '}' and top_symbol != '{'
             next
           end
         end
@@ -342,6 +346,7 @@ def code_splitter(code)
     temp = executed_code_list[x]
     temp = temp.strip
     student_code << executed_code_list[x] unless temp.empty?
+
     x += 1
   end
   student_code
@@ -357,5 +362,6 @@ def main_method (file_path, student_full_code)
   my_test = seperate_and_filter_trace(student_full_code, file_path,
                                       'cp/traceprinter/', 'output.txt')
   Dir.chdir('/home')
+  #puts my_test
   my_test
 end
