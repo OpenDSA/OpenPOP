@@ -282,10 +282,13 @@ LinkedList.prototype = {
     },
     checkIfCircularList: function() {
         var circular = true;
+        if(this.size() > 0){
         if (this.getNode(this.size() - 1).getNext() === null)
             circular = false;
         this.circularList = circular;
-
+        }
+        else
+            return false;
     },
     isCircular: function() {
         return this.circularList;
@@ -670,7 +673,10 @@ Visualization.prototype = {
                     return nextStep;
             }
             if (this.currentStep == this.size() - 1) //return the last step (return statement step)
-                return this.steps[this.currentStep];
+                if (!currentStep.equals(nextStep)) //if they are not equal then return the step
+                    return nextStep;
+                else
+                    return null;
         } else
             window.alert("Steps Out of Bound");
     },
@@ -715,7 +721,7 @@ Visualization.prototype = {
         this.JsavLinkedList = new JsavLinkedListObject(this.codeObject, this.visualizer);
         var initialLinkedList = this.steps[0].getLinkedListForStep();
         for (var i = 0; i < initialLinkedList.size(); i++) {
-            this.JsavLinkedList.addLast(initialLinkedList.getNode(i).getData());
+            this.JsavLinkedList.addLast(initialLinkedList.getNode(i).getData(), initialLinkedList.getNode(i).getReference());
         }
         if (initialLinkedList.isCircular())
             this.JsavLinkedList.circular = true;
@@ -749,7 +755,7 @@ Visualization.prototype = {
         if (toIndex !== -1) {
             pointer.movePointerToNewNode(toIndex, toPointeeReference, this.JsavLinkedList.getJsavLinkedList(), this.visualizer);
             this.visualizer.umsg('change pointer ' + pointer.getName(0) + ' pointee');
-            this.JsavLinkedList.layout();
+            //this.JsavLinkedList.layout();
         } else //make the pointer null
             pointer.makeNull(this.visualizer);
     },
@@ -773,11 +779,13 @@ Visualization.prototype = {
             var current = this.getCurrentStep();
             var index = this.getCurrentIndex();
             var next = this.getNextStep();
+            if(next != null){
             this.visualizeChanges(current, next);
             //FIX ME temp solution to code line number issue
             var lineNumber = next.getStepCodeLineNumber();
             this.codeObject.setCurrentLine(lineNumber > 1 ? lineNumber - 1 : lineNumber);
             this.visualizer.step();
+            }
         }
     },
     visualizeChanges: function(current, next) {
@@ -826,7 +834,8 @@ Visualization.prototype = {
                 } else {
                     var toReference = changeObject.To;
                     var node = current.getLinkedListForStep().getNodeByReference(toReference.toString());
-                    var NodeIndex = this.JsavLinkedList.getNodeIndexByValue(node.getData());
+                    var nodeLocation = current.getLinkedListForStep().getNodeLocation(toReference.toString());
+                    var NodeIndex = this.JsavLinkedList.getNodeIndexByReference(node.getReference());
                     this.movePointer(changeObject.pointerIndex, NodeIndex, toReference.toString());
                 }
             } else {
@@ -866,7 +875,7 @@ Visualization.prototype = {
                 var newNode = this.JsavLinkedList.getNodeNotPartOfTheListByData(current.getLinkedListForStep().getNode(nodeIndex).getData());
                 var nextIndex = current.getLinkedListForStep().getNodeLocation(changeObject.To.toString());
                 if (nextIndex == 0) { //add the new node at first
-                    this.JsavLinkedList.addFirst(newNode);
+                    this.JsavLinkedList.addFirst(newNode, current.getLinkedListForStep().getNode(nodeIndex).getReference());
                     this.JsavLinkedList.layout();
                     this.visualizer.umsg("add the node with value " + current.getLinkedListForStep().getNode(nodeIndex).getData() + " at the first position in the list");
                     //correct all lists as the 
@@ -910,7 +919,9 @@ Visualization.prototype = {
         //We need to determine if we should remove first or move the pointer first
         //if the pointer pointes to a node after a removed node so it is normal to see a change in the index of the node
         //if it points to a node before the removed one so we should apply the pointer change
+
         var after = false;
+        if(pointerChange!== null){
         var oldPointerPointeeIndex = pointerChange.nodePosition;
         var differenceInIndices = pointerChange.nodePosition - pointerChange.To;
         for (var i = 0; i < removedNodes.length; i++) {
@@ -919,6 +930,7 @@ Visualization.prototype = {
             if (nodeIndex < oldPointerPointeeIndex)
                 differenceInIndices--;
         }
+    }
         if (pointerChange !== null && differenceInIndices !== 0) {
             var pointer = this.pointersForVisualization.getPointer(pointerChange.pointerIndex);
             var toIndex = -1;
@@ -962,6 +974,7 @@ Visualization.prototype = {
             var nodeIndex = next.getLinkedListForStep().getNodeLocation(node.getReference());
             //if this new node is not pointed by any other node, so this node is not in the list
             var partOfTheList = false;
+            if(current.getLinkedListForStep().size() > 0){
             var newNodeReference = node.getReference();
             for (var j = 0; j < next.getLinkedListForStep().size(); j++) {
                 if (j !== nodeIndex) {
@@ -970,10 +983,12 @@ Visualization.prototype = {
                         partOfTheList = true;
                 }
             }
+            
             if (!partOfTheList) { //means that the node is either will be added at the beginning of the list or the node is separate from the list
                 //check to see if the node will be added in the beginning of the list
                 var atBeginning = false;
                 var node = addedNodes[i];
+                if(node.getNext() !== null){
                 for (var j = 0; j < next.getLinkedListForStep().size(); j++) {
                     if (j !== nodeIndex) {
                         if (next.getLinkedListForStep().getNode(j).getNext() !== null &&
@@ -981,8 +996,10 @@ Visualization.prototype = {
                             atBeginning = true;
                     }
                 }
+                }
                 if (atBeginning) {
-                    this.JsavLinkedList.addFirst(node.getData());
+                    this.JsavLinkedList.addFirst(node.getData(), node.getReference());
+
                     this.JsavLinkedList.layout();
                     this.visualizer.umsg("add new node with value " + node.getData() + " at the beginning of the list");
                 } else { //means the node is separated from the list
@@ -1003,10 +1020,16 @@ Visualization.prototype = {
                     pointerChange = null; //to prevent re-displaying the pointer latter in this function
                 }
             } else {
-                this.JsavLinkedList.add(nodeIndex, node.getData());
+                this.JsavLinkedList.add(nodeIndex, node.getData(), node.getReference());
                 this.visualizer.umsg("Create new Node with data value " + node.getData() + ' and add it to the list at location ' + nodeIndex);
                 this.JsavLinkedList.layout();
             }
+        }
+        else{
+            this.JsavLinkedList.add(nodeIndex, node.getData(), node.getReference());
+                this.visualizer.umsg("Create new Node with data value " + node.getData() + ' and add it to the list at location ' + nodeIndex);
+                this.JsavLinkedList.layout();
+        }
         }
         //now if there is a change in pointers we will visualize it
         if (pointerChange !== null) {
@@ -1049,6 +1072,7 @@ function JsavLinkedListObject(codeObject, av) {
     this.size = 0;
     this.av = av;
     this.listOfNewNodesNotPartOfTheList = [];
+    this.listOfNodesReferences = [];
 }
 JsavLinkedListObject.prototype = {
     constructor: JsavLinkedListObject,
@@ -1062,16 +1086,19 @@ JsavLinkedListObject.prototype = {
             if (this.listOfNewNodesNotPartOfTheList[i].value() === data)
                 return this.listOfNewNodesNotPartOfTheList[i];
     },
-    addFirst: function(data) {
+    addFirst: function(data, ref) {
         this.JsavLinkedList.addFirst(data);
+        this.listOfNodesReferences.splice(0, 0, ref.toString());
         this.size++;
     },
-    addLast: function(data) {
+    addLast: function(data, ref) {
         this.JsavLinkedList.addLast(data);
+        this.listOfNodesReferences.push(ref.toString());
         this.size++;
     },
-    add: function(index, data) {
+    add: function(index, data, ref) {
         this.JsavLinkedList.add(index, data);
+        this.listOfNodesReferences.splice(index, 0, ref.toString());
         this.size++;
     },
     getJsavLinkedList: function() {
@@ -1083,6 +1110,7 @@ JsavLinkedListObject.prototype = {
     remove: function(index) {
         this.size--;
         return this.JsavLinkedList.remove(index);
+        this.listOfNodesReferences.splice(index, 1);
     },
     CreateCircularArrow: function(last, first) {
         this.circularEdge = this.connection(last.element, first.element);
@@ -1131,6 +1159,11 @@ JsavLinkedListObject.prototype = {
     getNodeIndexByValue: function(value) {
         for (var i = 0; i < this.JsavLinkedList.size(); i++)
             if (this.JsavLinkedList.get(i).value() === value)
+                return i;
+    },
+    getNodeIndexByReference: function(reference) {
+        for (var i = 0; i < this.listOfNodesReferences.length; i++)
+            if (this.listOfNodesReferences[i] === reference.toString())
                 return i;
     }
 };

@@ -84,23 +84,18 @@ class AnswersController < ApplicationController
     Dir.chdir path
     require path + '/' + 'RubyJsonFilter.rb'
     code_body = wrapper_code.sub(/\b__\b/, answer_text)
-    code_body.gsub! "\r", ''
+    code_body.gsub! '\r', ''
     code_body.gsub! '\r', ''
     trace = main_method('', code_body)
     trace
   end
 
   def build_visualization(trace, student_code)
-    first = "var testvisualizerTrace = {\"code\":\"" + student_code
-    second = "\",\"trace\":[" + trace
-    last = "],\"userlog\":\"Debugger VM maxMemory: 807M \\n \"}" +
-        "\n\n" + "$(document).ready(function()" +
-        "{ \n \n \t var testvisualizer = new ExecutionVisualizer('testvisualizerDiv'," +
-        " testvisualizerTrace,{embeddedMode: false, lang: 'java', heightChangeCallback: redrawAllVisualizerArrows});"+
-        " \n \n \tfunction redrawAllVisualizerArrows()"+
-        " { \n \n \t \t if (testvisualizer) testvisualizer.redrawConnectors(); \n \t } "+
-        "\n \n $(window).resize(redrawAllVisualizerArrows); \n});"
-    return "<script>" + first + second + last + "</script>"
+    newStudentCode = student_code.split(/\n/).join('\\n')
+    first = 'var testvisualizerTrace = {"code":"' + newStudentCode + '"'
+    second = ',"trace":[' + trace
+    last = ']}'
+    body = '<body onload="visualize(testvisualizerTrace);"/>'
+    '<script>' + first + second + last + '</script>' + body
   end
-
 end
