@@ -60,30 +60,30 @@ Both of these tools are used as back ends in [Python Tutor](http://pythontutor.c
 
 # Setting Up a Vagrant Environment for OpenPOP
 ## Introduction:
-Vagrant is designed to run on multiple platforms, including Mac OS X, Microsoft Windows, Debian, Ubuntu, CentOS, RedHat and Fedora. In this document we describe how to configure and run CodeWorkout project virtual development environment through Vagrant.
+Vagrant is designed to run on multiple platforms, including Mac OS X, Microsoft Windows, Debian, Ubuntu, CentOS, RedHat and Fedora. In this document we describe how to configure and run OpenPOP project virtual development environment through Vagrant.
 
 ## Installation Steps:
 1) Install [Vagrant](https://www.vagrantup.com/downloads.html)
 2) Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 3) ```Clone this repository```
-4) ```$ cd code-workout```
+4) ```$ cd OpenPOP```
 5) ```$ vagrant up```
 6) ```$ vagrant ssh```
 7) ```$ . /vagrant/runservers.sh```
 8) After the provisioning script is complete you can go to:
-https://192.168.33.10:3000 for CodeWorkout server
+https://192.168.33.10:3000 for OpenPOP server
 
 ## Shut Down The Virtual Machine:
 After you finish your work, you need to turn the virtual machine off.
 
 1) Exit the virtual machine terminal by typing ```exit```
-2) ```$ cd code-workout```
+2) ```$ cd OpenPOP```
 3) ```$ vagrant halt```
 
 ## Re-run Development Servers:
 If you decided to shut down the virtual machine using vagrant halt, you have to re-run the servers again after you do vagrant up.
 
-1) ```$ cd code-workout```
+1) ```$ cd OpenPOP```
 2) ```$ vagrant up```
 3) ```$ vagrant ssh```
 4) ```$ cd /vagrant```
@@ -92,7 +92,7 @@ If you decided to shut down the virtual machine using vagrant halt, you have to 
 ## Reprovision The Virtual Machine:
 If anything went wrong or you want to reprovision your virtual machine for any reason, follow these steps.
 
-1) ```$ cd code-workout```
+1) ```$ cd OpenPOP```
 2) ```$ git pull```
 3) ```$ vagrant destroy```
 4) ```$ vagrant up```
@@ -100,11 +100,11 @@ If anything went wrong or you want to reprovision your virtual machine for any r
 ## Virtual Machine sudo password:
 sudo password is vagrant in case you need to execute any commands that require sudo.
 
-## Keep code-workout repository up to date:
-During development of code-workout, other developers might add new gems to the project or add new migrations etc. To keep your local version up to date with the latest version do the following:
+## Keep OpenPOP repository up to date:
+During development of OpenPOP, other developers might add new gems to the project or add new migrations etc. To keep your local version up to date with the latest version do the following:
 
 1) Open a new terminal
-2) ```$ cd code-workout```
+2) ```$ cd OpenPOP```
 3) ```$ git pull```
 4) ```$ vagrant reload```
 5) ```$ vagrant ssh```
