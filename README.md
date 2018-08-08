@@ -57,3 +57,58 @@ This file contains the code that used to visualize the student code. The main fu
 ## Visualizers Backend
 There are tools that used to generate the execution traces. The current version of this server uses [Java_Jail](https://github.com/daveagp/java_jail) to generate execution traces for any source code wriiten in JAVA. In the future expansion, the server may use [opt-cpp-backend](https://github.com/pgbovine/opt-cpp-backend).
 Both of these tools are used as back ends in [Python Tutor](http://pythontutor.com/) for Java and C++/C code.
+
+# Setting Up a Vagrant Environment for OpenPOP
+## Introduction:
+Vagrant is designed to run on multiple platforms, including Mac OS X, Microsoft Windows, Debian, Ubuntu, CentOS, RedHat and Fedora. In this document we describe how to configure and run CodeWorkout project virtual development environment through Vagrant.
+
+## Installation Steps:
+1) Install [Vagrant](https://www.vagrantup.com/downloads.html)
+2) Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+3) ```Clone this repository```
+4) ```$ cd code-workout```
+5) ```$ vagrant up```
+6) ```$ vagrant ssh```
+7) ```$ . /vagrant/runservers.sh```
+8) After the provisioning script is complete you can go to:
+https://192.168.33.10:3000 for CodeWorkout server
+
+## Shut Down The Virtual Machine:
+After you finish your work, you need to turn the virtual machine off.
+
+1) Exit the virtual machine terminal by typing ```exit```
+2) ```$ cd code-workout```
+3) ```$ vagrant halt```
+
+## Re-run Development Servers:
+If you decided to shut down the virtual machine using vagrant halt, you have to re-run the servers again after you do vagrant up.
+
+1) ```$ cd code-workout```
+2) ```$ vagrant up```
+3) ```$ vagrant ssh```
+4) ```$ cd /vagrant```
+5) ```$ rails server```
+
+## Reprovision The Virtual Machine:
+If anything went wrong or you want to reprovision your virtual machine for any reason, follow these steps.
+
+1) ```$ cd code-workout```
+2) ```$ git pull```
+3) ```$ vagrant destroy```
+4) ```$ vagrant up```
+
+## Virtual Machine sudo password:
+sudo password is vagrant in case you need to execute any commands that require sudo.
+
+## Keep code-workout repository up to date:
+During development of code-workout, other developers might add new gems to the project or add new migrations etc. To keep your local version up to date with the latest version do the following:
+
+1) Open a new terminal
+2) ```$ cd code-workout```
+3) ```$ git pull```
+4) ```$ vagrant reload```
+5) ```$ vagrant ssh```
+6) ```$ cd /vagrant```
+7) ```$ sudo bundle install```
+8) ```$ rake db:populate ``` Note: This step will place the database in a simple starter state.
+9) ```$ . /vagrant/runservers.sh```
