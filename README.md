@@ -111,4 +111,5 @@ During development of OpenPOP, other developers might add new gems to the projec
 6) ```$ cd /vagrant```
 7) ```$ sudo bundle install```
 8) ```$ rake db:populate ``` Note: This step will place the database in a simple starter state.
-9) ```$ . /vagrant/runservers.sh```
+9) ```$ cd /vagrant/```
+10) run ```rails s```
