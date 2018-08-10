@@ -1,0 +1,353 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JsavLinkedListObject Index &#8212; OpenPOPVisualizer  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LinkedList Index" href="LinkedList.html" />
+    <link rel="prev" title="Trace Index" href="Trace.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="jsavlinkedlistobject-index">
+<h1>JsavLinkedListObject Index<a class="headerlink" href="#jsavlinkedlistobject-index" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="JsavLinkedListObject">
+<em class="property">class </em><code class="descname">JsavLinkedListObject</code><span class="sig-paren">(</span><em>codeObject</em>, <em>av</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents the JSAV linked list object thea will be used in the visualization</p>
+<p>Class constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>codeObject</strong> (<em>JSAVpesudocodeobject</em>) – This object is used to show the student code in the slide show</li>
+<li><strong>av</strong> (<em>JSAV</em>) – the JSAV object that is used to draw the visualizations</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="JsavLinkedListObject.CreateCircularArrow">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">CreateCircularArrow</code><span class="sig-paren">(</span><em>last</em>, <em>first</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.CreateCircularArrow" title="Permalink to this definition">¶</a></dt>
+<dd><p>connects the last node with the first node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>last</strong> (<em>JSAVNode</em>) – </li>
+<li><strong>first</strong> (<em>JSAVNode</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.add">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">add</code><span class="sig-paren">(</span><em>index</em>, <em>data</em>, <em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds a new node at the specified index of the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>Integer</em>) – The specified index on the list</li>
+<li><strong>data</strong> (<em>Object</em>) – The created node data</li>
+<li><strong>ref</strong> (<em>String</em>) – The created node memory reference.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.addFirst">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">addFirst</code><span class="sig-paren">(</span><em>data</em>, <em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.addFirst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds a new node at the first of the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>Object</em>) – The created node data</li>
+<li><strong>ref</strong> (<em>String</em>) – The created node memory reference.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.addLast">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">addLast</code><span class="sig-paren">(</span><em>data</em>, <em>ref</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.addLast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds a new node at the end on the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>Object</em>) – The created node data</li>
+<li><strong>ref</strong> (<em>String</em>) – The created node memory reference.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.connection">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">connection</code><span class="sig-paren">(</span><em>obj1</em>, <em>obj2</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a link from obj1 to obj2</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj1</strong> (<em>JSAVNode</em>) – </li>
+<li><strong>obj2</strong> (<em>JSAVNode</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the new link</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.convertToCircularList">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">convertToCircularList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.convertToCircularList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the list to Circular linked list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.first">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">first</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.first" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the first JSAV node in the list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.get">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">get</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the node at the specified index on the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>Integer</em>) – The specified index of the list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.getJsavLinkedList">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">getJsavLinkedList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.getJsavLinkedList" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the JSAV Linked list object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.getNodeIndexByReference">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">getNodeIndexByReference</code><span class="sig-paren">(</span><em>reference</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.getNodeIndexByReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the index of the node with the given reference</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reference</strong> (<em>String</em>) – the reference value that used to find the node index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.getNodeIndexByValue">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">getNodeIndexByValue</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.getNodeIndexByValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the index of the node with the given value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>Object</em>) – the value that used to find the node index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.getNodeNotPartOfTheListByData">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">getNodeNotPartOfTheListByData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.getNodeNotPartOfTheListByData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for a node that is not in the linked list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>Object</em>) – The data will be used to find the requested node</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the linked list node</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.last">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">last</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.last" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the last JSAV node in the list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.layout">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>redraw the JSAV linked list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.newNode">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">newNode</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.newNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new node in the JSAV linked list. This node is not part of the list yet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>Object</em>) – the linked list node data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the new JSAV linked list node</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.position">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the position of the JSAV linked list object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.remove">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">remove</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes the node at the specified index on the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>Integer</em>) – The specified index of the list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="JsavLinkedListObject.size">
+<code class="descclassname">JsavLinkedListObject.</code><code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#JsavLinkedListObject.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the size of the linked list</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Trace.html" title="previous chapter">Trace Index</a></li>
+      <li>Next: <a href="LinkedList.html" title="next chapter">LinkedList Index</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mostafa Mohammed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/JsavLinkedListObject.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

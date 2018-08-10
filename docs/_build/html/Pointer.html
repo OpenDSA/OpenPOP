@@ -1,0 +1,196 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Pointer Index &#8212; OpenPOPVisualizer  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="StudentCode Index" href="StudentCode.html" />
+    <link rel="prev" title="LinkedListPointersForStep Index" href="LinkedListPointersForStep.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pointer-index">
+<h1>Pointer Index<a class="headerlink" href="#pointer-index" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Pointer">
+<em class="property">class </em><code class="descname">Pointer</code><span class="sig-paren">(</span><em>pointerName</em>, <em>pointeeReference</em>, <em>linkedNodePosition</em><span class="sig-paren">)</span><a class="headerlink" href="#Pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to represent any pointer that will be used in the visualizations</p>
+<p>constructor to initialize a pointer to a linked list node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pointerName</strong> (<em>String</em>) – pointer name</li>
+<li><strong>pointeeReference</strong> (<em>reference</em>) – the reference for pointee node</li>
+<li><strong>linkedNodePosition</strong> (<em>reference</em>) – pointee position</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="Pointer.equals">
+<code class="descclassname">Pointer.</code><code class="descname">equals</code><span class="sig-paren">(</span><em>OtherPointer</em><span class="sig-paren">)</span><a class="headerlink" href="#Pointer.equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if the current pointer is equal to the other pointer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>OtherPointer</strong> (<a class="reference internal" href="#Pointer" title="Pointer"><em>Pointer</em></a>) – the other pointer that will be compared to the current pointer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Pointer.getName">
+<code class="descclassname">Pointer.</code><code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Pointer.getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>get pointer name</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Pointer.getPointeePosition">
+<code class="descclassname">Pointer.</code><code class="descname">getPointeePosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Pointer.getPointeePosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the linked list node pointee index</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Pointer.getPointeeReference">
+<code class="descclassname">Pointer.</code><code class="descname">getPointeeReference</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Pointer.getPointeeReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the pointer memory reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Pointer.setName">
+<code class="descclassname">Pointer.</code><code class="descname">setName</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#Pointer.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>set pointer name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>String</em>) – pointer name value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Pointer.setPointeePosition">
+<code class="descclassname">Pointer.</code><code class="descname">setPointeePosition</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#Pointer.setPointeePosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the linked list node pointee index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>Integer</em>) – the linked list node pointee index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Pointer.setPointeeReference">
+<code class="descclassname">Pointer.</code><code class="descname">setPointeeReference</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#Pointer.setPointeeReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the pointer memory reference value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>reference</em>) – pointer memory reference value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="LinkedListPointersForStep.html" title="previous chapter">LinkedListPointersForStep Index</a></li>
+      <li>Next: <a href="StudentCode.html" title="next chapter">StudentCode Index</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mostafa Mohammed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/Pointer.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

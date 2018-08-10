@@ -1,0 +1,346 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Visualization Index &#8212; OpenPOPVisualizer  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="VisualizationStep Index" href="VisualizationStep.html" />
+    <link rel="prev" title="StudentCode Index" href="StudentCode.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="visualization-index">
+<h1>Visualization Index<a class="headerlink" href="#visualization-index" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Visualization">
+<em class="property">class </em><code class="descname">Visualization</code><span class="sig-paren">(</span><em>traces</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization" title="Permalink to this definition">¶</a></dt>
+<dd><p>create all step for the visualization</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>traces</strong> (<a class="reference internal" href="TraceList.html#TraceList" title="TraceList"><em>TraceList</em></a>) – list of all traces</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="Visualization.addNewPointerAndVisualizeIt">
+<code class="descclassname">Visualization.</code><code class="descname">addNewPointerAndVisualizeIt</code><span class="sig-paren">(</span><em>changeObject</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.addNewPointerAndVisualizeIt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds new pointer to the visualized linked list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>changeObject</strong> (<em>Hash</em>) – Hash table that contains the changes to be applied on list nodes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.add_nodesToTheList">
+<code class="descclassname">Visualization.</code><code class="descname">add_nodesToTheList</code><span class="sig-paren">(</span><em>current</em>, <em>next</em>, <em>changeObject</em>, <em>pointerChange</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.add_nodesToTheList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a node the the current Visualized linked list and visualize the addition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the current visualization step</li>
+<li><strong>next</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the next visualization step</li>
+<li><strong>changeObject</strong> (<em>Hash</em>) – Hash table that contains the changes to be applied on list nodes</li>
+<li><strong>pointerChange</strong> (<em>Hash</em>) – Hash table that contains the changes to be applied on pointers</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.correctPointersForVisualization">
+<code class="descclassname">Visualization.</code><code class="descname">correctPointersForVisualization</code><span class="sig-paren">(</span><em>nextStep</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.correctPointersForVisualization" title="Permalink to this definition">¶</a></dt>
+<dd><p>modify the pointers references and pointee location for the next step</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nextStep</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the next step to be used to correct the pointers in the current visualized linked list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.determineTheChange">
+<code class="descclassname">Visualization.</code><code class="descname">determineTheChange</code><span class="sig-paren">(</span><em>diff</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.determineTheChange" title="Permalink to this definition">¶</a></dt>
+<dd><p>use the diff to identify the changes. The changes are in the form of Json object string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.drawFinalState">
+<code class="descclassname">Visualization.</code><code class="descname">drawFinalState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.drawFinalState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the final configuration</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.drawInitialState">
+<code class="descclassname">Visualization.</code><code class="descname">drawInitialState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.drawInitialState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the initial configuration</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.getCurrentStep">
+<code class="descclassname">Visualization.</code><code class="descname">getCurrentStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.getCurrentStep" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the current step</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.getNextStep">
+<code class="descclassname">Visualization.</code><code class="descname">getNextStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.getNextStep" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>1- check change in the linked list number, values, order</dt>
+<dd>2- check change in pointers pointee (becomes null), position, add new pointer
+return the step with the next step with the change or the last step (return statement step)</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.getStep">
+<code class="descclassname">Visualization.</code><code class="descname">getStep</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.getStep" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the specified step based on the given index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>Integer</em>) – the step index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.movePointer">
+<code class="descclassname">Visualization.</code><code class="descname">movePointer</code><span class="sig-paren">(</span><em>pointerIndex</em>, <em>toIndex</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.movePointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>move a pointer based on its index inside the list of pointers for a step, to any position in the linked list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pointerIndex</strong> (<em>Integer</em>) – pointer index inside the list of pointers for a step</li>
+<li><strong>toIndex</strong> (<em>Integer</em>) – the index for a node in the Linked list to be pointed by the pointer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.movePointerToSeparateNode">
+<code class="descclassname">Visualization.</code><code class="descname">movePointerToSeparateNode</code><span class="sig-paren">(</span><em>pointerIndex</em>, <em>node</em>, <em>nodeReference</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.movePointerToSeparateNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to make pointer pointes to a node that is not in the list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.nullifyPointer">
+<code class="descclassname">Visualization.</code><code class="descname">nullifyPointer</code><span class="sig-paren">(</span><em>pointerIndex</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.nullifyPointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the pointer value to null and visualize it appropriately</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pointerIndex</strong> (<em>Integer</em>) – the index of the pointer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.remove_nodesFromTheList">
+<code class="descclassname">Visualization.</code><code class="descname">remove_nodesFromTheList</code><span class="sig-paren">(</span><em>current</em>, <em>next</em>, <em>changeObject</em>, <em>pointerChange</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.remove_nodesFromTheList" title="Permalink to this definition">¶</a></dt>
+<dd><p>There is a change in the number of nodes inside the list. So, we need to detect, apply and visualize the change</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the current visualization step</li>
+<li><strong>next</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the next visualization step</li>
+<li><strong>changeObject</strong> (<em>Hash</em>) – Hash table that contains the changes to be applied on list nodes</li>
+<li><strong>pointerChange</strong> (<em>Hash</em>) – Hash table that contains the changes to be applied on pointers</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.resetSteps">
+<code class="descclassname">Visualization.</code><code class="descname">resetSteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.resetSteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>reset the current step value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.size">
+<code class="descclassname">Visualization.</code><code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the total number of steps</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.visualizeAllSteps">
+<code class="descclassname">Visualization.</code><code class="descname">visualizeAllSteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.visualizeAllSteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualizes all steps.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.visualizeChanges">
+<code class="descclassname">Visualization.</code><code class="descname">visualizeChanges</code><span class="sig-paren">(</span><em>current</em>, <em>next</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.visualizeChanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the change from the current step to the next step</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the current step</li>
+<li><strong>next</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the next step</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.visualizeLinkedListNodes">
+<code class="descclassname">Visualization.</code><code class="descname">visualizeLinkedListNodes</code><span class="sig-paren">(</span><em>current</em>, <em>next</em>, <em>changeObject</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.visualizeLinkedListNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualizes the change in the order of nodes (next values), or the values of nodes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the current visualization step</li>
+<li><strong>next</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the next visualization step</li>
+<li><strong>changeObject</strong> (<em>Hash</em>) – Hash table that contains the changes to be applied on list nodes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Visualization.visualizePointers">
+<code class="descclassname">Visualization.</code><code class="descname">visualizePointers</code><span class="sig-paren">(</span><em>current</em>, <em>changeObject</em><span class="sig-paren">)</span><a class="headerlink" href="#Visualization.visualizePointers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualizes the pointers based on the current visualization step</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current</strong> (<a class="reference internal" href="VisualizationStep.html#VisualizationStep" title="VisualizationStep"><em>VisualizationStep</em></a>) – the current visualization step</li>
+<li><strong>changeObject</strong> (<em>Hash</em>) – Hash table that contains the changes to be applied on pointers</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="StudentCode.html" title="previous chapter">StudentCode Index</a></li>
+      <li>Next: <a href="VisualizationStep.html" title="next chapter">VisualizationStep Index</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mostafa Mohammed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/Visualization.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

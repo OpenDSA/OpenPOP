@@ -1,0 +1,175 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>LinkedListPointersForStep Index &#8212; OpenPOPVisualizer  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pointer Index" href="Pointer.html" />
+    <link rel="prev" title="LinkedListNode Index" href="LinkedListNode.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="linkedlistpointersforstep-index">
+<h1>LinkedListPointersForStep Index<a class="headerlink" href="#linkedlistpointersforstep-index" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="LinkedListPointersForStep">
+<em class="property">class </em><code class="descname">LinkedListPointersForStep</code><span class="sig-paren">(</span><em>traceStackForStep</em>, <em>LinkedListForStep</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListPointersForStep" title="Permalink to this definition">¶</a></dt>
+<dd><p>class to represent the pointers used to point at nodes in the linked list</p>
+<p>class constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>traceStackForStep</strong> (<a class="reference internal" href="TraceStack.html#TraceStack" title="TraceStack"><em>TraceStack</em></a>) – Trace object that represent on step</li>
+<li><strong>LinkedListForStep</strong> (<a class="reference internal" href="LinkedList.html#LinkedList" title="LinkedList"><em>LinkedList</em></a>) – Linked List for the step</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="LinkedListPointersForStep.addPointer">
+<code class="descclassname">LinkedListPointersForStep.</code><code class="descname">addPointer</code><span class="sig-paren">(</span><em>pointerName</em>, <em>pointeeReference</em>, <em>LinkedListNodePosition</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListPointersForStep.addPointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a new pointer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pointerName</strong> (<em>String</em>) – the pointer name</li>
+<li><strong>pointeeReference</strong> (<em>String</em>) – the pointer reference value</li>
+<li><strong>LinkedListNodePosition</strong> (<em>Object</em>) – Linked List pointee node poistion</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListPointersForStep.difference">
+<code class="descclassname">LinkedListPointersForStep.</code><code class="descname">difference</code><span class="sig-paren">(</span><em>OtherLinkedListPointersForStep</em>, <em>diff</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListPointersForStep.difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculats the difference between this linked list pointers and the other linkedlist pointers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>OtherLinkedListPointersForStep</strong> (<a class="reference internal" href="#LinkedListPointersForStep" title="LinkedListPointersForStep"><em>LinkedListPointersForStep</em></a>) – The other linked list pointers that will be compared with this linked list pointers</li>
+<li><strong>diff</strong> (<em>Hash</em>) – Hash table</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListPointersForStep.equals">
+<code class="descclassname">LinkedListPointersForStep.</code><code class="descname">equals</code><span class="sig-paren">(</span><em>OtherLinkedListPointersForStep</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListPointersForStep.equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if the current LinkedListPointersForStep is equal to the other LinkedListPointersForStep</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>OtherLinkedListPointersForStep</strong> (<a class="reference internal" href="#LinkedListPointersForStep" title="LinkedListPointersForStep"><em>LinkedListPointersForStep</em></a>) – the other LinkedListPointersForStep that will be compared to the current LinkedListPointersForStep</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListPointersForStep.getPointer">
+<code class="descclassname">LinkedListPointersForStep.</code><code class="descname">getPointer</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListPointersForStep.getPointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the pointer at the specified index</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListPointersForStep.size">
+<code class="descclassname">LinkedListPointersForStep.</code><code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListPointersForStep.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the number of pointers in the list</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="LinkedListNode.html" title="previous chapter">LinkedListNode Index</a></li>
+      <li>Next: <a href="Pointer.html" title="next chapter">Pointer Index</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mostafa Mohammed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/LinkedListPointersForStep.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
