@@ -1,9 +1,23 @@
 class AnswersController < ApplicationController
   respond_to :json, :html
   def create
-    if @exercise.nil? and @answer.nil?
+    if @exercise.nil? && @answer.nil?
       @exercise = Exercise.find(params[:exercise_id])
       @answer = @exercise.answers.create(answer_params)
+      student_answer = params[:answer][:StudentCode]
+    @answer = Answer.find_by_StudentCode(student_answer)
+    if @answer.nil?
+      #puts"new one created"
+      @answer = @exercise.answers.create(StudentCode: student_answer)
+    end
+    if @answer.trace.nil?
+      #puts"new trace created"
+      trace = generate_code_trace(@exercise.code, student_answer)
+      @trace = @answer.create_trace(exercise_trace: trace)
+    else
+      #puts"old trace used"
+        @trace = @answer.trace
+    end
     end
 
     redirect_to exercise_path(@exercise)
