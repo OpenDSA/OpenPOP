@@ -8,7 +8,7 @@
     <%= answer.trace.nil? ? "NONE": answer.trace.exercise_trace%>
 </p>
 <p>
-  <%= link_to 'Visualize', visualize_path(answer.exercise, answer), 'data-popup' => true %> |
+  <%= link_to 'Visualize', visualize_path(answer.exercise, answer)%> |
 
 
   <%= link_to 'Destroy Answer', [answer.exercise, answer],

@@ -362,6 +362,7 @@ def main_method (file_path, student_full_code)
   my_test = seperate_and_filter_trace(student_full_code, file_path,
                                       'cp/traceprinter/', 'output.txt')
   Dir.chdir('/home')
+<<<<<<< HEAD
   my_test
 
 end
@@ -384,3 +385,8 @@ def create_student_full_code
 
   main_method('', full_student_code)
 end
+=======
+  #puts my_test
+  my_test
+end
+>>>>>>> 657b7db52b82900b899aca5cc926ed6aabeccd8d

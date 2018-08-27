@@ -1,0 +1,207 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>LinkedList Index &#8212; OpenPOPVisualizer  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LinkedListNode Index" href="LinkedListNode.html" />
+    <link rel="prev" title="JsavLinkedListObject Index" href="JsavLinkedListObject.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="linkedlist-index">
+<h1>LinkedList Index<a class="headerlink" href="#linkedlist-index" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="LinkedList">
+<em class="property">class </em><code class="descname">LinkedList</code><span class="sig-paren">(</span><em>traceHeapForStep</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that creates a linked list for a single visualization step</p>
+<p>Class constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>traceHeapForStep</strong> (<em>Object</em>) – The trace heap for a single step</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="LinkedList.checkIfCircularList">
+<code class="descclassname">LinkedList.</code><code class="descname">checkIfCircularList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.checkIfCircularList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the linked list is circular or not</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.difference">
+<code class="descclassname">LinkedList.</code><code class="descname">difference</code><span class="sig-paren">(</span><em>OtherLinkedList</em>, <em>diff</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculats the difference between this linked list and the other linkedlist</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>OtherLinkedList</strong> (<a class="reference internal" href="#LinkedList" title="LinkedList"><em>LinkedList</em></a>) – The other linked list that will be compared with this linked list</li>
+<li><strong>diff</strong> (<em>Hash</em>) – Hash table</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.equals">
+<code class="descclassname">LinkedList.</code><code class="descname">equals</code><span class="sig-paren">(</span><em>OtherLinkedList</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if the current linked list is equal to the other linked list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>OtherLinkedList</strong> (<a class="reference internal" href="#LinkedList" title="LinkedList"><em>LinkedList</em></a>) – the other linked list that will be compared to the current linked list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.getNode">
+<code class="descclassname">LinkedList.</code><code class="descname">getNode</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.getNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the node at the given index</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.getNodeByReference">
+<code class="descclassname">LinkedList.</code><code class="descname">getNodeByReference</code><span class="sig-paren">(</span><em>reference</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.getNodeByReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the reference of the node that has the given reference</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.getNodeLocation">
+<code class="descclassname">LinkedList.</code><code class="descname">getNodeLocation</code><span class="sig-paren">(</span><em>reference</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.getNodeLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the location of the node with the specified reference</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reference</strong> (<em>String</em>) – the node reference</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.isCircular">
+<code class="descclassname">LinkedList.</code><code class="descname">isCircular</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.isCircular" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the true if the list is circular, false otherwise</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.removeAt">
+<code class="descclassname">LinkedList.</code><code class="descname">removeAt</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.removeAt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a node at the specified index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>Integer</em>) – The index of the node that will be removed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedList.size">
+<code class="descclassname">LinkedList.</code><code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LinkedList.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the number of nodes inside the linked list</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="JsavLinkedListObject.html" title="previous chapter">JsavLinkedListObject Index</a></li>
+      <li>Next: <a href="LinkedListNode.html" title="next chapter">LinkedListNode Index</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mostafa Mohammed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/LinkedList.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

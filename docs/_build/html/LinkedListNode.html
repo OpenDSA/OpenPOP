@@ -1,0 +1,215 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>LinkedListNode Index &#8212; OpenPOPVisualizer  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LinkedListPointersForStep Index" href="LinkedListPointersForStep.html" />
+    <link rel="prev" title="LinkedList Index" href="LinkedList.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="linkedlistnode-index">
+<h1>LinkedListNode Index<a class="headerlink" href="#linkedlistnode-index" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="LinkedListNode">
+<em class="property">class </em><code class="descname">LinkedListNode</code><span class="sig-paren">(</span><em>nodeData</em>, <em>nodeReference</em>, <em>nodeNext</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>class to initialize a linked list node</p>
+<p>Class constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nodeData</strong> (<em>Object</em>) – the data value for the node</li>
+<li><strong>nodeReference</strong> (<em>reference</em>) – The reference value for the pointer</li>
+<li><strong>nodeNext</strong> (<em>reference</em>) – The reference value for the next node in the chain</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="LinkedListNode.difference">
+<code class="descclassname">LinkedListNode.</code><code class="descname">difference</code><span class="sig-paren">(</span><em>OtherNode</em>, <em>diff</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculats the difference between this linkedlist node and the other linkedlist node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>OtherNode</strong> (<a class="reference internal" href="#LinkedListNode" title="LinkedListNode"><em>LinkedListNode</em></a>) – The other linked list that will be compared with this linked list</li>
+<li><strong>diff</strong> (<em>Hash</em>) – Hash table</li>
+<li><strong>index</strong> (<em>Integer</em>) – the node index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListNode.equals">
+<code class="descclassname">LinkedListNode.</code><code class="descname">equals</code><span class="sig-paren">(</span><em>OtherNode</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if the current node is equal to the other node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>OtherNode</strong> (<a class="reference internal" href="#LinkedListNode" title="LinkedListNode"><em>LinkedListNode</em></a>) – the other node that will be compared to the current node</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListNode.getData">
+<code class="descclassname">LinkedListNode.</code><code class="descname">getData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.getData" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the node value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListNode.getNext">
+<code class="descclassname">LinkedListNode.</code><code class="descname">getNext</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.getNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the reference for the next node in the chain</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListNode.getReference">
+<code class="descclassname">LinkedListNode.</code><code class="descname">getReference</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.getReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the reference value for the node</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListNode.setData">
+<code class="descclassname">LinkedListNode.</code><code class="descname">setData</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.setData" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the value of the node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>Object</em>) – the node value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListNode.setNext">
+<code class="descclassname">LinkedListNode.</code><code class="descname">setNext</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.setNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the reference for the next node in the chain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>reference</em>) – the reference value for the next node in the chain</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="LinkedListNode.setReference">
+<code class="descclassname">LinkedListNode.</code><code class="descname">setReference</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#LinkedListNode.setReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the reference value for the node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>reference</em>) – the reference value for the node</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="LinkedList.html" title="previous chapter">LinkedList Index</a></li>
+      <li>Next: <a href="LinkedListPointersForStep.html" title="next chapter">LinkedListPointersForStep Index</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mostafa Mohammed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/LinkedListNode.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

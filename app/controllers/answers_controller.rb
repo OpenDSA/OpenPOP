@@ -1,45 +1,54 @@
-
 class AnswersController < ApplicationController
-
   respond_to :json, :html
   def create
-    if @exercise.nil? and @answer.nil?
+    if @exercise.nil? && @answer.nil?
       @exercise = Exercise.find(params[:exercise_id])
       @answer = @exercise.answers.create(answer_params)
+      student_answer = params[:answer][:StudentCode]
+    @answer = Answer.find_by_StudentCode(student_answer)
+    if @answer.nil?
+      #puts"new one created"
+      @answer = @exercise.answers.create(StudentCode: student_answer)
+    end
+    if @answer.trace.nil?
+      #puts"new trace created"
+      trace = generate_code_trace(@exercise.code, student_answer)
+      @trace = @answer.create_trace(exercise_trace: trace)
+    else
+      #puts"old trace used"
+        @trace = @answer.trace
+    end
     end
 
     redirect_to exercise_path(@exercise)
-    end
+  end
 
   def destroy
     @exercise = Exercise.find(params[:exercise_id])
     @answer = @exercise.answers.find(params[:id])
-    if @answer.trace.nil?
-      @answer.destroy
-    else
-      @answer.trace.destroy
-      @answer.destroy
-    end
+    @answer.trace.destroy unless @answer.trace.nil?
+    @answer.destroy
     redirect_to exercise_path(@exercise)
   end
 
   def visualize
-    #puts params.inspect
+    # puts params.inspect
     @exercise = Exercise.find(params[:exercise_id])
 
     @answer = @exercise.answers.find(params[:id])
-    #puts @answer.trace
+    # puts @answer.trace
     if @answer.trace.nil?
-      #puts"new trace created"
-      #puts @answer.trace
+      # puts"new trace created"
+      # puts @answer.trace
       trace = generate_code_trace(@exercise.code, @answer.StudentCode)
       @trace = @answer.create_trace(exercise_trace: trace)
     else
-      #puts"old trace used"
+      #  puts"old trace used"
       @trace = @answer.trace
     end
-    #puts @trace.exercise_trace
-    @openpop_results = build_visualization(@trace.exercise_trace, @answer.StudentCode)
+    # puts @trace.exercise_trace
+    @openpop_results = build_visualization(@trace.exercise_trace,
+                                           @answer.StudentCode)
   end
 
   def solve
@@ -65,9 +74,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.json { render :json => @trace }  # note, no :location or :status options
     end
-
   end
-
 
   def oldsolve
     id = params[:exerciseByID]
@@ -85,13 +92,13 @@ class AnswersController < ApplicationController
   end
 
   def generate_code_trace(exercise, code)
-    wrapper_code = exercise#@exercise.code
-    answer_text = code #@answer.StudentCode
+    wrapper_code = exercise# @exercise.code
+    answer_text = code # @answer.StudentCode
     path = File.join(File.dirname(File.expand_path('../..', __FILE__)), 'Java-Visualizer')
-    pwd = Dir.pwd
     Dir.chdir path
     require path + '/' + 'RubyJsonFilter.rb'
     code_body = wrapper_code.sub(/\b__\b/, answer_text)
+<<<<<<< HEAD
     code_body.gsub! "\r",''
     code_body.gsub! '\r',''
     code_trace = main_method('',code_body)
@@ -114,19 +121,24 @@ class AnswersController < ApplicationController
     #Dir.chdir pwd
     #return trace
     code_trace
+=======
+    code_body.gsub! '\r', ''
+    code_body.gsub! '\r', ''
+    trace = main_method('', code_body)
+    trace
+>>>>>>> 657b7db52b82900b899aca5cc926ed6aabeccd8d
   end
 
   def build_visualization(trace, student_code)
-    first = "var testvisualizerTrace = {\"code\":\"" + student_code
-    second = "\",\"trace\":[" + trace
-    last = "],\"userlog\":\"Debugger VM maxMemory: 807M \\n \"}" +
-        "\n\n" + "$(document).ready(function()" +
-        "{ \n \n \t var testvisualizer = new ExecutionVisualizer('testvisualizerDiv'," +
-        " testvisualizerTrace,{embeddedMode: false, lang: 'java', heightChangeCallback: redrawAllVisualizerArrows});"+
-        " \n \n \tfunction redrawAllVisualizerArrows()"+
-        " { \n \n \t \t if (testvisualizer) testvisualizer.redrawConnectors(); \n \t } "+
-        "\n \n $(window).resize(redrawAllVisualizerArrows); \n});"
-    return "<script>" + first + second + last + "</script>"
+    newStudentCode = student_code.split(/\n/).join('\\n')
+    first = 'var testvisualizerTrace = {"code":"' + newStudentCode + '"'
+    second = ',"trace":[' + trace
+    last = ']}'
+    body = '<body onload="visualize(testvisualizerTrace);"/>'
+    '<script>' + first + second + last + '</script>' + body
   end
+<<<<<<< HEAD
 
+=======
+>>>>>>> 657b7db52b82900b899aca5cc926ed6aabeccd8d
 end
