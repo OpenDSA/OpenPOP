@@ -96,23 +96,24 @@ class AnswersController < ApplicationController
     code_body.gsub! '\r',''
     code_trace = main_method('',code_body)
     #remove the last comma
-    trace = ""
-    (0...code_trace.length).each do |y|
-      if y == code_trace.length - 1
-        temp_string = code_trace[y]
-        temp_string = temp_string[0...-1]
-        trace = trace + temp_string
-      else
-        temp_string = code_trace[y]
-        trace = trace + temp_string + "\n"
-      end
-    end
+    #trace = ""
+    #(0...code_trace.length).each do |y|
+    #  if y == code_trace.length - 1
+    #    temp_string = code_trace[y]
+    #    temp_string = temp_string[0...-1]
+    #    trace = trace + temp_string
+    #  else
+    #    temp_string = code_trace[y]
+    #    trace = trace + temp_string + "\n"
+    #  end
+    #end
     #results = "<script>" + codeTrace.split('$')[0] + "</script>"
     ##@openpop_results = "<script>" + create_student_full_code('{p=r;\n return 0;}').split('$')[0] + "</script>"
     #results.sub!('$', '</script><script> $')
     #@openpop_results = results
     #Dir.chdir pwd
-    return trace
+    #return trace
+    code_trace
   end
 
   def build_visualization(trace, student_code)
