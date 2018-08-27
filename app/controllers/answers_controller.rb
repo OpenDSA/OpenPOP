@@ -98,7 +98,6 @@ class AnswersController < ApplicationController
     Dir.chdir path
     require path + '/' + 'RubyJsonFilter.rb'
     code_body = wrapper_code.sub(/\b__\b/, answer_text)
-<<<<<<< HEAD
     code_body.gsub! "\r",''
     code_body.gsub! '\r',''
     code_trace = main_method('',code_body)
@@ -121,12 +120,6 @@ class AnswersController < ApplicationController
     #Dir.chdir pwd
     #return trace
     code_trace
-=======
-    code_body.gsub! '\r', ''
-    code_body.gsub! '\r', ''
-    trace = main_method('', code_body)
-    trace
->>>>>>> 657b7db52b82900b899aca5cc926ed6aabeccd8d
   end
 
   def build_visualization(trace, student_code)
