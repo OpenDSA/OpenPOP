@@ -130,8 +130,4 @@ class AnswersController < ApplicationController
     body = '<body onload="visualize(testvisualizerTrace);"/>'
     '<script>' + first + second + last + '</script>' + body
   end
-<<<<<<< HEAD
-
-=======
->>>>>>> 657b7db52b82900b899aca5cc926ed6aabeccd8d
 end
