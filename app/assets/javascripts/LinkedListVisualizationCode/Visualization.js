@@ -136,7 +136,7 @@ class Visualization{
     movePointer(pointerIndex, toIndex, toPointeeReference) {
         var pointer = this.pointersForVisualization.getPointer(pointerIndex);
         if (toIndex !== -1) {
-            pointer.movePointerToNewNode(toIndex, toPointeeReference, this.JsavLinkedList.getJsavLinkedList(), this.visualizer);
+            pointer.movePointerToNewNode(toIndex, toPointeeReference, this.JsavLinkedList.getJsavLinkedList(), this.visualizer, this.pointersForVisualization);
             this.visualizer.umsg('change pointer ' + pointer.getName(0) + ' pointee');
             //this.JsavLinkedList.layout();
         } else //make the pointer null
@@ -481,6 +481,6 @@ class Visualization{
             newPointer.getPointeeReference(),
             newPointer.getPointeePosition());
         this.visualizer.umsg('add new pointer ' + newPointer.getName());
-        newPointer.drawPointer(this.visualizer, this.JsavLinkedList.getJsavLinkedList());
+        newPointer.drawPointer(this.visualizer, this.JsavLinkedList.getJsavLinkedList(), this.pointersForVisualization);
     }
 };

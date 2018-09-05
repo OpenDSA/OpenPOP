@@ -82,24 +82,34 @@ class Pointer
         diff.pointerForStep.pointer = JSON.stringify(str);
         return diff;
     }
-    drawPointer(av, JsavLinkedList) {
+    drawPointer(av, JsavLinkedList, pointersForVisualization = null) {
+        var left = 0;
+        if(pointersForVisualization !== null)
+        {
+            for(var i = 0; i< pointersForVisualization.size(); i++)
+            {
+                if(pointersForVisualization.getPointer(i).getName() != this.getName() &&
+                 pointersForVisualization.getPointer(i).getPointeePosition() === this.getPointeePosition())
+                    left+=25;
+            }
+        }
         if (this.getPointeePosition() !== -1) {
             if (this.JsavPointer === null)
-                this.JsavPointer = av.pointer(this.getName(), JsavLinkedList.get(this.getPointeePosition()));
+                this.JsavPointer = av.pointer(this.getName(), JsavLinkedList.get(this.getPointeePosition()), {left: left});
             else
-                this.JsavPointer.target(JsavLinkedList.get(this.getPointeePosition()));
-        } else {
+                this.JsavPointer.target(JsavLinkedList.get(this.getPointeePosition()),{left: left});
+        } else {//draw null pointer
             if (this.JsavPointer === null) {
-                this.JsavPointer = av.pointer(this.getName(), JsavLinkedList);
+                this.JsavPointer = av.pointer(this.getName(), JsavLinkedList, {anchor:"center bottom", myAnchor:"right top",top:0, left:-35, arrowAnchor: "center bottom"});
             }
             this.JsavPointer.target(null);
         }
     }
-    movePointerToNewNode(nodeIndex, toPointeeReference, JsavLinkedList, av) {
+    movePointerToNewNode(nodeIndex, toPointeeReference, JsavLinkedList, av, pointersForVisualization) {
         this.setPointeePosition(nodeIndex);
         this.setPointeeReference(toPointeeReference);
         //pointer.setPointee(newNode);
-        this.drawPointer(av, JsavLinkedList);
+        this.drawPointer(av, JsavLinkedList, pointersForVisualization);
     }
     movePointerToSeparateNode(node, reference, av) {
         this.setPointeePosition(-1); //we do not know the index of this node yet
