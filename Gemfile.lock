@@ -182,12 +182,7 @@ GEM
     websocket-extensions (0.1.3)
     xpath (2.1.0)
       nokogiri (~> 1.3)
-<<<<<<< HEAD
     yajl-ruby (1.4.1)
-=======
-    yajl-ruby (1.4.0)
->>>>>>> 657b7db52b82900b899aca5cc926ed6aabeccd8d
-
 PLATFORMS
   ruby
 
