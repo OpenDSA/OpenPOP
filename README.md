@@ -70,8 +70,9 @@ Vagrant is designed to run on multiple platforms, including Mac OS X, Microsoft 
 5) ```$ vagrant up```
 6) ```$ vagrant ssh```
 7) ```$ cd /vagrant```
-8) run ```rails s```
-8) After the provisioning script is complete you can go to:
+8) ```$ bundle```
+9) run ```rails s```
+10) After the provisioning script is complete you can go to:
 http://192.168.33.10:3000 for OpenPOP server
 
 ## Shut Down The Virtual Machine:
