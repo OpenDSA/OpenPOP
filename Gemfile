@@ -56,4 +56,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'responders'
 gem 'json'
-gem 'yajl-ruby', require: 'yajl'
