@@ -1,1 +1,1 @@
-bundle exec thin start -p 9295 --ssl &
+bundle exec thin start -p 9295 &
