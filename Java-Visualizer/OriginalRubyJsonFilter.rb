@@ -21,8 +21,8 @@ def generate_backend_trace(junit_test_file, files_path, peruser_files_path, stud
   student_file.close
   #puts "student file #{fullString}"
   #Dir.chdir "/home/mdn/Research/OpenDSA-DevStack/OpenPOP/Java-Visualizer/frontAndBackendFiles/backendFiles"
-  #output = `./java/bin/java -cp .:cp:cp/javax.json-1.0.jar:java/lib/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
-  output = `java -cp .:cp:cp/javax.json-1.0.4.jar:java/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
+  output = `./java/bin/java -cp .:cp:cp/javax.json-1.0.jar:java/lib/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
+  #output = `java -cp .:cp:cp/javax.json-1.0.4.jar:java/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
   #puts output
   return output
 

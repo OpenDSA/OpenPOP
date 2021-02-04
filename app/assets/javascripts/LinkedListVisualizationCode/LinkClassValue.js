@@ -7,7 +7,7 @@ class LinkClassValue{
      * @param {reference} next the reference for the next node in the list
      * @param {Object} data the value of the current node in the list
      */
-    constructor(next, data) {
+    constructor(data, next) {
     this.LinkNodeNext = null;
     if (next[1] !== null && next[1].constructor === Array)
         this.LinkNodeNext = next[1][1];

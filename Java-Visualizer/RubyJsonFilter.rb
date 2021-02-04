@@ -103,7 +103,8 @@ def generate_backend_trace(junit_test_file,
                 "\n" + '"' + 'stdin' + '"' + ':' + '"' + '"' + "\n" + '}'
   student_file.puts(full_string)
   student_file.close
-  output = `java -cp .:cp:cp/javax.json-1.0.4.jar:java/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
+  #output = `java -cp .:cp:cp/javax.json-1.0.4.jar:java/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
+  output = `./java/bin/java -cp .:cp:cp/javax.json-1.0.jar:java/lib/tools.jar traceprinter.InMemory < cp/traceprinter/output.txt` # the shell command
   output
 end
 
