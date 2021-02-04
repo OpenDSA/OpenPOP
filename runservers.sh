@@ -1,1 +1,3 @@
-bundle exec thin start -p 9295 &
+#!/bin/bash
+
+bundle exec thin start -p 9295

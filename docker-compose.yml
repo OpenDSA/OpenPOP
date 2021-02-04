@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  openpop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["./runservers.sh"]
+    volumes:
+      - .:/openpop
+    ports:
+      - "9295:9295"
