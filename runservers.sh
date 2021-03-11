@@ -1,1 +1,1 @@
-bundle exec thin start -p 9295 &
+bundle exec puma -b tcp://127.0.0.1:9295 &
