@@ -1,1 +1,3 @@
-bundle exec puma -b tcp://127.0.0.1:9295 &
+#!/bin/bash
+
+bundle exec thin start --ssl --ssl-key-file server.key --ssl-cert-file server.crt -p 9295
