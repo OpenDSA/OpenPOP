@@ -1,4 +1,4 @@
-In order for the traceprinter package to work, it needs a few java tools. 
+In order for the traceprinter package to work, it needs a few java tools.
 
 This was copied directly from David Pritchard's repository found at: 
 https://github.com/daveagp/java_jail
